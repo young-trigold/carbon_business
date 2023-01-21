@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "standard-with-typescript"
+  ],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/order": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-filename-extension": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/function-component-definition": "off",
+    "react/require-default-props": "off",
+    "no-underscore-dangle": "off",
+    "object-curly-newline": "off",
+    "no-unused-vars": "off",
+    "react/no-unused-prop-types": "off",
+    "no-undef": "off",
+    "consistent-return": "off"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "tsc && node ./build/fetchData.js",
+    "insert": "tsc && node ./build/insertData.js"
+  },
+  "keywords": [],
+  "author": "trigold",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer-core": "^19.5.2",
+    "database": "workspace: *"
+  }
+}
