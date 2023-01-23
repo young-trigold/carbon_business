@@ -3,8 +3,9 @@ import { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { EChartsOption } from 'echarts';
 import { useQuery } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { CarbonBusiness } from 'types';
+import { Alert, CircularProgress } from '@mui/material';
 
 const ChartContainer = styled.div({
   width: 1000,
@@ -16,12 +17,13 @@ const queryFn = async () => {
 };
 
 export const Chart = () => {
-  const {isLoading, isError, error, data } = useQuery({
+  const { isLoading, isError, error, data } = useQuery({
     queryKey: ['record'],
     queryFn,
   });
   const chartContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (isLoading || isError) return;
     const chart = echarts.init(chartContainerRef.current!, undefined, {
       renderer: 'svg',
     });
@@ -58,10 +60,10 @@ export const Chart = () => {
       ],
     };
     chart.setOption(option);
-  }, []);
+  }, [isLoading, isError]);
 
-  if(isLoading) return 'loading';
-  if(isError) return 'error';
+  if (isLoading) return <CircularProgress />;
+  if (isError) return <Alert severity="error">{(error as AxiosError).message}</Alert>;
 
   return <ChartContainer ref={chartContainerRef}></ChartContainer>;
 };

@@ -4,7 +4,9 @@
   "description": "",
   "private": true,
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "dev": "pnpm -r dev"
+  },
   "keywords": [],
   "author": "trigold",
   "license": "ISC",
