@@ -1,19 +1,7 @@
 import puppeteer from 'puppeteer-core';
 import { writeFile } from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
-
-export type CarbonBusiness = {
-  date: string;
-  agency: string;
-  type: string;
-  startPrice: number;
-  endPrice: number;
-  minPrice: number;
-  maxPrice: number;
-  averagePrice: number;
-  volume: number;
-  amount: number;
-};
+import { CarbonBusiness } from 'types';
 
 const pathToData = './data';
 if (!existsSync(pathToData)) {

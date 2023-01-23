@@ -6,5 +6,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "cSpell.words": ["trigold"]
+  "cSpell.words": ["echarts", "trigold"]
 }

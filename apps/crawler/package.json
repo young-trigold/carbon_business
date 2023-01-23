@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "puppeteer-core": "^19.5.2",
-    "database": "workspace: *"
+    "database": "workspace: *",
+    "types": "workspace: *"
   }
 }

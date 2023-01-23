@@ -30,9 +30,11 @@ importers:
     specifiers:
       database: 'workspace: *'
       puppeteer-core: ^19.5.2
+      types: 'workspace: *'
     dependencies:
       database: link:../database
       puppeteer-core: registry.npmmirror.com/puppeteer-core/19.5.2
+      types: link:../types
 
   apps/database:
     specifiers:
@@ -83,6 +85,9 @@ importers:
       concurrently: registry.npmmirror.com/concurrently/7.6.0
       nodemon: registry.npmmirror.com/nodemon/2.0.20
 
+  apps/types:
+    specifiers: {}
+
   apps/web:
     specifiers:
       '@babel/core': ^7.20.12
@@ -106,6 +111,7 @@ importers:
       react-redux: ^8.0.5
       react-router-dom: ^6.4.3
       terser: ^5.16.1
+      types: 'workspace: *'
       typescript: ^4.9.3
       vite: ^4.0.0
     dependencies:
@@ -124,6 +130,7 @@ importers:
       react-redux: registry.npmmirror.com/react-redux/8.0.5_fxtgt6bjwd6p4cwoordejim2zi
       react-router-dom: registry.npmmirror.com/react-router-dom/6.7.0_biqbaboplfbrettd7655fr4n2y
       terser: registry.npmmirror.com/terser/5.16.1
+      types: link:../types
     devDependencies:
       '@types/react': registry.npmmirror.com/@types/react/18.0.27
       '@types/react-dom': registry.npmmirror.com/@types/react-dom/18.0.10

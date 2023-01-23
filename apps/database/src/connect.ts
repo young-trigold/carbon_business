@@ -1,16 +1,17 @@
 import mongoose from 'mongoose';
 
-const { log } = console;
-
-export const connectDataBase = () => {
+export const connectDataBase = async () => {
   const dbUrl = 'mongodb://127.0.0.1:27017';
 
   const options = {
     dbName: 'carbon_business',
   };
 
-  mongoose
-    .connect(dbUrl, options)
-    .then(() => log('数据库连接成功!'))
-    .catch(() => log('数据库连接错误!'));
+  try {
+    mongoose.connect(dbUrl, options);
+    console.log('数据库连接成功!');
+  } catch (error) {
+    console.error('数据库连接错误!');
+    console.error(error);
+  }
 };
