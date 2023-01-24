@@ -8,12 +8,13 @@ import { CarbonBusiness } from 'types';
 import { Alert, CircularProgress } from '@mui/material';
 
 const ChartContainer = styled.div({
-  width: 1000,
+  width: 1200,
   height: 700,
 });
 
 const queryFn = async () => {
-  return await axios.get<CarbonBusiness[]>('/api/records');
+  const res = await axios.get<CarbonBusiness[]>('/api/records');
+  return res.data;
 };
 
 export const Chart = () => {
@@ -29,37 +30,52 @@ export const Chart = () => {
     });
     const option: EChartsOption = {
       xAxis: {
+        name: '交易时间',
         type: 'time',
         boundaryGap: false,
       },
       yAxis: {
+        name: '交易相关量',
         type: 'value',
       },
-      dataset: {
-        source: [
-          { date: '2017-10-31', first: 43.3, second: 85.8 },
-          { date: '2017-11-30', first: 83.1, second: 73.4 },
-          { date: '2017-12-31', first: 86.4, second: 65.2 },
-          { date: '2018-01-31', first: 72.4, second: 53.9 },
-        ],
+      toolbox: {
+        feature: {
+          dataZoom: {
+            yAxisIndex: 'none',
+          },
+          restore: {},
+          saveAsImage: {},
+        },
       },
-      series: [
-        {
-          type: 'line',
-          dimensions: ['date', 'first'],
-        },
-        {
-          type: 'line',
-          dimensions: ['date', 'second'],
-        },
-      ],
+      tooltip: {
+        trigger: 'axis',
+      },
       dataZoom: [
         {
           type: 'inside',
+          start: 0,
+          end: 20,
+        },
+        {
+          start: 0,
+          end: 20,
         },
       ],
+      dataset: {
+        source: data!,
+      },
+      series: ['上海', '湖北', '深圳', '广州'].map((agency) => ({
+        type: 'line',
+        dimensions: ['date', agency],
+        smooth: true,
+        name: agency,
+      })),
     };
     chart.setOption(option);
+
+    return () => {
+      chart.dispose();
+    };
   }, [isLoading, isError]);
 
   if (isLoading) return <CircularProgress />;
