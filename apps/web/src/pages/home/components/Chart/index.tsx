@@ -17,7 +17,7 @@ export const Chart = () => {
 
   const queryFn = async () => {
     const res = await axios.get<CarbonBusiness[]>(
-      `/api/records?checkedAgencies=${checkedAgencies.toString()}&key=${queryKey}&startDate=${startDate}$endDate=${endDate}`,
+      `/api/records?checkedAgencies=${checkedAgencies.toString()}&key=${queryKey}&startDate=${startDate}&endDate=${endDate}`,
     );
     return res.data;
   };
