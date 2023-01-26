@@ -1,35 +1,32 @@
 import * as echarts from 'echarts';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { EChartsOption } from 'echarts';
 import { useQuery } from 'react-query';
 import axios, { AxiosError } from 'axios';
-import { Alert, Skeleton, styled } from '@mui/material';
+import { Alert, Box, Skeleton, styled } from '@mui/material';
 import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
 import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
 import { useAppSelector } from '../../../../app/store';
-import { CarbonBusiness, QueryKeyOfCarbonBusiness, carbonBusinessKeys } from 'types';
-
-const ChartContainer = styled('div')(() => ({
-  width: '1100px',
-  height: '700px',
-}));
+import { CarbonBusiness, carbonBusinessKeys } from 'types';
 
 export const Chart = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
-  const [agencies, setAgencies] = useState(['上海', '湖北', '深圳', '广州']);
-  const [carbonBusinessKey, setCarbonBusinessKey] = useState<QueryKeyOfCarbonBusiness>('averagePrice');
+  const { startDate, endDate, checkedAgencies, queryKey } = useAppSelector(
+    (state) => state.homePage,
+  );
 
   const queryFn = async () => {
     const res = await axios.get<CarbonBusiness[]>(
-      `/api/records?agencies=${agencies.toString()}&key=${carbonBusinessKey}`,
+      `/api/records?checkedAgencies=${checkedAgencies.toString()}&key=${queryKey}&startDate=${startDate}$endDate=${endDate}`,
     );
     return res.data;
   };
 
   const { isLoading, isError, error, data } = useQuery({
-    queryKey: ['record', ...agencies, carbonBusinessKey],
+    queryKey: ['record', ...checkedAgencies, queryKey, startDate, endDate],
     queryFn,
   });
+
   const chartContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (isLoading || isError) return;
@@ -40,7 +37,7 @@ export const Chart = () => {
     });
     const option: EChartsOption = {
       grid: {
-        left: 65,
+        left: 80,
         top: 40,
         right: 15,
         bottom: 70,
@@ -49,7 +46,7 @@ export const Chart = () => {
         type: 'time',
         axisLine: {
           symbol: ['none', 'arrow'],
-          symbolSize: [8, 16]
+          symbolSize: [8, 16],
         },
         axisTick: {
           inside: true,
@@ -60,20 +57,20 @@ export const Chart = () => {
         axisPointer: {
           show: true,
           label: {
-            color: 'blue'
-          }
-        }
+            color: 'blue',
+          },
+        },
       },
       yAxis: {
-        name: carbonBusinessKeys.get(carbonBusinessKey),
+        name: carbonBusinessKeys.get(queryKey),
         type: 'value',
         axisLabel: {
-          formatter: '{value} 元/吨',
+          formatter: '{value}元',
           // ...
         },
         axisLine: {
           symbol: ['none', 'arrow'],
-          symbolSize: [8, 16]
+          symbolSize: [8, 16],
         },
         axisTick: {
           inside: true,
@@ -99,7 +96,7 @@ export const Chart = () => {
       dataset: {
         source: data!,
       },
-      series: agencies.map((agency) => ({
+      series: checkedAgencies.map((agency) => ({
         type: 'line',
         dimensions: ['date', agency],
         name: agency,
@@ -116,10 +113,10 @@ export const Chart = () => {
     return () => {
       chart.dispose();
     };
-  }, [isLoading, isError, themeMode]);
+  }, [isLoading, isError, themeMode, data]);
 
   if (isLoading) return <Skeleton variant="rounded" animation="wave" width={1000} height={700} />;
   if (isError) return <Alert severity="error">{(error as AxiosError).message}</Alert>;
 
-  return <ChartContainer ref={chartContainerRef}></ChartContainer>;
+  return <Box ref={chartContainerRef} width={1100} height={700} minWidth={1100}></Box>;
 };

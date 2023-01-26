@@ -1,7 +1,5 @@
 import {
   Button,
-  Checkbox,
-  FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
@@ -13,26 +11,69 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { useAppDispatch } from '../../../../app/store';
-import { setEndDate, setStartDate } from '../../../../app/store/pages/home';
-import { carbonBusinessKeys, queryKeys, startDate } from 'types';
+import { useAppDispatch, useAppSelector } from '../../../../app/store';
+import {
+  setAgencies,
+  setEndDate,
+  setQueryKey,
+  setStartDate,
+} from '../../../../app/store/pages/home';
+import {
+  AgenciesOfCarbonBusiness,
+  QueryKeyOfCarbonBusiness,
+  agencies,
+  carbonBusinessKeys,
+  queryKeys,
+} from 'types';
+import { AgencyCheckBox } from './components/AgencyCheckBox';
+
+export interface FormState {
+  startDate: string;
+  endDate: string;
+  checkedAgencies: AgenciesOfCarbonBusiness[];
+  queryKey: QueryKeyOfCarbonBusiness;
+}
 
 export const Form = () => {
+  const { startDate, endDate, checkedAgencies, queryKey } = useAppSelector(
+    (state) => state.homePage,
+  );
+  const [form, setForm] = useState<FormState>({
+    startDate,
+    endDate,
+    checkedAgencies,
+    queryKey,
+  });
+
+  const onStartDateChange = (value: { $d: string }) => {
+    setForm((preForm) => ({
+      ...preForm,
+      startDate: dayjs(new Date(value.$d)).format('YYYY-MM-DD'),
+    }));
+  };
+
+  const onEndDateChange = (value: { $d: string }) => {
+    setForm((preForm) => ({
+      ...preForm,
+      endDate: dayjs(new Date(value.$d)).format('YYYY-MM-DD'),
+    }));
+  };
+
+  const onQueryKeyChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setForm((preForm) => ({
+      ...preForm,
+      queryKey: event.target.value as QueryKeyOfCarbonBusiness,
+    }));
+  };
+
   const dispatch = useAppDispatch();
 
-  const onStartDateChange = (value) => {
-    console.debug(value);
-    dispatch(setStartDate(value));
+  const onClick = () => {
+    dispatch(setStartDate(form.startDate));
+    dispatch(setEndDate(form.endDate));
+    dispatch(setQueryKey(form.queryKey));
+    dispatch(setAgencies(form.checkedAgencies));
   };
-
-  const onEndDateChange = (value) => {
-    console.debug(value);
-    dispatch(setEndDate(value));
-  };
-
-  const onAgenciesChange = (value) => {};
-
-  const onQueryKeyChange = (value) => {};
 
   return (
     <Stack spacing={2}>
@@ -40,15 +81,15 @@ export const Form = () => {
         <Stack spacing={2}>
           <DatePicker
             label="交易开始日期"
-            value={startDate}
-            onChange={onStartDateChange}
+            value={form.startDate}
+            onChange={onStartDateChange as any}
             renderInput={(params) => <TextField {...params} />}
           />
 
           <DatePicker
             label="交易结束日期"
-            value={dayjs().format('YYYY-MM-DD')}
-            onChange={onEndDateChange}
+            value={form.endDate}
+            onChange={onEndDateChange as any}
             renderInput={(params) => <TextField {...params} />}
           />
         </Stack>
@@ -56,26 +97,33 @@ export const Form = () => {
 
       <FormGroup>
         <FormLabel>碳排放交易机构</FormLabel>
-        {['上海', '湖北', '深圳', '广州'].map((agency) => (
-          <FormControlLabel control={<Checkbox></Checkbox>} label={agency}></FormControlLabel>
-        ))}
+        <Stack direction="row" flexWrap="wrap">
+          {agencies.map((agency) => (
+            <AgencyCheckBox
+              agency={agency}
+              setForm={setForm}
+              checkedAgencies={form.checkedAgencies}
+            />
+          ))}
+        </Stack>
       </FormGroup>
 
-      <FormControl>
+      <FormGroup>
         <FormLabel>查询目标值</FormLabel>
-
-        <RadioGroup defaultValue="female" name="queryKey">
+        <RadioGroup defaultValue="averagePrice" name="queryKey" onChange={onQueryKeyChange}>
           {queryKeys.map((queryKey) => (
             <FormControlLabel
               value={queryKey}
-              control={<Radio />}
+              control={<Radio checked={form.queryKey === queryKey} />}
               label={carbonBusinessKeys.get(queryKey)}
             />
           ))}
         </RadioGroup>
-      </FormControl>
+      </FormGroup>
 
-      <Button variant="contained">查询</Button>
+      <Button variant="contained" onClick={onClick}>
+        查询
+      </Button>
     </Stack>
   );
 };

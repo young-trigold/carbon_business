@@ -5,7 +5,7 @@ import { CarbonBusiness, QueryKeyOfCarbonBusiness } from 'types';
 
 export const getRecords = async (req: Request, res: Response) => {
   const { query } = req;
-  const agencies = (query?.agencies as string)?.split(',') ?? ['上海', '湖北', '深圳', '广州'];
+  const agencies = (query?.checkedAgencies as string)?.split(',') ?? ['上海', '湖北', '深圳', '广州'];
   const key = (query?.key as QueryKeyOfCarbonBusiness) ?? 'averagePrice';
   try {
     const records = await Record.aggregate([
