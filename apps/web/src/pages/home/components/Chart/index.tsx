@@ -3,11 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import { EChartsOption } from 'echarts';
 import { useQuery } from 'react-query';
 import axios, { AxiosError } from 'axios';
-import { CarbonBusiness, QueryKeyOfCarbonBusiness, carbonBusinessKeys } from 'types';
 import { Alert, CircularProgress, styled } from '@mui/material';
 import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
 import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
 import { useAppSelector } from '../../../../app/store';
+import { CarbonBusiness, QueryKeyOfCarbonBusiness, carbonBusinessKeys } from 'types';
 
 const ChartContainer = styled('div')(() => ({
   width: '1000px',
