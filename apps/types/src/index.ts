@@ -24,4 +24,16 @@ export const carbonBusinessKeys = new Map<keyof CarbonBusiness, string>([
   ['amount', '成交金额'],
 ]);
 
-export type QueryKeyOfCarbonBusiness = Exclude<keyof CarbonBusiness, 'date' | 'agency' | 'type'>;
+export const queryKeys = [
+  'startPrice',
+  'endPrice',
+  'minPrice',
+  'maxPrice',
+  'averagePrice',
+  'volume',
+  'amount',
+] as const;
+
+export const startDate = '2016-11-04';
+
+export type QueryKeyOfCarbonBusiness = typeof queryKeys[number];
