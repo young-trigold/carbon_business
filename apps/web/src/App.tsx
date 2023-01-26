@@ -30,7 +30,6 @@ const App = () => {
       <APPContainer>
         <GlobalStyle />
         <Chart />
-        <Button>click me</Button>
       </APPContainer>
     </QueryClientProvider>
   );

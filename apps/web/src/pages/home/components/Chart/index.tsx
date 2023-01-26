@@ -35,7 +35,7 @@ export const Chart = () => {
         boundaryGap: false,
       },
       yAxis: {
-        name: '交易相关量',
+        name: '成交均价',
         type: 'value',
       },
       toolbox: {
@@ -67,8 +67,10 @@ export const Chart = () => {
       series: ['上海', '湖北', '深圳', '广州'].map((agency) => ({
         type: 'line',
         dimensions: ['date', agency],
-        smooth: true,
         name: agency,
+        connectNulls: true, // 连接 null 值
+        showSymbol: false, // 去掉圆圈
+        smooth: true, // 光滑曲线
       })),
     };
     chart.setOption(option);
