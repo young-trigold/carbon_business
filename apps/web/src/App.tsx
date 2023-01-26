@@ -1,16 +1,20 @@
-import { Button } from '@mui/material';
-import styled from '@emotion/styled';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { styled, ThemeProvider } from '@mui/material/styles';
 
 import { GlobalStyle } from './app/theme/GlobalStyle';
 import { Chart } from './pages/home/components/Chart';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { themes } from './app/theme/themes';
+import { useAppSelector } from './app/store';
 
-const APPContainer = styled.div({
+const APPContainer = styled('div')(({theme}) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   height: '100vh',
-});
+  backgroundColor: theme.palette.background.default,
+}));
 
 const client = new QueryClient({
   defaultOptions: {
@@ -25,12 +29,18 @@ const client = new QueryClient({
 });
 
 const App = () => {
+  const { themeMode } = useAppSelector((state) => state.themeMode);
+
   return (
     <QueryClientProvider client={client}>
-      <APPContainer>
-        <GlobalStyle />
-        <Chart />
-      </APPContainer>
+      <ThemeProvider theme={themes[themeMode]}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <APPContainer>
+            <GlobalStyle />
+            <Chart />
+          </APPContainer>
+        </LocalizationProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
