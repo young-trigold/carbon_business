@@ -4,7 +4,7 @@
   "description": "",
   "main": "./build/index.js",
   "scripts": {
-    "dev": "tsc"
+    "dev": "tsc --watch"
   },
   "keywords": [],
   "author": "",
