@@ -82,12 +82,16 @@ export const Form = () => {
           <DatePicker
             label="交易开始日期"
             value={form.startDate}
+            minDate="2016-11-04"
+            maxDate={form.endDate}
             onChange={onStartDateChange as any}
             renderInput={(params) => <TextField {...params} />}
           />
 
           <DatePicker
             label="交易结束日期"
+            minDate={form.startDate}
+            maxDate={dayjs().format('YYYY-DD-MM')}
             value={form.endDate}
             onChange={onEndDateChange as any}
             renderInput={(params) => <TextField {...params} />}
