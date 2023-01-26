@@ -6,7 +6,10 @@ const lightTheme = createTheme({
     mode: 'light',
     background: {
       default: '#f4f5f5'
-    }
+    },
+    primary: {
+      main: '#1890ff'
+    },
   },
 });
 
@@ -15,6 +18,9 @@ const darkTheme = createTheme({
     mode: 'dark',
     background: {
       default: '#1b1b1d'
+    },
+    primary: {
+      main: '#67d6ed'
     }
   },
 });

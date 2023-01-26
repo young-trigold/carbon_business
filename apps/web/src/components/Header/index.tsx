@@ -46,7 +46,7 @@ export const Header = () => {
 
   const dispatch = useAppDispatch();
 
-  const onThemeModeChange = (event, value: ThemeMode) => {
+  const onThemeModeChange = (event: React.MouseEvent, value: ThemeMode) => {
     if (value) dispatch(setThemeMode(value));
   };
 
