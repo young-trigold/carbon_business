@@ -23,3 +23,5 @@ export const carbonBusinessKeys = new Map<keyof CarbonBusiness, string>([
   ['volume', '成交量'],
   ['amount', '成交金额'],
 ]);
+
+export type QueryKeyOfCarbonBusiness = Exclude<keyof CarbonBusiness, 'date' | 'agency' | 'type'>;

@@ -26,7 +26,7 @@ const App = () => {
   return (
     <QueryClientProvider client={client}>
       <ThemeProvider theme={themes[themeMode]}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} >
           <CssBaseline />
           <RouterPart />
         </LocalizationProvider>

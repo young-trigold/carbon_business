@@ -22,7 +22,6 @@
     "@mui/material": "^5.11.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/x-date-pickers": "^5.0.15",
-    "dayjs": "^1.11.7",
     "@date-io/dayjs": "^2.16.0",
     "@mui/system": "^5.11.5",
     "@emotion/react": "^11.10.5",

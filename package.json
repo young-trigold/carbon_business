@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "trigold",
   "license": "ISC",
+  "dependencies": {
+    "dayjs": "^1.11.7"
+  },
   "devDependencies": {
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.2",

@@ -1,21 +1,18 @@
 import * as echarts from 'echarts';
 import { useEffect, useRef, useState } from 'react';
-import styled from '@emotion/styled';
 import { EChartsOption } from 'echarts';
 import { useQuery } from 'react-query';
 import axios, { AxiosError } from 'axios';
-import { CarbonBusiness, carbonBusinessKeys } from 'types';
-import { Alert, CircularProgress } from '@mui/material';
+import { CarbonBusiness, QueryKeyOfCarbonBusiness, carbonBusinessKeys } from 'types';
+import { Alert, CircularProgress, styled } from '@mui/material';
 import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
 import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
 import { useAppSelector } from '../../../../app/store';
 
-const ChartContainer = styled.div({
-  width: 1200,
-  height: 700,
-});
-
-type QueryKeyOfCarbonBusiness = Exclude<keyof CarbonBusiness, 'date' | 'agency' | 'type'>;
+const ChartContainer = styled('div')(() => ({
+  width: '1000px',
+  height: '700px',
+}));
 
 export const Chart = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
@@ -30,7 +27,7 @@ export const Chart = () => {
   };
 
   const { isLoading, isError, error, data } = useQuery({
-    queryKey: ['record'],
+    queryKey: ['record', ...agencies, carbonBusinessKey],
     queryFn,
   });
   const chartContainerRef = useRef<HTMLDivElement>(null);
