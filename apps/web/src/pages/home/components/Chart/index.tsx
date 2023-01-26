@@ -91,7 +91,7 @@ export const Chart = () => {
     return () => {
       chart.dispose();
     };
-  }, [isLoading, isError]);
+  }, [isLoading, isError, themeMode]);
 
   if (isLoading) return <CircularProgress />;
   if (isError) return <Alert severity="error">{(error as AxiosError).message}</Alert>;
