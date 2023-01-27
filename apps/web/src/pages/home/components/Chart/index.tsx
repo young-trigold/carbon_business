@@ -3,11 +3,11 @@ import { useEffect, useRef } from 'react';
 import { EChartsOption } from 'echarts';
 import { useQuery } from 'react-query';
 import axios, { AxiosError } from 'axios';
-import { Alert, Box, Skeleton, styled } from '@mui/material';
+import { Alert, Box, Skeleton } from '@mui/material';
 import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
 import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
 import { useAppSelector } from '../../../../app/store';
-import { CarbonBusiness, carbonBusinessKeys } from 'types';
+import { CarbonBusiness, carbonBusinessKeys, formatNumber } from 'types';
 
 export const Chart = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
@@ -37,7 +37,7 @@ export const Chart = () => {
     });
     const option: EChartsOption = {
       grid: {
-        left: 80,
+        left: 75,
         top: 40,
         right: 15,
         bottom: 70,
@@ -65,8 +65,12 @@ export const Chart = () => {
         name: carbonBusinessKeys.get(queryKey),
         type: 'value',
         axisLabel: {
-          formatter: '{value}元',
-          // ...
+          formatter: (value: number) => {
+            if (queryKey.toLowerCase().includes('price')) return `${formatNumber(value)}元/吨`;
+            if (queryKey === 'amount') return `${formatNumber(value)}元`;
+            if (queryKey === 'volume') return `${formatNumber(value)}吨`;
+            return `${value}`;
+          },
         },
         axisLine: {
           symbol: ['none', 'arrow'],
@@ -113,7 +117,7 @@ export const Chart = () => {
     return () => {
       chart.dispose();
     };
-  }, [isLoading, isError, themeMode, data]);
+  }, [isLoading, isError, themeMode, ...checkedAgencies, queryKey, startDate, endDate]);
 
   if (isLoading) return <Skeleton variant="rounded" animation="wave" width={1000} height={700} />;
   if (isError) return <Alert severity="error">{(error as AxiosError).message}</Alert>;

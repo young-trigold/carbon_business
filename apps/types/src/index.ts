@@ -35,7 +35,17 @@ export const queryKeys = [
 ] as const;
 
 export const startDate = '2016-11-04';
-export const agencies = ['上海', '湖北', '深圳', '广州', '北京', '海峡','天津', '重庆'] as const;
+export const agencies = ['上海', '湖北', '深圳', '广州', '北京', '海峡', '天津', '重庆'] as const;
 
 export type AgenciesOfCarbonBusiness = typeof agencies[number];
 export type QueryKeyOfCarbonBusiness = typeof queryKeys[number];
+
+export const formatNumber = (number: number) => {
+  const numAsString = String(number);  // 数字大小
+  const [integerString] = numAsString.split('.');
+
+  const { length } = integerString;
+  if (length >= 9) return `${number / 10 ** 8}亿`;
+  if (length >= 5) return `${number / 10 ** 4}万`;
+  return number.toString();
+};
