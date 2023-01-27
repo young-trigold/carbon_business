@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import {
@@ -24,6 +24,7 @@ import {
   agencies,
   carbonBusinessKeys,
   queryKeys,
+  startDate,
 } from 'types';
 import { AgencyCheckBox } from './components/AgencyCheckBox';
 
@@ -35,15 +36,17 @@ export interface FormState {
 }
 
 export const Form = () => {
-  const { startDate, endDate, checkedAgencies, queryKey } = useAppSelector(
-    (state) => state.homePage,
+  const initialForm: FormState = useMemo(
+    () => ({
+      startDate: startDate,
+      endDate: dayjs().format('YYYY-MM-DD'),
+      checkedAgencies: ['上海', '湖北', '深圳', '广州'],
+      queryKey: 'averagePrice',
+    }),
+    [],
   );
-  const [form, setForm] = useState<FormState>({
-    startDate,
-    endDate,
-    checkedAgencies,
-    queryKey,
-  });
+
+  const [form, setForm] = useState<FormState>(initialForm);
 
   const onStartDateChange = (value: { $d: string }) => {
     setForm((preForm) => ({
@@ -68,7 +71,15 @@ export const Form = () => {
 
   const dispatch = useAppDispatch();
 
-  const onClick = () => {
+  const onReset = () => {
+    setForm(initialForm);
+    dispatch(setStartDate(form.startDate));
+    dispatch(setEndDate(form.endDate));
+    dispatch(setQueryKey(form.queryKey));
+    dispatch(setAgencies(form.checkedAgencies));
+  };
+
+  const onQuery = () => {
     dispatch(setStartDate(form.startDate));
     dispatch(setEndDate(form.endDate));
     dispatch(setQueryKey(form.queryKey));
@@ -125,9 +136,27 @@ export const Form = () => {
         </RadioGroup>
       </FormGroup>
 
-      <Button variant="contained" onClick={onClick}>
-        查询
-      </Button>
+      <Stack direction="row" spacing={2} justifyContent="space-around">
+        <Button
+          variant="contained"
+          onClick={onReset}
+          sx={{
+            flexGrow: 1,
+          }}
+          
+        >
+          重置
+        </Button>
+        <Button
+          variant="contained"
+          onClick={onQuery}
+          sx={{
+            flexGrow: 1,
+          }}
+        >
+          查询
+        </Button>
+      </Stack>
     </Stack>
   );
 };

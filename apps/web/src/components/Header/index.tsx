@@ -12,15 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {
-  FormControlLabel,
-  FormGroup,
-  Switch,
-  ToggleButton,
-  ToggleButtonGroup,
-} from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../app/store';
-import { ThemeMode, setThemeMode } from '../../app/store/themeMode';
+import { ToggleThemeButton } from './components/ToggleThemeButton';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -43,14 +35,6 @@ export const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const dispatch = useAppDispatch();
-
-  const onThemeModeChange = (event: React.MouseEvent, value: ThemeMode) => {
-    if (value) dispatch(setThemeMode(value));
-  };
-
-  const { themeMode } = useAppSelector((state) => state.themeMode);
 
   return (
     <AppBar position="static">
@@ -142,16 +126,8 @@ export const Header = () => {
             ))}
           </Box>
 
-          <Box sx={{ marginRight: '2em' }}>
-            <ToggleButtonGroup
-              value={themeMode}
-              exclusive
-              onChange={onThemeModeChange}
-            >
-              <ToggleButton value="light">白天</ToggleButton>
-              <ToggleButton value="dark">夜间</ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
+          <ToggleThemeButton />
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

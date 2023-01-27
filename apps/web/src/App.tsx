@@ -2,11 +2,13 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, GlobalStyles, Theme } from '@mui/material';
+import 'dayjs/locale/zh-cn';
 
 import { themes } from './app/theme/themes';
 import { useAppSelector } from './app/store';
 import { RouterPart } from './app/router';
+import { Styles } from './app/theme/styles';
 
 const client = new QueryClient({
   defaultOptions: {
@@ -26,8 +28,9 @@ const App = () => {
   return (
     <QueryClientProvider client={client}>
       <ThemeProvider theme={themes[themeMode]}>
-        <LocalizationProvider dateAdapter={AdapterDayjs} >
-          <CssBaseline />
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-cn">
+          <CssBaseline enableColorScheme />
+          <Styles />
           <RouterPart />
         </LocalizationProvider>
       </ThemeProvider>

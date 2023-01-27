@@ -15,7 +15,7 @@ export const HomePage = () => {
           padding: '1.5em 1em',
         }}
       >
-        <Chart />
+        <Chart width={1100} height={700}/>
         <Form />
       </Stack>
     </div>

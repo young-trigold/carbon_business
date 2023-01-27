@@ -9,7 +9,13 @@ import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type
 import { useAppSelector } from '../../../../app/store';
 import { CarbonBusiness, carbonBusinessKeys, formatNumber } from 'types';
 
-export const Chart = () => {
+interface ChartProps {
+  width: number;
+  height: number;
+}
+
+export const Chart: React.FC<ChartProps> = (props) => {
+  const { width, height } = props;
   const { themeMode } = useAppSelector((state) => state.themeMode);
   const { startDate, endDate, checkedAgencies, queryKey } = useAppSelector(
     (state) => state.homePage,
@@ -119,8 +125,19 @@ export const Chart = () => {
     };
   }, [isLoading, isError, themeMode, ...checkedAgencies, queryKey, startDate, endDate]);
 
-  if (isLoading) return <Skeleton variant="rounded" animation="wave" width={1000} height={700} />;
+  if (isLoading)
+    return (
+      <Skeleton
+        variant="rounded"
+        animation="wave"
+        width={width}
+        height={height}
+        sx={{
+          minWidth: width,
+        }}
+      />
+    );
   if (isError) return <Alert severity="error">{(error as AxiosError).message}</Alert>;
 
-  return <Box ref={chartContainerRef} width={1100} height={700} minWidth={1100}></Box>;
+  return <Box ref={chartContainerRef} width={width} height={height} minWidth={width}></Box>;
 };

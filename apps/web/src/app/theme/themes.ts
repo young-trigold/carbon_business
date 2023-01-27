@@ -1,29 +1,38 @@
-import { Theme, createTheme } from "@mui/material/styles";
+import { Theme, createTheme } from '@mui/material/styles';
 import { ThemeMode } from '../store/themeMode';
+import { zhCN } from '@mui/material/locale';
 
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    background: {
-      default: '#f4f5f5'
-    },
-    primary: {
-      main: '#1890ff'
+const lightTheme = createTheme(
+  {
+    palette: {
+      mode: 'light',
+      contrastThreshold: 4.5,
+      background: {
+        default: '#f4f5f5',
+      },
+      primary: {
+        main: '#1890ff',
+      },
     },
   },
-});
+  zhCN,
+);
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    background: {
-      default: '#1b1b1d'
+const darkTheme = createTheme(
+  {
+    palette: {
+      mode: 'dark',
+      contrastThreshold: 4.5,
+      background: {
+        default: '#1b1b1d',
+      },
+      primary: {
+        main: '#67d6ed',
+      },
     },
-    primary: {
-      main: '#67d6ed'
-    }
   },
-});
+  zhCN,
+);
 
 // const themes: Themes = {
 //   light: {
