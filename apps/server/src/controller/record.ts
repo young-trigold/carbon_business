@@ -1,7 +1,7 @@
 import { Record } from 'database';
 import { Request, Response } from 'express';
 import dayjs from 'dayjs';
-import { CarbonBusiness, QueryKeyOfCarbonBusiness } from 'types';
+import { CarbonBusiness, QueryKeyOfCarbonBusiness } from 'lib';
 
 export const getRecords = async (req: Request, res: Response) => {
   const { query } = req;

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
-import { AgenciesOfCarbonBusiness, QueryKeyOfCarbonBusiness, startDate } from 'types';
+import { AgenciesOfCarbonBusiness, QueryKeyOfCarbonBusiness, startDate } from 'lib';
 
 interface HomePageState {
   startDate: string;

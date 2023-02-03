@@ -7,7 +7,7 @@ import { Alert, Box, Skeleton } from '@mui/material';
 import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
 import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
 import { useAppSelector } from '../../../../app/store';
-import { CarbonBusiness, carbonBusinessKeys, formatNumber } from 'types';
+import { CarbonBusiness, carbonBusinessKeys, formatNumber } from 'lib';
 
 interface ChartProps {
   width: number;

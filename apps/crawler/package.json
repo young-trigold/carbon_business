@@ -13,6 +13,6 @@
   "dependencies": {
     "puppeteer-core": "^19.5.2",
     "database": "workspace: *",
-    "types": "workspace: *"
+    "lib": "workspace: *"
   }
 }

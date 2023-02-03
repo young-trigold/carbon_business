@@ -25,7 +25,7 @@ import {
   carbonBusinessKeys,
   queryKeys,
   startDate,
-} from 'types';
+} from 'lib';
 import { AgencyCheckBox } from './components/AgencyCheckBox';
 
 export interface FormState {

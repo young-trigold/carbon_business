@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import puppeteer from 'puppeteer-core';
 import { writeFile } from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
-import { CarbonBusiness } from 'types';
+import { CarbonBusiness } from 'lib';
 import { readFile, readdir, unlink } from 'fs/promises';
 
 class Crawler {
