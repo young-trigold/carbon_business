@@ -18,6 +18,7 @@ class Crawler {
   }
 
   async isSynced() {
+    this.time = dayjs().format('YYYY-MM-DD HH:mm');
     const getDateOfLatestDataInDatabase = async () => {
       const datesOfRecords = await Record.aggregate([
         { $group: { _id: '$date', records: { $push: '$$ROOT' }, count: { $sum: 1 } } },
