@@ -41,11 +41,17 @@ export type AgenciesOfCarbonBusiness = typeof agencies[number];
 export type QueryKeyOfCarbonBusiness = typeof queryKeys[number];
 
 export const formatNumber = (number: number) => {
-  const numAsString = String(number);  // 数字大小
+  const numAsString = String(number); // 数字大小
   const [integerString] = numAsString.split('.');
 
   const { length } = integerString;
   if (length >= 9) return `${number / 10 ** 8}亿`;
   if (length >= 5) return `${number / 10 ** 4}万`;
   return number.toString();
+};
+
+export const pipe = (...functions: ((arg: unknown) => void)[]) => {
+  return (arg: unknown) => {
+    return functions.reduce((result, func) => func(result), arg);
+  };
 };

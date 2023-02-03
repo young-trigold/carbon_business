@@ -123,7 +123,7 @@ export const Chart: React.FC<ChartProps> = (props) => {
     return () => {
       chart.dispose();
     };
-  }, [isLoading, isError, themeMode, ...checkedAgencies, queryKey, startDate, endDate]);
+  }, [isLoading, isError, themeMode, checkedAgencies, queryKey, startDate, endDate]);
 
   if (isLoading)
     return (

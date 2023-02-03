@@ -71,19 +71,16 @@ export const Form = () => {
 
   const dispatch = useAppDispatch();
 
-  const onReset = () => {
-    setForm(initialForm);
+  const onQuery = () => {
     dispatch(setStartDate(form.startDate));
     dispatch(setEndDate(form.endDate));
     dispatch(setQueryKey(form.queryKey));
     dispatch(setAgencies(form.checkedAgencies));
   };
 
-  const onQuery = () => {
-    dispatch(setStartDate(form.startDate));
-    dispatch(setEndDate(form.endDate));
-    dispatch(setQueryKey(form.queryKey));
-    dispatch(setAgencies(form.checkedAgencies));
+  const onReset = () => {
+    setForm(initialForm);
+    onQuery();
   };
 
   return (
@@ -143,7 +140,6 @@ export const Form = () => {
           sx={{
             flexGrow: 1,
           }}
-          
         >
           重置
         </Button>

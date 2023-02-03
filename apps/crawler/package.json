@@ -5,8 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "fetch": "tsc && node ./build/fetchData.js",
-    "insert": "tsc && node ./build/insertData.js"
+    "dev": "tsc && node ./build/main.js"
   },
   "keywords": [],
   "author": "trigold",

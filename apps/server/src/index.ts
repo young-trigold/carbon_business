@@ -27,5 +27,5 @@ server.get('/*', (_, res) => {
 
 const port = process.env.PORT;
 
-connectDataBase();
+connectDataBase('服务器');
 server.listen(port, () => log(`web 服务器进程已经监听在 localhost:${port}`));

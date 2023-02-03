@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-export const connectDataBase = async () => {
+export const connectDataBase = async (target: string) => {
+  mongoose.set('strictQuery', true);
   const dbUrl = 'mongodb://127.0.0.1:27017';
 
   const options = {
@@ -9,9 +10,9 @@ export const connectDataBase = async () => {
 
   try {
     mongoose.connect(dbUrl, options);
-    console.log('数据库连接成功!');
+    console.log(`${target}: 数据库连接成功`);
   } catch (error) {
-    console.error('数据库连接错误!');
+    console.error('数据库连接错误');
     console.error(error);
   }
 };

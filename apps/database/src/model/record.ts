@@ -16,34 +16,13 @@ const recordScheme = new Schema(
       type: String,
       required: true,
     },
-    startPrice: {
-      type: Number,
-      required: true,
-    },
-    endPrice: {
-      type: Number,
-      required: true,
-    },
-    minPrice: {
-      type: Number,
-      required: true,
-    },
-    maxPrice: {
-      type: Number,
-      required: true,
-    },
-    averagePrice: {
-      type: Number,
-      required: true,
-    },
-    volume: {
-      type: Number,
-      required: true,
-    },
-    amount: {
-      type: Number,
-      required: true,
-    },
+    startPrice: Number,
+    endPrice: Number,
+    minPrice: Number,
+    maxPrice: Number,
+    averagePrice: Number,
+    volume: Number,
+    amount: Number,
   },
   {
     timestamps: true,
@@ -59,4 +38,3 @@ const recordScheme = new Schema(
 );
 
 export const Record = mongoose.model('Record', recordScheme);
-
