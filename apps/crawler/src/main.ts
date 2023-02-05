@@ -1,6 +1,6 @@
 import { Record, connectDataBase } from 'database';
 import dayjs from 'dayjs';
-import puppeteer from 'puppeteer-core';
+import puppeteer, { Browser, Page } from 'puppeteer-core';
 import { writeFile } from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
 import { CarbonBusiness } from 'lib';
@@ -10,8 +10,8 @@ class Crawler {
   latestDateForDatabase: string = dayjs().format('YYYY-MM-DD');
   latestDateForTargetWebsite: string = dayjs().format('YYYY-MM-DD');
   time = dayjs().format('YYYY-MM-DD HH:mm');
-
-  constructor() {}
+  browser: Browser | null = null;
+  page: Page | null = null;
 
   async init() {
     await connectDataBase('爬虫');
@@ -36,20 +36,19 @@ class Crawler {
     };
 
     const getDateOfLatestDataInTargetWebsite = async () => {
-      const browser = await puppeteer.launch({
+      this.browser = await puppeteer.launch({
         executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
       });
-      const page = await browser.newPage();
+      this.page = await this.browser.newPage();
       const url = `https://ets.sceex.com.cn/internal.htm?orderby=tradeTime%20desc&pageSize=14&k=guo_nei_xing_qing&url=mrhq_gn&pageIndex=1`;
-      await page.goto(url, {
+      await this.page.goto(url, {
         waitUntil: 'domcontentloaded',
       });
       const tableRowSelector = '.tan_every_table tr';
-      const date = await page.$$eval(tableRowSelector, (trElements) => {
+      const date = await this.page.$$eval(tableRowSelector, (trElements) => {
         return trElements[1].children[0].textContent ?? dayjs().format('YYYY-DD-MM');
       });
       this.latestDateForTargetWebsite = date;
-      await browser.close();
       return date;
     };
 
@@ -81,39 +80,36 @@ class Crawler {
       }
     }
 
-    const browser = await puppeteer.launch({
-      executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    });
-
-    const page = await browser.newPage();
-
     const getDataByPageIndex = async (pageIndex: number) => {
       const url = `https://ets.sceex.com.cn/internal.htm?orderby=tradeTime%20desc&pageSize=14&k=guo_nei_xing_qing&url=mrhq_gn&pageIndex=${pageIndex}`;
-      await page.goto(url, {
+      await this.page?.goto(url, {
         waitUntil: 'domcontentloaded',
       });
 
       const tableRowSelector = '.tan_every_table tr';
-      const carbonBusinessDataByPageIndex = await page.$$eval(tableRowSelector, (trElements) => {
-        const trElementsWithoutThead = trElements.slice(1);
-        const result = trElementsWithoutThead.map((trElement) => {
-          const tdElements = [...trElement.children];
-          const eachData: CarbonBusiness = {
-            date: tdElements[0].textContent ?? '',
-            agency: tdElements[1].textContent ?? '',
-            type: tdElements[2].textContent ?? '',
-            startPrice: Number.parseFloat(tdElements[3].textContent ?? '0'),
-            endPrice: Number.parseFloat(tdElements[4].textContent ?? '0'),
-            minPrice: Number.parseFloat(tdElements[5].textContent ?? '0'),
-            maxPrice: Number.parseFloat(tdElements[6].textContent ?? '0'),
-            averagePrice: Number.parseFloat(tdElements[7].textContent ?? '0'),
-            volume: Number.parseFloat(tdElements[8].textContent ?? '0'),
-            amount: Number.parseFloat(tdElements[9].textContent ?? '0'),
-          };
-          return eachData;
-        });
-        return result;
-      });
+      const carbonBusinessDataByPageIndex = await this.page?.$$eval(
+        tableRowSelector,
+        (trElements) => {
+          const trElementsWithoutThead = trElements.slice(1);
+          const result = trElementsWithoutThead.map((trElement) => {
+            const tdElements = [...trElement.children];
+            const eachData: CarbonBusiness = {
+              date: tdElements[0].textContent ?? '',
+              agency: tdElements[1].textContent ?? '',
+              type: tdElements[2].textContent ?? '',
+              startPrice: Number.parseFloat(tdElements[3].textContent ?? '0'),
+              endPrice: Number.parseFloat(tdElements[4].textContent ?? '0'),
+              minPrice: Number.parseFloat(tdElements[5].textContent ?? '0'),
+              maxPrice: Number.parseFloat(tdElements[6].textContent ?? '0'),
+              averagePrice: Number.parseFloat(tdElements[7].textContent ?? '0'),
+              volume: Number.parseFloat(tdElements[8].textContent ?? '0'),
+              amount: Number.parseFloat(tdElements[9].textContent ?? '0'),
+            };
+            return eachData;
+          });
+          return result;
+        },
+      );
 
       return carbonBusinessDataByPageIndex;
     };
@@ -144,6 +140,7 @@ class Crawler {
       await sleep(getRandomNumber(600, 1200));
       console.log(`本次用时：${performance.now() - start} ms`);
       if (
+        !carbonBusinessDataByPageIndex ||
         carbonBusinessDataByPageIndex.length === 0 ||
         carbonBusinessDataByPageIndex.some(
           (record) =>
@@ -155,8 +152,6 @@ class Crawler {
       }
       pageIndex += 1;
     }
-
-    await browser.close();
   }
 
   async insertData() {
@@ -203,6 +198,7 @@ class Crawler {
       if (!(await this.isSynced())) {
         await this.fetchData();
         await this.insertData();
+        await this.browser?.close();
       }
     };
     await crawl();
