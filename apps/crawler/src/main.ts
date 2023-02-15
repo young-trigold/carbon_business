@@ -98,10 +98,10 @@ class Crawler {
               agency: tdElements[1].textContent ?? '',
               type: tdElements[2].textContent ?? '',
               startPrice: Number.parseFloat(tdElements[3].textContent ?? '0'),
-              endPrice: Number.parseFloat(tdElements[4].textContent ?? '0'),
+              maxPrice: Number.parseFloat(tdElements[4].textContent ?? '0'),
               minPrice: Number.parseFloat(tdElements[5].textContent ?? '0'),
-              maxPrice: Number.parseFloat(tdElements[6].textContent ?? '0'),
-              averagePrice: Number.parseFloat(tdElements[7].textContent ?? '0'),
+              averagePrice: Number.parseFloat(tdElements[6].textContent ?? '0'),
+              endPrice: Number.parseFloat(tdElements[7].textContent ?? '0'),
               volume: Number.parseFloat(tdElements[8].textContent ?? '0'),
               amount: Number.parseFloat(tdElements[9].textContent ?? '0'),
             };
