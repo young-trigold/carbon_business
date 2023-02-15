@@ -11,8 +11,10 @@
   "author": "trigold",
   "license": "ISC",
   "dependencies": {
-    "puppeteer-core": "^19.5.2",
     "database": "workspace: *",
-    "lib": "workspace: *"
+    "js-xlsx": "^0.8.22",
+    "lib": "workspace: *",
+    "puppeteer-core": "^19.5.2",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.2/xlsx-0.19.2.tgz"
   }
 }
