@@ -11,7 +11,7 @@ const lightTheme = createTheme(
         default: '#f4f5f5',
       },
       primary: {
-        main: '#1890ff',
+        main: '#66bb6a',
       },
     },
   },
@@ -27,7 +27,7 @@ const darkTheme = createTheme(
         default: '#1b1b1d',
       },
       primary: {
-        main: '#67d6ed',
+        main: '#388e3c',
       },
     },
   },

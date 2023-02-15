@@ -1,4 +1,14 @@
-import { Box, Button, ButtonGroup, Card, IconButton, Skeleton, Stack, styled } from '@mui/material';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  IconButton,
+  Skeleton,
+  Stack,
+  Typography,
+  styled,
+} from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -73,7 +83,7 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
       sx={{
         position: 'relative',
         margin: '1em',
-        padding: '2em',
+        padding: '0 2em',
         width: `${width}px`,
         height: `${height}px`,
       }}
@@ -157,8 +167,8 @@ export const HomeCarousel = () => {
     queryFn: getCarousel,
   });
 
-  const width = 900;
-  const height = 500;
+  const width = 800;
+  const height = 400;
 
   if (isLoading)
     return <Skeleton width={width} height={height} variant="rounded" animation="wave" />;
@@ -186,14 +196,15 @@ export const HomeCarousel = () => {
               padding: '1em',
             }}
           >
-            <h1>{title}</h1>
-            <p
+            <Typography variant="h5">{title}</Typography>
+            <Typography
+              variant="body2"
               style={{
                 textIndent: '2em',
               }}
             >
               <em>{description}</em>
-            </p>
+            </Typography>
           </figcaption>
         </div>
       );
