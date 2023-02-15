@@ -1,4 +1,13 @@
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Divider,
+  Stack,
+  Typography,
+  styled,
+} from '@mui/material';
 
 const list = Array.from({ length: 5 }).map(() => ({
   title: '《生物多样性公约》第十五次缔约方大会主席、生态环境',
@@ -19,18 +28,18 @@ const Info: React.FC<{
   const { title, subtitle, source, date, backgroundImgURL } = props;
 
   return (
-    <Box sx={{ margin: '1em 0' }}>
+    <Card
+      sx={{
+        margin: '1em 0',
+      }}
+    >
       <Stack direction="row">
-        <Box
-          width={400}
-          sx={{
-            borderRadius: '4px',
-            marginRight: '1em',
-            backgroundSize: 'cover',
-            backgroundImage: `url(${window.location.protocol}//${window.location.hostname}/${backgroundImgURL})`,
-          }}
-        ></Box>
-        <Box>
+        <CardMedia
+          component="img"
+          sx={{ width: '160px', borderRadius: '4px', margin: '1em' }}
+          image={`${window.location.protocol}//${window.location.hostname}/${backgroundImgURL}`}
+        />
+        <CardContent>
           <Stack>
             <Typography variant="h6">{title}</Typography>
             <Stack direction="row" spacing={2}>
@@ -39,16 +48,15 @@ const Info: React.FC<{
             </Stack>
             <Typography variant="body2">{subtitle}</Typography>
           </Stack>
-        </Box>
+        </CardContent>
       </Stack>
-      <Divider></Divider>
-    </Box>
+    </Card>
   );
 };
 
 export const InfoList = () => {
   return (
-    <Box>
+    <Box sx={{ margin: '1em 0' }}>
       <Typography variant="h5">新闻资讯</Typography>
       {list.map((data) => (
         <Info {...data}></Info>

@@ -3,6 +3,8 @@ import {
   Button,
   ButtonGroup,
   Card,
+  CardContent,
+  CardMedia,
   IconButton,
   Skeleton,
   Stack,
@@ -30,6 +32,7 @@ const SlideContainer = styled(Box)<{
   index: number;
   currentIndex: number;
 }>(({ index, currentIndex, width }) => ({
+  borderRadius: '4px',
   position: index === currentIndex ? 'unset' : 'absolute',
   left: 0,
   top: 0,
@@ -82,14 +85,13 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
     <Box
       sx={{
         position: 'relative',
-        margin: '1em',
-        padding: '0 2em',
+        margin: '1em 2em',
         width: `${width}px`,
         height: `${height}px`,
       }}
     >
-      <div
-        style={{
+      <Box
+        sx={{
           position: 'relative',
           width: '100%',
         }}
@@ -104,7 +106,7 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
             {slide}
           </SlideContainer>
         ))}
-      </div>
+      </Box>
 
       <IconButton
         onClick={onBack}
@@ -112,7 +114,9 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
           position: 'absolute',
           left: '0',
           top: '50%',
+          transform: 'translate(-100%, -100%)',
         }}
+        color="primary"
       >
         <ArrowBack></ArrowBack>
       </IconButton>
@@ -122,7 +126,9 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
           position: 'absolute',
           right: '0',
           top: '50%',
+          transform: 'translate(100%, -100%)',
         }}
+        color="primary"
       >
         <ArrowForward></ArrowForward>
       </IconButton>
@@ -177,36 +183,30 @@ export const HomeCarousel = () => {
     data?.slides?.map((slide) => {
       const { title, description, backgroundImgURL } = slide;
       return (
-        <div
-          style={{
-            width: '100%',
+        <Card
+          sx={{
             height: '100%',
             position: 'relative',
-            backgroundImage: `url(${window.location.protocol}//${window.location.hostname}/${backgroundImgURL})`,
-            backgroundSize: 'cover',
           }}
         >
-          <figcaption
-            style={{
-              width: '30%',
-              height: '100%',
+          <CardMedia
+            component="img"
+            image={`${window.location.protocol}//${window.location.hostname}/${backgroundImgURL}`}
+          />
+
+          <CardContent
+            sx={{
               position: 'absolute',
+              bottom: 0,
               right: 0,
               backgroundColor: 'rgba(0,0,0, 0.3)',
-              padding: '1em',
+              color: 'white'
             }}
           >
             <Typography variant="h5">{title}</Typography>
-            <Typography
-              variant="body2"
-              style={{
-                textIndent: '2em',
-              }}
-            >
-              <em>{description}</em>
-            </Typography>
-          </figcaption>
-        </div>
+            <Typography variant="body2">{description}</Typography>
+          </CardContent>
+        </Card>
       );
     }) ?? [];
 
