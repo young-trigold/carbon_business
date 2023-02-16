@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsc && node ./build/main.js"
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/main.js\""
   },
   "keywords": [],
   "author": "trigold",

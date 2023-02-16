@@ -11,6 +11,15 @@ export type CarbonBusiness = {
   amount: number;
 };
 
+export type Article = {
+  title: string;
+  subtitle: string;
+  source: string;
+  date: string;
+  backgroundImgURL: string;
+  link: string;
+}
+
 export const carbonBusinessKeys = new Map<keyof CarbonBusiness, string>([
   ['date', '交易日期'],
   ['agency', '交易机构'],

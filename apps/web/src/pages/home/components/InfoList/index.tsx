@@ -8,6 +8,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
+import { Article } from 'lib';
 
 const list = Array.from({ length: 5 }).map(() => ({
   title: '《生物多样性公约》第十五次缔约方大会主席、生态环境',
@@ -16,30 +17,25 @@ const list = Array.from({ length: 5 }).map(() => ({
   date: '2020-01-21',
   source: '人民网',
   backgroundImgURL: 'imgs/carousel_01.jpg',
+  link: '',
 }));
 
-const Info: React.FC<{
-  title: string;
-  subtitle: string;
-  source: string;
-  date: string;
-  backgroundImgURL: string;
-}> = (props) => {
+const Info: React.FC<Article> = (props) => {
   const { title, subtitle, source, date, backgroundImgURL } = props;
 
   return (
     <Card
       sx={{
-        margin: '1em 0',
+        margin: '0.5em 0',
       }}
     >
       <Stack direction="row">
         <CardMedia
           component="img"
-          sx={{ width: '160px', borderRadius: '4px', margin: '1em' }}
+          sx={{ width: '180px', padding: '0.5em' }}
           image={`${window.location.protocol}//${window.location.hostname}/${backgroundImgURL}`}
         />
-        <CardContent>
+        <CardContent sx={{ padding: '0.5em' }}>
           <Stack>
             <Typography variant="h6">{title}</Typography>
             <Stack direction="row" spacing={2}>
