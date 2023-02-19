@@ -77,7 +77,7 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
     return () => {
       return window.clearInterval(animation);
     };
-  }, []);
+  }, [onForward]);
 
   return (
     <Box

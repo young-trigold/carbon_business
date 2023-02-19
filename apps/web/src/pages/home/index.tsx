@@ -37,24 +37,26 @@ export const HomePage = () => {
         backgroundImgURL: string;
         description: string;
         title: string;
+        link: string;
       }[];
     }>('api/carousel');
     return res.data;
   };
 
-  const { data } = useQuery({
+  const { data: carousel } = useQuery({
     queryKey: 'carousel',
     queryFn: getCarousel,
   });
 
   const slides =
-    data?.slides?.map((slide) => {
-      const { title, description, backgroundImgURL } = slide;
+    carousel?.slides?.map((slide) => {
+      const { title, description, backgroundImgURL, link } = slide;
       return (
         <Card
           sx={{
             position: 'relative',
           }}
+          onClick={() => (window.location.href = link)}
         >
           <Box
             width="100%"
