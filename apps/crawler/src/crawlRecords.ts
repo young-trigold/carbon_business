@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import puppeteer, { Browser, Page } from 'puppeteer-core';
 import { writeFile } from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
-import { CarbonBusiness } from 'lib';
+import { CarbonBusiness, getRandomNumber, sleep } from 'lib';
 import { readFile, readdir, unlink } from 'fs/promises';
 
 class Crawler {
@@ -14,7 +14,7 @@ class Crawler {
   page: Page | null = null;
 
   async init() {
-    await connectDataBase('爬虫');
+    await connectDataBase('爬虫：record');
   }
 
   async isSynced() {
@@ -112,15 +112,6 @@ class Crawler {
       );
 
       return carbonBusinessDataByPageIndex;
-    };
-
-    const sleep = (time: number) =>
-      new Promise((f) => {
-        setTimeout(f, time);
-      });
-
-    const getRandomNumber = (start: number, end: number) => {
-      return Math.floor(Math.random() * (end - start + 1) + start);
     };
 
     let pageIndex = 1;

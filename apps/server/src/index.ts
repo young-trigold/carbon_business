@@ -7,6 +7,7 @@ import * as url from 'url';
 import { connectDataBase } from 'database';
 import { recordAPI } from './api/record.js';
 import { carouselAPI } from './api/carousel.js';
+import { articleAPI } from './api/article.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ server.use(express.static(path.join(__dirname, 'public')));
 server.use(express.static(path.join(__dirname, 'static')));
 server.use('/api', recordAPI);
 server.use('/api', carouselAPI);
+server.use('/api', articleAPI);
 server.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

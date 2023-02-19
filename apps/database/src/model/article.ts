@@ -20,10 +20,7 @@ const articleScheme = new Schema(
       type: String,
       required: true,
     },
-    subtitle: {
-      type: String,
-      required: true,
-    },
+    subtitle: String,
     backgroundImgURL: String,
     tag: String,
   },

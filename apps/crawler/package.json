@@ -5,7 +5,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/main.js\""
+    "dev": "tsc --watch",
+    "crawlRecords": "node build/crawlRecords.js",
+    "crawlArticles": "node build/crawlArticles.js"
   },
   "keywords": [],
   "author": "trigold",

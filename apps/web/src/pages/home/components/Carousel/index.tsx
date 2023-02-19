@@ -31,15 +31,13 @@ const Dot = styled('div')<{
 const SlideContainer = styled(Box)<{
   index: number;
   currentIndex: number;
-}>(({ index, currentIndex, width }) => ({
+}>(({ index, currentIndex }) => ({
   borderRadius: '4px',
   position: index === currentIndex ? 'unset' : 'absolute',
-  left: 0,
-  top: 0,
   opacity: index === currentIndex ? 1 : 0,
   transition: 'all 0.3s',
   color: 'white',
-  transform: index === currentIndex ? 'unset' : 'translateX(200px)',
+  transform: index === currentIndex ? 'unset' : 'translateX(-50%)'
 }));
 
 interface CarouselProps {
@@ -85,36 +83,27 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
     <Box
       sx={{
         position: 'relative',
-        margin: '1em 2em',
-        width: `${width}px`,
-        height: `${height}px`,
+        width: '900px',
+        height: '500px',
+        padding: '0 2em',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: '0 1em',
       }}
     >
-      <Box
-        sx={{
-          position: 'relative',
-          width: '100%',
-        }}
-      >
-        {...slides.map((slide, index) => (
-          <SlideContainer
-            index={index}
-            currentIndex={currentIndex}
-            width={width - 64}
-            height={height - 30}
-          >
-            {slide}
-          </SlideContainer>
-        ))}
-      </Box>
+      {...slides.map((slide, index) => (
+        <SlideContainer index={index} currentIndex={currentIndex} width={width} height={height}>
+          {slide}
+        </SlideContainer>
+      ))}
 
       <IconButton
         onClick={onBack}
         sx={{
           position: 'absolute',
           left: '0',
-          top: '50%',
-          transform: 'translate(-100%, -100%)',
+         
         }}
         color="primary"
       >
@@ -125,8 +114,6 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
         sx={{
           position: 'absolute',
           right: '0',
-          top: '50%',
-          transform: 'translate(100%, -100%)',
         }}
         color="primary"
       >
@@ -154,61 +141,4 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
       </Stack>
     </Box>
   );
-};
-
-export const HomeCarousel = () => {
-  const getCarousel = async () => {
-    const res = await axios.get<{
-      slides: {
-        backgroundImgURL: string;
-        description: string;
-        title: string;
-      }[];
-    }>('api/carousel');
-    return res.data;
-  };
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: 'carousel',
-    queryFn: getCarousel,
-  });
-
-  const width = 800;
-  const height = 400;
-
-  if (isLoading)
-    return <Skeleton width={width} height={height} variant="rounded" animation="wave" />;
-
-  const slides =
-    data?.slides?.map((slide) => {
-      const { title, description, backgroundImgURL } = slide;
-      return (
-        <Card
-          sx={{
-            height: '100%',
-            position: 'relative',
-          }}
-        >
-          <CardMedia
-            component="img"
-            image={`${window.location.protocol}//${window.location.hostname}/${backgroundImgURL}`}
-          />
-
-          <CardContent
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              backgroundColor: 'rgba(0,0,0, 0.3)',
-              color: 'white'
-            }}
-          >
-            <Typography variant="h5">{title}</Typography>
-            <Typography variant="body2">{description}</Typography>
-          </CardContent>
-        </Card>
-      );
-    }) ?? [];
-
-  return <Carousel width={width} height={height} slides={slides}></Carousel>;
 };

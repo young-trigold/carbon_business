@@ -18,7 +18,8 @@ export type Article = {
   date: string;
   backgroundImgURL: string;
   link: string;
-}
+  id: string;
+};
 
 export const carbonBusinessKeys = new Map<keyof CarbonBusiness, string>([
   ['date', '交易日期'],
@@ -63,4 +64,13 @@ export const pipe = (...functions: ((arg: unknown) => void)[]) => {
   return (arg: unknown) => {
     return functions.reduce((result, func) => func(result), arg);
   };
+};
+
+export const sleep = (time: number) =>
+  new Promise((f) => {
+    setTimeout(f, time);
+  });
+
+export const getRandomNumber = (start: number, end: number) => {
+  return Math.floor(Math.random() * (end - start + 1) + start);
 };
