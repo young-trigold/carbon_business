@@ -1,11 +1,11 @@
-import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
 import { Article } from 'lib';
 
 export const ArticleCard: React.FC<Article> = (props) => {
   const { title, subtitle, source, date, backgroundImgURL, link } = props;
 
   const onClick = () => {
-    window.location.href = link;
+    window.open(link);
   };
 
   return (
@@ -17,10 +17,13 @@ export const ArticleCard: React.FC<Article> = (props) => {
       onClick={onClick}
     >
       <Stack direction="row">
-        <CardMedia
-          component="img"
-          sx={{ width: '180px', padding: '0.5em' }}
-          image={`${backgroundImgURL}`}
+        <Box
+          width={350}
+          sx={{
+            padding: '0.5em',
+            backgroundImage: `url(${backgroundImgURL})`,
+            backgroundSize: 'cover',
+          }}
         />
         <CardContent sx={{ padding: '0.5em' }}>
           <Stack>

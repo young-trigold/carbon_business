@@ -49,7 +49,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
           sx={{
             position: 'relative',
           }}
-          onClick={() => (window.location.href = link)}
+          onClick={() => window.open(link)}
         >
           <Box
             width="100%"
@@ -75,5 +75,6 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
         </Card>
       );
     }) ?? [];
+
   return <Carousel width={width} height={height} slides={slides} />;
 };
