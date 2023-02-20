@@ -1,8 +1,11 @@
-import { GlobalStyles, Interpolation, Theme } from '@mui/material';
+import { GlobalStyles, Theme } from '@mui/material';
 
 export const Styles = () => {
   const styles = (theme: Theme) => {
     return {
+      '*': {
+        overflow: 'overlay',
+      },
       '::-webkit-scrollbar': {
         width: '6px',
         backgroundColor: 'transparent',

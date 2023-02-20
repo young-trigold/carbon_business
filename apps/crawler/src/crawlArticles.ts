@@ -1,10 +1,7 @@
-import { Article, Record, connectDataBase } from 'database';
+import { Article, connectDataBase } from 'database';
 import dayjs from 'dayjs';
-import puppeteer, { Browser, Page } from 'puppeteer-core';
-import { writeFile } from 'fs/promises';
-import { existsSync, mkdirSync } from 'fs';
-import { Article as ArticleType, CarbonBusiness, getRandomNumber, sleep } from 'lib';
-import { readFile, readdir, unlink } from 'fs/promises';
+import { Article as ArticleType, getRandomNumber, sleep } from 'lib';
+import puppeteer from 'puppeteer-core';
 
 await connectDataBase('爬虫：article');
 
@@ -26,7 +23,7 @@ const getArticlesByPageIndex = async (pageIndex: number) => {
   const articles = await page.$$eval(
     '.sx_content3_content_left > .sx_content3_content_left_ul1 > li > a',
     (linkElements) => {
-      const result: ArticleType[] = linkElements.map((linkElement) => {
+      const result: Omit<ArticleType, 'id'>[] = linkElements.map((linkElement) => {
         console.debug(linkElement.querySelector('p.wz_desc')?.textContent);
         return {
           title: linkElement.title.trim(),
