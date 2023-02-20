@@ -1,6 +1,6 @@
-import { AgenciesOfCarbonBusiness, agencies } from 'lib';
-import { FormState } from '../..';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import { AgenciesOfCarbonBusiness } from 'lib';
+import { FormState } from '../..';
 
 interface AgencyCheckBoxProps {
   agency: AgenciesOfCarbonBusiness;

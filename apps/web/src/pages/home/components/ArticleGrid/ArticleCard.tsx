@@ -1,17 +1,5 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Divider,
-  Skeleton,
-  Stack,
-  Typography,
-  styled,
-} from '@mui/material';
-import axios from 'axios';
+import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import { Article } from 'lib';
-import { useQuery } from 'react-query';
 
 export const ArticleCard: React.FC<Article> = (props) => {
   const { title, subtitle, source, date, backgroundImgURL, link } = props;

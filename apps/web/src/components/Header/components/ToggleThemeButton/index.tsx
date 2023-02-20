@@ -1,5 +1,5 @@
-import { Box, ToggleButton, ToggleButtonGroup, Tooltip, styled } from '@mui/material';
 import { DarkMode, LightMode } from '@mui/icons-material';
+import { Box, ToggleButton, ToggleButtonGroup, Tooltip, styled } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { ThemeMode, setThemeMode } from '../../../../app/store/themeMode';

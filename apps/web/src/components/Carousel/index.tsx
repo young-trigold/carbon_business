@@ -1,20 +1,6 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Skeleton,
-  Stack,
-  Typography,
-  styled,
-} from '@mui/material';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import { Box, IconButton, Stack, styled } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const Dot = styled('div')<{
   index: number;
@@ -37,7 +23,7 @@ const SlideContainer = styled(Box)<{
   opacity: index === currentIndex ? 1 : 0,
   transition: 'all 0.3s',
   color: 'white',
-  transform: index === currentIndex ? 'unset' : 'translateX(-50%)'
+  transform: index === currentIndex ? 'unset' : 'translateX(-50%)',
 }));
 
 interface CarouselProps {
@@ -83,8 +69,8 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
     <Box
       sx={{
         position: 'relative',
-        width: '900px',
-        height: '500px',
+        width: `${width}px`,
+        height: `${height}px`,
         padding: '0 2em',
         display: 'flex',
         alignItems: 'center',
@@ -93,7 +79,7 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
       }}
     >
       {...slides.map((slide, index) => (
-        <SlideContainer index={index} currentIndex={currentIndex} width={width} height={height}>
+        <SlideContainer index={index} currentIndex={currentIndex} width={width-100} height={height-100}>
           {slide}
         </SlideContainer>
       ))}
@@ -103,7 +89,6 @@ export const Carousel: React.FC<CarouselProps> = (props) => {
         sx={{
           position: 'absolute',
           left: '0',
-         
         }}
         color="primary"
       >

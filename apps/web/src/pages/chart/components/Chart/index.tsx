@@ -1,13 +1,13 @@
-import * as echarts from 'echarts';
-import { useEffect, useRef } from 'react';
-import { EChartsOption } from 'echarts';
-import { useQuery } from 'react-query';
-import axios, { AxiosError } from 'axios';
 import { Alert, Box, Skeleton } from '@mui/material';
-import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
-import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
-import { useAppSelector } from '../../../../app/store';
+import axios, { AxiosError } from 'axios';
+import * as echarts from 'echarts';
+import { EChartsOption } from 'echarts';
 import { CarbonBusiness, carbonBusinessKeys, formatNumber } from 'lib';
+import { useEffect, useRef } from 'react';
+import { useQuery } from 'react-query';
+import { useAppSelector } from '../../../../app/store';
+import chartDarkTheme from '../../../../app/theme/chart/dark.json' assert { type: 'json' };
+import chartLightTheme from '../../../../app/theme/chart/light.json' assert { type: 'json' };
 
 interface ChartProps {
   width: number;
