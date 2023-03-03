@@ -1,14 +1,14 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, GlobalStyles, Theme } from '@mui/material';
 import 'dayjs/locale/zh-cn';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import { themes } from './app/theme/themes';
-import { useAppSelector } from './app/store';
 import { RouterPart } from './app/router';
+import { useAppSelector } from './app/store';
 import { Styles } from './app/theme/styles';
+import { themes } from './app/theme/themes';
 
 const client = new QueryClient({
   defaultOptions: {

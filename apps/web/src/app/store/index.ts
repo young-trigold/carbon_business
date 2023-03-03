@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import themeModeReducer from './themeMode';
 import homePageReducer from './pages/home';
+import themeModeReducer from './themeMode';
 
 export const store = configureStore({
   reducer: {
     themeMode: themeModeReducer,
     homePage: homePageReducer,
-    // user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

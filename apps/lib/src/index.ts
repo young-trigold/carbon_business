@@ -2,13 +2,13 @@ export type CarbonBusiness = {
   date: string;
   agency: string;
   type: string;
-  startPrice: number;
-  endPrice: number;
-  minPrice: number;
-  maxPrice: number;
-  averagePrice: number;
-  volume: number;
-  amount: number;
+  startPrice?: number;
+  endPrice?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  averagePrice?: number;
+  volume?: number;
+  amount?: number;
 };
 
 export type Article = {
@@ -45,7 +45,17 @@ export const queryKeys = [
 ] as const;
 
 export const startDate = '2016-11-04';
-export const agencies = ['上海', '湖北', '深圳', '广州', '北京', '海峡', '天津', '重庆'] as const;
+export const agencies = [
+  '上海',
+  '湖北',
+  '深圳',
+  '广州',
+  '全国',
+  '北京',
+  '海峡',
+  '天津',
+  '重庆',
+] as const;
 
 export type AgenciesOfCarbonBusiness = typeof agencies[number];
 export type QueryKeyOfCarbonBusiness = typeof queryKeys[number];
