@@ -1,4 +1,4 @@
-import AdbIcon from '@mui/icons-material/Adb';
+import { Forest } from '@mui/icons-material';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -16,10 +16,10 @@ import { ToggleThemeButton } from './components/ToggleThemeButton';
 
 const pages = [
   { title: '碳交易面板', link: '/chart' },
-  { title: '碳金融', link: '' },
-  { title: '碳市场', link: ' ' },
-  { title: '碳足迹', link: '' },
-  { title: '政策法规', link: '' },
+  { title: '碳导航', link: 'https://navi.co2.press/' },
+  // { title: '碳市场', link: ' ' },
+  // { title: '碳足迹', link: '' },
+  // { title: '政策法规', link: '' },
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -40,7 +40,7 @@ export const Header = () => {
     <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Forest sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -58,17 +58,20 @@ export const Header = () => {
           >
             首页
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.title}
-                onClick={() => navigate(page.link)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.title}
-              </Button>
-            ))}
+            {[
+              ...pages.map((page) => (
+                <Button
+                  key={page.title}
+                  onClick={() =>
+                    page.link.startsWith('http') ? window.open(page.link) : navigate(page.link)
+                  }
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page.title}
+                </Button>
+              )),
+            ]}
           </Box>
 
           <ToggleThemeButton />

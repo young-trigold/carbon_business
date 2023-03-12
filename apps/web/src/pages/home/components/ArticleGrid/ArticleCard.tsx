@@ -13,6 +13,7 @@ export const ArticleCard: React.FC<Article> = (props) => {
       sx={{
         height: '160px',
         cursor: 'pointer',
+        margin: '0.5em 0'
       }}
       onClick={onClick}
     >

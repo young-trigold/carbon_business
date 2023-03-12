@@ -3,6 +3,10 @@ import { GlobalStyles, Theme } from '@mui/material';
 export const Styles = () => {
   const styles = (theme: Theme) => {
     return {
+      a: {
+        textDecoration: 'none',
+        color: "inherit",
+      },
       '::-webkit-scrollbar': {
         width: '6px',
         backgroundColor: 'transparent',
