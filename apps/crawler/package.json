@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
-    "crawlRecords": "node build/crawlRecords.js",
+    "crawlRecords": "start node build/crawlRecords.js & start node build/crawlRecordsOfChina.js",
+    "recordsToExcel": "node build/recordsToExcel.js",
     "crawlArticles": "node build/crawlArticles.js"
   },
   "keywords": [],

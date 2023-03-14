@@ -27,7 +27,7 @@ records = records.map((record) => {
 });
 
 const worksheet = XLSX.utils.json_to_sheet(records);
-console.debug(records.slice(0, 3));
 const workbook = XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(workbook, worksheet, 'Records');
-XLSX.writeFile(workbook, 'records1.xlsx');
+XLSX.writeFile(workbook, 'records.xlsx');
+console.log("已经成功转换!");
