@@ -46,6 +46,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
       const { title, description, backgroundImgURL, link } = slide;
       return (
         <Card
+          
           sx={{
             position: 'relative',
           }}

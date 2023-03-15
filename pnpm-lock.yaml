@@ -49,9 +49,9 @@ importers:
 
   apps/database:
     specifiers:
-      mongoose: ^6.8.4
+      mongoose: ^7.0.1
     dependencies:
-      mongoose: registry.npmmirror.com/mongoose/6.8.4
+      mongoose: registry.npmmirror.com/mongoose/7.0.1
 
   apps/lib:
     specifiers: {}
@@ -2310,7 +2310,7 @@ packages:
     name: '@types/connect'
     version: 3.4.35
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node/18.11.18
+      '@types/node': registry.npmmirror.com/@types/node/18.14.0
     dev: true
 
   registry.npmmirror.com/@types/cors/2.8.13:
@@ -2402,12 +2402,18 @@ packages:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.11.18.tgz}
     name: '@types/node'
     version: 18.11.18
+    dev: true
 
   registry.npmmirror.com/@types/node/18.14.0:
     resolution: {integrity: sha512-5EWrvLmglK+imbCJY0+INViFWUHg1AHel1sq4ZVSfdcNqGy9Edv3UB9IIzzg+xPaUcAgZYcfVs2fBcwDeZzU0A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.14.0.tgz}
     name: '@types/node'
     version: 18.14.0
-    dev: true
+
+  registry.npmmirror.com/@types/node/18.15.3:
+    resolution: {integrity: sha512-p6ua9zBxz5otCmbpb5D3U4B5Nanw6Pk3PPyX05xnxbB/fRv71N7CPmORg7uAD5P70T0xmx1pzAx/FUfa5X+3cw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.15.3.tgz}
+    name: '@types/node'
+    version: 18.15.3
+    dev: false
 
   registry.npmmirror.com/@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/parse-json/-/parse-json-4.0.0.tgz}
@@ -2531,7 +2537,7 @@ packages:
     name: '@types/whatwg-url'
     version: 8.2.2
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node/18.11.18
+      '@types/node': registry.npmmirror.com/@types/node/18.15.3
       '@types/webidl-conversions': registry.npmmirror.com/@types/webidl-conversions/7.0.0
     dev: false
 
@@ -2541,7 +2547,7 @@ packages:
     version: 2.10.0
     requiresBuild: true
     dependencies:
-      '@types/node': registry.npmmirror.com/@types/node/18.11.18
+      '@types/node': registry.npmmirror.com/@types/node/18.14.0
     dev: false
     optional: true
 
@@ -3078,6 +3084,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       buffer: registry.npmmirror.com/buffer/5.7.1
+    dev: false
+
+  registry.npmmirror.com/bson/5.0.1:
+    resolution: {integrity: sha512-y09gBGusgHtinMon/GVbv1J6FrXhnr/+6hqLlSmEFzkz6PodqF6TxjyvfvY3AfO+oG1mgUtbC86xSbOlwvM62Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bson/-/bson-5.0.1.tgz}
+    name: bson
+    version: 5.0.1
+    engines: {node: '>=14.20.1'}
     dev: false
 
   registry.npmmirror.com/buffer-crc32/0.2.13:
@@ -5368,6 +5381,30 @@ packages:
       - aws-crt
     dev: false
 
+  registry.npmmirror.com/mongodb/5.1.0:
+    resolution: {integrity: sha512-qgKb7y+EI90y4weY3z5+lIgm8wmexbonz0GalHkSElQXVKtRuwqXuhXKccyvIjXCJVy9qPV82zsinY0W1FBnJw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mongodb/-/mongodb-5.1.0.tgz}
+    name: mongodb
+    version: 5.1.0
+    engines: {node: '>=14.20.1'}
+    peerDependencies:
+      '@aws-sdk/credential-providers': ^3.201.0
+      mongodb-client-encryption: ^2.3.0
+      snappy: ^7.2.2
+    peerDependenciesMeta:
+      '@aws-sdk/credential-providers':
+        optional: true
+      mongodb-client-encryption:
+        optional: true
+      snappy:
+        optional: true
+    dependencies:
+      bson: registry.npmmirror.com/bson/5.0.1
+      mongodb-connection-string-url: registry.npmmirror.com/mongodb-connection-string-url/2.6.0
+      socks: registry.npmmirror.com/socks/2.7.1
+    optionalDependencies:
+      saslprep: registry.npmmirror.com/saslprep/1.0.3
+    dev: false
+
   registry.npmmirror.com/mongoose/6.8.4:
     resolution: {integrity: sha512-19Jk2hbSAPcM4u6ErW0UPwaSO2YfP/cXfBS9YEiNgNzZfXd+jkyemqJ+t2aflaicXeU4VdTP33pZYxqjk2hUYw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mongoose/-/mongoose-6.8.4.tgz}
     name: mongoose
@@ -5383,6 +5420,26 @@ packages:
       sift: registry.npmmirror.com/sift/16.0.1
     transitivePeerDependencies:
       - aws-crt
+      - supports-color
+    dev: false
+
+  registry.npmmirror.com/mongoose/7.0.1:
+    resolution: {integrity: sha512-fxm2bPRG457Hb8RLwN8cMCokK8HNem/7g+qp5SrHC7Pt4Z4jqn1+/3cuc8W7uqehKDWEtpirggI7uw08x2ZIjQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mongoose/-/mongoose-7.0.1.tgz}
+    name: mongoose
+    version: 7.0.1
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      bson: registry.npmmirror.com/bson/5.0.1
+      kareem: registry.npmmirror.com/kareem/2.5.1
+      mongodb: registry.npmmirror.com/mongodb/5.1.0
+      mpath: registry.npmmirror.com/mpath/0.9.0
+      mquery: registry.npmmirror.com/mquery/5.0.0
+      ms: registry.npmmirror.com/ms/2.1.3
+      sift: registry.npmmirror.com/sift/16.0.1
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - mongodb-client-encryption
+      - snappy
       - supports-color
     dev: false
 
@@ -5413,6 +5470,17 @@ packages:
     name: mquery
     version: 4.0.3
     engines: {node: '>=12.0.0'}
+    dependencies:
+      debug: registry.npmmirror.com/debug/4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  registry.npmmirror.com/mquery/5.0.0:
+    resolution: {integrity: sha512-iQMncpmEK8R8ncT8HJGsGc9Dsp8xcgYMVSbs5jgnm1lFHTZqMJTUWTDx1LBO8+mK3tPNZWFLBghQEIOULSTHZg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mquery/-/mquery-5.0.0.tgz}
+    name: mquery
+    version: 5.0.0
+    engines: {node: '>=14.0.0'}
     dependencies:
       debug: registry.npmmirror.com/debug/4.3.4
     transitivePeerDependencies:
@@ -5833,19 +5901,11 @@ packages:
       once: registry.npmmirror.com/once/1.4.0
     dev: false
 
-  registry.npmmirror.com/punycode/2.2.0:
-    resolution: {integrity: sha512-LN6QV1IJ9ZhxWTNdktaPClrNfp8xdSAYS0Zk2ddX7XsXZAxckMHPCBcHRo0cTcEIgYPRiGEkmji3Idkh2yFtYw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/punycode/-/punycode-2.2.0.tgz}
-    name: punycode
-    version: 2.2.0
-    engines: {node: '>=6'}
-    dev: false
-
   registry.npmmirror.com/punycode/2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/punycode/-/punycode-2.3.0.tgz}
     name: punycode
     version: 2.3.0
     engines: {node: '>=6'}
-    dev: true
 
   registry.npmmirror.com/puppeteer-core/19.5.2:
     resolution: {integrity: sha512-Rqk+3kqM+Z2deooTYqcYt8lRtGffJdifWa9td9nbJSjhANWsFouk8kLBNUKycewCCFHM8TZUKS0x28OllavW2A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/puppeteer-core/-/puppeteer-core-19.5.2.tgz}
@@ -6736,7 +6796,7 @@ packages:
     version: 3.0.0
     engines: {node: '>=12'}
     dependencies:
-      punycode: registry.npmmirror.com/punycode/2.2.0
+      punycode: registry.npmmirror.com/punycode/2.3.0
     dev: false
 
   registry.npmmirror.com/tree-kill/1.2.2:

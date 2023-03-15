@@ -24,6 +24,7 @@ const client = new QueryClient({
 
 const App = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
+  
 
   return (
     <QueryClientProvider client={client}>

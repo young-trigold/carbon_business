@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^6.8.4"
+    "mongoose": "^7.0.1"
   }
 }
