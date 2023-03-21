@@ -5,9 +5,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/zh-cn';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import { useEffect } from 'react';
 import { RouterPart } from './app/router';
 import { useAppDispatch, useAppSelector } from './app/store';
 import { setMessageVisible } from './app/store/message';
+import './app/store/watchedLocationStorage';
 import { Styles } from './app/theme/styles';
 import { themes } from './app/theme/themes';
 
@@ -26,7 +28,11 @@ const client = new QueryClient({
 const App = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
   const { visible, text, state } = useAppSelector((state) => state.message);
-  const dispatch = useAppDispatch(); 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    window.watchedLocalStorage.getItem('token');
+  }, []);
 
   return (
     <QueryClientProvider client={client}>
@@ -36,7 +42,7 @@ const App = () => {
           <Styles />
           <RouterPart />
           <Snackbar
-            autoHideDuration={6000}
+            autoHideDuration={4000}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             open={visible}
             onClose={() => {
