@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useAppSelector } from '../../../../app/store';
 
 const settings = ['后台管理', '退出登录'];
 
@@ -20,11 +21,13 @@ export const UserAvatar = () => {
     setAnchorElUser(null);
   };
 
+  const { userInfo } = useAppSelector((state) => state.user);
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="打开设置">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar alt={userInfo?.name ?? '游客'} src="/static/images/avatar/2.jpg" />
         </IconButton>
       </Tooltip>
       <Menu

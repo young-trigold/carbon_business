@@ -43,6 +43,7 @@ export const login = async (req: Request, res: Response) => {
           token: jwt.sign({ name, permission, avatarURL }, process.env.JWT_SECRET!, {
             expiresIn: '7d',
           }),
+          userInfo: { name, permission, avatarURL },
         });
       } else {
         res.status(401).json({ message: '密码不匹配!' });

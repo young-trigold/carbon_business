@@ -1,4 +1,4 @@
-import { CssBaseline } from '@mui/material';
+import { Alert, CssBaseline, Snackbar } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -6,7 +6,8 @@ import 'dayjs/locale/zh-cn';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { RouterPart } from './app/router';
-import { useAppSelector } from './app/store';
+import { useAppDispatch, useAppSelector } from './app/store';
+import { setMessageVisible } from './app/store/message';
 import { Styles } from './app/theme/styles';
 import { themes } from './app/theme/themes';
 
@@ -24,7 +25,8 @@ const client = new QueryClient({
 
 const App = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
-  
+  const { visible, text, state } = useAppSelector((state) => state.message);
+  const dispatch = useAppDispatch(); 
 
   return (
     <QueryClientProvider client={client}>
@@ -33,6 +35,24 @@ const App = () => {
           <CssBaseline enableColorScheme />
           <Styles />
           <RouterPart />
+          <Snackbar
+            autoHideDuration={6000}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            open={visible}
+            onClose={() => {
+              dispatch(setMessageVisible(false));
+            }}
+          >
+            <Alert
+              onClose={() => {
+                dispatch(setMessageVisible(false));
+              }}
+              severity={state}
+              sx={{ width: '100%' }}
+            >
+              {text}
+            </Alert>
+          </Snackbar>
         </LocalizationProvider>
       </ThemeProvider>
     </QueryClientProvider>
