@@ -14,10 +14,10 @@
   "author": "trigold",
   "license": "ISC",
   "dependencies": {
-    "database": "workspace: *",
+    "database": "workspace:^1.0.0",
     "js-xlsx": "^0.8.22",
-    "lib": "workspace: *",
-    "puppeteer-core": "^19.5.2",
+    "lib": "workspace:^1.0.0",
+    "puppeteer-core": "^19.7.5",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.2/xlsx-0.19.2.tgz"
   }
 }

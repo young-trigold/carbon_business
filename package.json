@@ -14,17 +14,17 @@
     "dayjs": "^1.11.7"
   },
   "devDependencies": {
-    "@types/node": "^18.14.0",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
+    "@types/node": "^18.15.5",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
     "concurrently": "^7.6.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.36.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.21",
     "typescript": "^4.9.5"
   }
 }
