@@ -11,10 +11,10 @@ export const InfoList = () => {
       return res.data;
     },
   });
+  const { palette } = useTheme();
 
   if (isLoading) return <Skeleton variant="rounded" animation="wave" width="400px" height="520px" />;
 
-  const { palette } = useTheme();
 
   return (
     <Box
@@ -28,6 +28,7 @@ export const InfoList = () => {
       <Typography variant="h6">新闻资讯</Typography>
       {articles?.map((article) => (
         <Stack
+          key={article.id}
           flexDirection="row"
           alignItems="center"
           sx={{

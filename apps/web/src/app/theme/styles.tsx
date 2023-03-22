@@ -4,21 +4,30 @@ export const Styles = () => {
   const styles = (theme: Theme) => {
     return {
       a: {
-        textDecoration: 'none',
+        textDecoration: `none`,
         color: "inherit",
+        transition: 'all 0.3s',
+
+        '&:hover': {
+          textDecoration: `underline wavy ${theme.palette.secondary.main}`,
+        }
       },
       '::-webkit-scrollbar': {
         width: '6px',
         backgroundColor: 'transparent',
-      },
 
-      '::-webkit-scrollbar:horizontal': {
-        height: '6px',
+        '&:horizontal': {
+          height: '6px',
+        },
       },
 
       '::-webkit-scrollbar-thumb': {
         borderRadius: '6.4px',
         backgroundColor: theme.palette.primary.main,
+
+        '&:hover': {
+          backgroundColor: theme.palette.secondary.main,
+        }
       },
 
       // ===============================================选择文字========================================

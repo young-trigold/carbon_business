@@ -1,5 +1,5 @@
 import { Forest } from '@mui/icons-material';
-import { Stack } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -26,7 +26,10 @@ export const Header = () => {
   const { hasLogin, userInfo } = user;
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{
+      filter: 'opacity(0.7)',
+      backdropFilter: 'blur(10px)',
+    }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Stack

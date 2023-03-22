@@ -29,6 +29,9 @@ const client = new QueryClient({
 const App = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
   const { visible, text, state } = useAppSelector((state) => state.message);
+
+  console.debug(visible);
+
   const { hasLogin } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
