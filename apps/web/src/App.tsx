@@ -10,6 +10,7 @@ import { RouterPart } from './app/router';
 import { useAppDispatch, useAppSelector } from './app/store';
 import { setMessageVisible } from './app/store/message';
 import './app/store/watchedLocationStorage';
+import { getUserInfo } from './app/store/watchedLocationStorage';
 import { Styles } from './app/theme/styles';
 import { themes } from './app/theme/themes';
 
@@ -28,11 +29,15 @@ const client = new QueryClient({
 const App = () => {
   const { themeMode } = useAppSelector((state) => state.themeMode);
   const { visible, text, state } = useAppSelector((state) => state.message);
+  const { hasLogin } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    window.watchedLocalStorage.getItem('token');
-  }, []);
+    const value = window.watchedLocalStorage.getItem('token');
+    if (typeof value === 'string' && !hasLogin) {
+      getUserInfo(value);
+    }
+  }, [hasLogin]);
 
   return (
     <QueryClientProvider client={client}>

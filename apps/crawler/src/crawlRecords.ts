@@ -24,6 +24,7 @@ class Crawler {
     this.#time = dayjs().format('YYYY-MM-DD HH:mm');
     const getDateOfLatestDataInDatabase = async () => {
       const datesOfRecords = await Record.aggregate([
+        { $match: { agency: { $ne: '全国' } } },
         { $group: { _id: '$date', records: { $push: '$$ROOT' }, count: { $sum: 1 } } },
         { $sort: { _id: -1 } },
         {
@@ -33,6 +34,7 @@ class Crawler {
           },
         },
       ]);
+      console.debug(datesOfRecords[0]);
       const date = datesOfRecords[0].date as string;
       this.#latestDateForDatabase = date;
       return date;

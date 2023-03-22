@@ -162,7 +162,7 @@ export const LoginButton = () => {
   );
 
   return (
-    <Box>
+    <>
       <Button
         sx={{
           color: 'inherit',
@@ -171,9 +171,10 @@ export const LoginButton = () => {
       >
         登录/注册
       </Button>
-      <Dialog maxWidth="sm" fullWidth open={modalVisible} onClose={closeModal}>
+
+      <Dialog maxWidth={false} open={modalVisible} onClose={closeModal}>
         {logging ? (
-          <>
+          <Box component="form" width={500}>
             <DialogTitle>请登录</DialogTitle>
             <DialogContent>
               {nameField}
@@ -194,9 +195,9 @@ export const LoginButton = () => {
                 登录
               </Button>
             </DialogActions>
-          </>
+          </Box>
         ) : (
-          <>
+          <Box component="form" width={500}>
             <DialogTitle>请注册</DialogTitle>
             <DialogContent>
               {nameField}
@@ -215,9 +216,9 @@ export const LoginButton = () => {
                 注册
               </Button>
             </DialogActions>
-          </>
+          </Box>
         )}
       </Dialog>
-    </Box>
+    </>
   );
 };

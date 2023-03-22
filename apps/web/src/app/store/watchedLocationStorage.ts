@@ -3,7 +3,7 @@ import { store } from '.';
 import { setMessageState } from './message';
 import { UserState, setIsLogin, setUserInfo } from './user';
 
-const getUserInfo = async (token: string) => {
+export const getUserInfo = async (token: string) => {
   try {
     const res = await axios.get<UserState['userInfo']>('/api/auth', {
       headers: {
@@ -51,11 +51,6 @@ if (typeof token === 'string') {
 export const watchedLocalStorage = {
   getItem(key: string) {
     const value = window.localStorage.getItem(key);
-    if (key === 'token') {
-      if (typeof value === 'string') {
-        getUserInfo(value);
-      }
-    }
     return value;
   },
   setItem(key: string, value: string) {

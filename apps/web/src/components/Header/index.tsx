@@ -1,4 +1,5 @@
 import { Forest } from '@mui/icons-material';
+import { Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,9 +15,9 @@ import { UserAvatar } from './components/UserAvatar';
 const pages = [
   { title: '碳交易面板', link: '/chart' },
   { title: '碳导航', link: 'https://navi.co2.press/' },
-  // { title: '碳市场', link: ' ' },
-  // { title: '碳足迹', link: '' },
-  // { title: '政策法规', link: '' },
+  { title: '碳市场', link: ' ' },
+  { title: '碳足迹', link: '' },
+  { title: '政策法规', link: '' },
 ];
 
 export const Header = () => {
@@ -28,24 +29,35 @@ export const Header = () => {
     <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Forest sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
+          <Stack
+            onClick={() => {
+              navigate('/');
+            }}
+            flexDirection="row"
+            alignItems="center"
             sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              cursor: 'pointer',
             }}
           >
-            首页
-          </Typography>
+            <Forest sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              首页
+            </Typography>
+          </Stack>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {[
               ...pages.map((page) => (
