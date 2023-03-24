@@ -1,40 +1,30 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
-import { AgenciesOfCarbonBusiness, QueryKeyOfCarbonBusiness, startDate } from 'lib';
 
 interface HomePageState {
-  startDate: string;
-  endDate: string;
-  checkedAgencies: AgenciesOfCarbonBusiness[];
-  queryKey: QueryKeyOfCarbonBusiness;
+  articleCurPage: number;
+  pageSize: number;
+  totalPageCount: number;
 }
 
 const initialState: HomePageState = {
-  startDate: startDate,
-  endDate: dayjs().format('YYYY-MM-DD'),
-  checkedAgencies: ['上海', '湖北', '深圳', '广州'],
-  queryKey: 'averagePrice',
+  articleCurPage: 0,
+  pageSize: 10,
+  totalPageCount: 0,
 };
 
 const homePageSlice = createSlice({
   name: 'homePage',
   initialState,
   reducers: {
-    setStartDate(state, action: PayloadAction<string>) {
-      state.startDate = action.payload;
+    setArticleCurPage(state, action: PayloadAction<number>) {
+      state.articleCurPage = action.payload;
     },
-    setEndDate(state, action: PayloadAction<string>) {
-      state.endDate = action.payload;
-    },
-    setAgencies(state, action: PayloadAction<AgenciesOfCarbonBusiness[]>) {
-      state.checkedAgencies = action.payload;
-    },
-    setQueryKey(state, action: PayloadAction<QueryKeyOfCarbonBusiness>) {
-      state.queryKey = action.payload;
+    setTotalPageCount(state, action: PayloadAction<number>) {
+      state.totalPageCount = action.payload;
     },
   },
 });
 
-export const { setStartDate, setEndDate, setAgencies, setQueryKey } = homePageSlice.actions;
+export const { setArticleCurPage, setTotalPageCount } = homePageSlice.actions;
 
 export default homePageSlice.reducer;

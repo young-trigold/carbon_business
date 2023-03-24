@@ -18,7 +18,7 @@ export type Article = {
   date: string;
   backgroundImgURL: string;
   link: string;
-  id: string;
+  _id: string;
 };
 
 export const carbonBusinessKeys = new Map<keyof CarbonBusiness, string>([

@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import messageReducer from './message';
+import chartPageReducer from './pages/chart';
 import homePageReducer from './pages/home';
 import themeModeReducer from './themeMode';
 import userReducer from './user';
-import messageReducer from './message';
 
 export const store = configureStore({
   reducer: {
     themeMode: themeModeReducer,
+    chartPage: chartPageReducer,
     homePage: homePageReducer,
     user: userReducer,
-    message: messageReducer, 
+    message: messageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

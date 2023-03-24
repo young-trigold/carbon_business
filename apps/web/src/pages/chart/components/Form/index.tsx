@@ -25,7 +25,7 @@ import {
   setEndDate,
   setQueryKey,
   setStartDate,
-} from '../../../../app/store/pages/home';
+} from '../../../../app/store/pages/chart';
 import { AgencyCheckBox } from './components/AgencyCheckBox';
 
 export interface FormState {

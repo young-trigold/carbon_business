@@ -18,7 +18,7 @@ export const Chart: React.FC<ChartProps> = (props) => {
   const { width, height } = props;
   const { themeMode } = useAppSelector((state) => state.themeMode);
   const { startDate, endDate, checkedAgencies, queryKey } = useAppSelector(
-    (state) => state.homePage,
+    (state) => state.chartPage,
   );
 
   const queryFn = async () => {
