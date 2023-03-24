@@ -1,9 +1,8 @@
-import { Box, MenuItem, MenuList, Stack } from '@mui/material';
+import { Box, MenuItem, MenuList, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { setMessageState } from '../../app/store/message';
-import { Header } from '../../components/Header';
 import { ArticleAdminBody } from './components/ArticleAdminBody';
 import { RecordAdminBody } from './components/RecordAdminBody';
 
@@ -23,35 +22,43 @@ export const AdminPage: React.FC = () => {
   const { hasLogin, userInfo } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
+  const { palette } = useTheme();
+
   if (!hasLogin || userInfo?.permission !== 'admin') {
     dispatch(setMessageState({ visible: true, text: '身份信息不匹配', state: 'error' }));
     return <Navigate to="/" />;
   }
 
   return (
-    <Box>
-      <Header />
-      <Stack
-        flexDirection="row"
+    <Box
+      width="100vw"
+      height="100vh"
+      sx={{
+        display: 'flex',
+      }}
+    >
+      <MenuList
         sx={{
-          width: '100vw',
+          position: 'sticky',
+          top: 0,
+          height: 'fit-content',
         }}
       >
-        <MenuList>
-          {options.map((option) => (
-            <MenuItem
-              onClick={() => setCurrentBodyIndex(option.bodyIndex)}
-              key={option.text}
-              sx={{
-                padding: '1em',
-              }}
-            >
-              {option.text}
-            </MenuItem>
-          ))}
-        </MenuList>
-        {bodies[currentBodyIndex]}
-      </Stack>
+        {options.map((option, index) => (
+          <MenuItem
+            onClick={() => setCurrentBodyIndex(option.bodyIndex)}
+            key={option.text}
+            sx={{
+              padding: '1em',
+              backgroundColor: currentBodyIndex === index ? palette.primary.main : 'unset',
+            }}
+          >
+            {option.text}
+          </MenuItem>
+        ))}
+      </MenuList>
+
+      {bodies[currentBodyIndex]}
     </Box>
   );
 };
