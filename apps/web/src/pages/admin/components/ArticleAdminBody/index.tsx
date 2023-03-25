@@ -7,13 +7,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  useTheme,
 } from '@mui/material';
 import axios from 'axios';
 import { Article } from 'lib';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useAppSelector } from '../../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../../app/store';
+import { setTotalPageCount } from '../../../../app/store/pages/admin';
+import { AddArticle } from './AddArticle';
 import { ArticleRow } from './ArticleRow';
+import { PageController } from './PageController';
 
 export const ArticleAdminBody = () => {
   const { articleCurPage, pageSize } = useAppSelector(
@@ -37,7 +40,12 @@ export const ArticleAdminBody = () => {
     },
   });
 
-  const { palette } = useTheme();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isLoading) return;
+    dispatch(setTotalPageCount(data?.totalPageCount ?? 0));
+  }, [isLoading]);
 
   if (isLoading)
     return <Skeleton variant="rounded" animation="wave" width="100%" height="1000px" />;
@@ -69,10 +77,12 @@ export const ArticleAdminBody = () => {
         </TableHead>
         <TableBody>
           {data?.articles?.map((article) => (
-            <ArticleRow article={article}></ArticleRow>
+            <ArticleRow key={article._id} article={article}></ArticleRow>
           ))}
         </TableBody>
       </Table>
+      <PageController />
+      <AddArticle />
     </TableContainer>
   );
 };

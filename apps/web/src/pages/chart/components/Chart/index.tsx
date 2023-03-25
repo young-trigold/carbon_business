@@ -22,7 +22,7 @@ export const Chart: React.FC<ChartProps> = (props) => {
   );
 
   const queryFn = async () => {
-    const res = await axios.get<CarbonBusiness[]>(
+    const res = await axios.get(
       `/api/records?checkedAgencies=${checkedAgencies.toString()}&key=${queryKey}&startDate=${startDate}&endDate=${endDate}`,
     );
     return res.data;

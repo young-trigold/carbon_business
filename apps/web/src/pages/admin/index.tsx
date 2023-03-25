@@ -6,7 +6,6 @@ import { setMessageState } from '../../app/store/message';
 import { ArticleAdminBody } from './components/ArticleAdminBody';
 import { RecordAdminBody } from './components/RecordAdminBody';
 
-const bodies = [<ArticleAdminBody></ArticleAdminBody>, <RecordAdminBody></RecordAdminBody>];
 const options = [
   { text: '文章管理', bodyIndex: 0 },
   { text: '数据管理', bodyIndex: 1 },
@@ -14,18 +13,14 @@ const options = [
 ];
 
 export const AdminPage: React.FC = () => {
-  // const {} = useQuery({
-
-  // });
+  const bodies = [<ArticleAdminBody />, <RecordAdminBody />];
   const [currentBodyIndex, setCurrentBodyIndex] = useState(0);
-
   const { hasLogin, userInfo } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-
   const { palette } = useTheme();
 
   if (!hasLogin || userInfo?.permission !== 'admin') {
-    dispatch(setMessageState({ visible: true, text: '身份信息不匹配', state: 'error' }));
+    dispatch(setMessageState({ visible: true, text: '身份信息不匹配', state: 'warning' }));
     return <Navigate to="/" />;
   }
 

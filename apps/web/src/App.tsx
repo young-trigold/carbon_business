@@ -14,7 +14,7 @@ import { getUserInfo } from './app/store/watchedLocationStorage';
 import { Styles } from './app/theme/styles';
 import { themes } from './app/theme/themes';
 
-const client = new QueryClient({
+export const client = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,

@@ -10,9 +10,14 @@ import {
   TextField,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
+import axios from 'axios';
 import dayjs from 'dayjs';
 import { Article } from 'lib';
 import { useMemo, useState } from 'react';
+import { useMutation } from 'react-query';
+import { client } from '../../../../../App';
+import { useAppDispatch, useAppSelector } from '../../../../../app/store';
+import { setMessageState } from '../../../../../app/store/message';
 
 interface ArticleRowProps {
   article: Article;
@@ -67,9 +72,70 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
     }));
   };
 
-  const updateArticle = () => {};
+  const dispatch = useAppDispatch();
 
-  const deleteArticle = () => {};
+  const { articleCurPage, pageSize } = useAppSelector(
+    (state) => state.adminPage.bodies.articleBody,
+  );
+
+  const { mutate: updateArticle } = useMutation(
+    (articleId: string) => {
+      return axios.put(`/api/articles/${articleId}`, formState, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      });
+    },
+    {
+      onMutate(variables) {
+        dispatch(setMessageState({ visible: true, text: '正在更新...', state: 'info' }));
+      },
+      onError(error, variables, context) {
+        dispatch(setMessageState({ visible: true, text: '更新失败!', state: 'error' }));
+      },
+      onSuccess(data, variables, context) {
+        client.setQueryData<{
+          articles: Article[];
+          totalPageCount: number;
+        }>(['articles', articleCurPage, pageSize], (pre) => ({
+          ...pre!,
+          articles: pre!.articles.map((preArticle) => {
+            if (preArticle._id === article._id) return { ...preArticle, ...formState };
+            return preArticle;
+          }),
+        }));
+        dispatch(setMessageState({ visible: true, text: '更新成功!', state: 'success' }));
+      },
+    },
+  );
+
+  const { mutate: deleteArticle } = useMutation(
+    (articleId: string) => {
+      return axios.delete(`/api/articles/${articleId}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      });
+    },
+    {
+      onMutate(variables) {
+        dispatch(setMessageState({ state: 'info', visible: true, text: '正在删除...' }));
+      },
+      onError(error, variables, context) {
+        dispatch(setMessageState({ state: 'error', visible: true, text: '删除失败!' }));
+      },
+      onSuccess(data, variables, context) {
+        client.setQueryData<{
+          articles: Article[];
+          totalPageCount: number;
+        }>(['articles', articleCurPage, pageSize], (pre) => ({
+          ...pre!,
+          articles: pre!.articles.filter((preArticle) => preArticle._id !== article._id),
+        }));
+        dispatch(setMessageState({ state: 'success', visible: true, text: '删除成功!' }));
+      },
+    },
+  );
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
@@ -135,7 +201,13 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
           删除
         </Button>
 
-        <Button variant="outlined" onClick={updateArticle}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            updateArticle(article._id);
+          }}
+          disabled={JSON.stringify(initialFormState) === JSON.stringify(formState)}
+        >
           更新
         </Button>
       </TableCell>
@@ -146,7 +218,13 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         </Box>
         <DialogActions>
           <Button onClick={closeModal}>取消</Button>
-          <Button onClick={deleteArticle}>确定</Button>
+          <Button
+            onClick={() => {
+              deleteArticle(article._id);
+            }}
+          >
+            确定
+          </Button>
         </DialogActions>
       </Dialog>
     </TableRow>
