@@ -78,6 +78,12 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
     (state) => state.adminPage.bodies.articleBody,
   );
 
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
+  const closeModal = () => {
+    setDeleteModalVisible(false);
+  };
+
   const { mutate: updateArticle } = useMutation(
     (articleId: string) => {
       return axios.put(`/api/articles/${articleId}`, formState, {
@@ -128,20 +134,19 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', articleCurPage, pageSize], (pre) => ({
-          ...pre!,
-          articles: pre!.articles.filter((preArticle) => preArticle.id !== article.id),
-        }));
+        }>(['articles', articleCurPage, pageSize], (pre) => {
+          return ({
+            ...pre!,
+            articles: pre!.articles.filter((preArticle) => preArticle.id !== article.id),
+          });
+        } );
         dispatch(setMessageState({ state: 'success', visible: true, text: '删除成功!' }));
+        closeModal();
       },
     },
   );
 
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-
-  const closeModal = () => {
-    setDeleteModalVisible(false);
-  };
+  
 
   return (
     <TableRow key={article.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>

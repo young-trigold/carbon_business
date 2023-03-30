@@ -4,9 +4,10 @@ import { Article } from 'lib';
 import { useQuery } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { setMessageState } from '../../../../app/store/message';
-import { setTotalPageCount } from '../../../../app/store/pages/home';
+import { setTotalPageCount as setTotalPageCountForHome} from '../../../../app/store/pages/home';
 import { ArticleCard } from './ArticleCard';
 import { PageController } from './PageController';
+import { setTotalPageCount as setTotalPageCountForAdmin} from '../../../../app/store/pages/admin';
 
 export const ArticleGrid = () => {
   const { articleCurPage, pageSize } = useAppSelector((state) => state.homePage);
@@ -31,7 +32,8 @@ export const ArticleGrid = () => {
       dispatch(setMessageState({ visible: true, text: '请求失败，刷新重试!', state: 'error' }));
     },
     onSuccess(data) {
-      dispatch(setTotalPageCount(data?.totalPageCount ?? 0));
+      dispatch(setTotalPageCountForHome(data?.totalPageCount ?? 0));
+      dispatch(setTotalPageCountForAdmin(data?.totalPageCount ?? 0));
     },
   });
 

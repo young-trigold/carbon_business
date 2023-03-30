@@ -79,10 +79,13 @@ export const AddArticle = () => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', articleCurPage, pageSize], (pre) => ({
-          ...pre!,
-          articles: [data.newArticle, ...(pre?.articles ?? [])],
-        }));
+        }>(['articles', articleCurPage, pageSize], (pre) => {
+          
+          return ({
+            ...pre!,
+            articles: [data.newArticle, ...(pre?.articles ?? [])],
+          });
+        } );
       },
     },
   );

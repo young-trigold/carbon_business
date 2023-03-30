@@ -10,15 +10,16 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { Article } from 'lib';
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
-import { setTotalPageCount } from '../../../../app/store/pages/admin';
+import { setTotalPageCount as setTotalPageCountForAdmin} from '../../../../app/store/pages/admin';
 import { AddArticle } from './AddArticle';
 import { ArticleRow } from './ArticleRow';
 import { PageController } from './PageController';
+import { setTotalPageCount as setTotalPageCountForHome } from '../../../../app/store/pages/home';
 
 export const ArticleAdminBody = () => {
+  const dispatch = useAppDispatch();
   const { articleCurPage, pageSize } = useAppSelector(
     (state) => state.adminPage.bodies.articleBody,
   );
@@ -38,14 +39,11 @@ export const ArticleAdminBody = () => {
       }>(`/api/articles?${searchParamsAsStr}`);
       return res.data;
     },
+    onSuccess(data) {
+      dispatch(setTotalPageCountForHome(data?.totalPageCount ?? 0));
+      dispatch(setTotalPageCountForAdmin(data?.totalPageCount ?? 0));
+    },
   });
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isLoading) return;
-    dispatch(setTotalPageCount(data?.totalPageCount ?? 0));
-  }, [isLoading]);
 
   if (isLoading)
     return <Skeleton variant="rounded" animation="wave" width="100%" height="1000px" />;
@@ -77,7 +75,7 @@ export const ArticleAdminBody = () => {
         </TableHead>
         <TableBody>
           {data?.articles?.map((article) => (
-            <ArticleRow key={article._id} article={article}></ArticleRow>
+            <ArticleRow key={article.id} article={article}></ArticleRow>
           ))}
         </TableBody>
       </Table>
