@@ -15,7 +15,6 @@ export const InfoList = () => {
 
   if (isLoading) return <Skeleton variant="rounded" animation="wave" width="400px" height="520px" />;
 
-
   return (
     <Box
       sx={{

@@ -9,6 +9,7 @@ import { recordAPI } from './api/record.js';
 import { carouselAPI } from './api/carousel.js';
 import { articleAPI } from './api/article.js';
 import { userApi } from './api/user.js';
+import uploadAPI from './api/upload.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ server.use('/api', recordAPI);
 server.use('/api', carouselAPI);
 server.use('/api', articleAPI);
 server.use('/api', userApi);
+server.use('/api', uploadAPI);
 server.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

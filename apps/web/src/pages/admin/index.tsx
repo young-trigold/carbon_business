@@ -2,7 +2,6 @@ import { Box, MenuItem, MenuList, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/store';
-import { setMessageState } from '../../app/store/message';
 import { ArticleAdminBody } from './components/ArticleAdminBody';
 import { RecordAdminBody } from './components/RecordAdminBody';
 
@@ -19,10 +18,7 @@ export const AdminPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { palette } = useTheme();
 
-  if (!hasLogin || userInfo?.permission !== 'admin') {
-    dispatch(setMessageState({ visible: true, text: '身份信息不匹配', state: 'warning' }));
-    return <Navigate to="/" />;
-  }
+  if (!hasLogin || userInfo?.permission !== 'admin') return <Navigate to="/" />;
 
   return (
     <Box

@@ -100,7 +100,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         }>(['articles', articleCurPage, pageSize], (pre) => ({
           ...pre!,
           articles: pre!.articles.map((preArticle) => {
-            if (preArticle._id === article._id) return { ...preArticle, ...formState };
+            if (preArticle.id === article.id) return { ...preArticle, ...formState };
             return preArticle;
           }),
         }));
@@ -130,7 +130,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
           totalPageCount: number;
         }>(['articles', articleCurPage, pageSize], (pre) => ({
           ...pre!,
-          articles: pre!.articles.filter((preArticle) => preArticle._id !== article._id),
+          articles: pre!.articles.filter((preArticle) => preArticle.id !== article.id),
         }));
         dispatch(setMessageState({ state: 'success', visible: true, text: '删除成功!' }));
       },
@@ -144,7 +144,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
   };
 
   return (
-    <TableRow key={article.title} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+    <TableRow key={article.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
       <TableCell component="th" scope="row">
         <TextField
           onChange={onTitleChange}
@@ -204,7 +204,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         <Button
           variant="outlined"
           onClick={() => {
-            updateArticle(article._id);
+            updateArticle(article.id);
           }}
           disabled={JSON.stringify(initialFormState) === JSON.stringify(formState)}
         >
@@ -220,7 +220,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
           <Button onClick={closeModal}>取消</Button>
           <Button
             onClick={() => {
-              deleteArticle(article._id);
+              deleteArticle(article.id);
             }}
           >
             确定

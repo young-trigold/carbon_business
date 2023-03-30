@@ -10,8 +10,23 @@ import {
 } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import { DatePicker } from '@mui/x-date-pickers';
+import axios from 'axios';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { Article } from 'lib';
+import { useMemo, useState } from 'react';
+import { useMutation } from 'react-query';
+import { client } from '../../../../../App';
+import { useAppDispatch, useAppSelector } from '../../../../../app/store';
+import { setMessageState } from '../../../../../app/store/message';
+
+interface FormState {
+  date: string;
+  title: string;
+  subTitle: string;
+  link: string;
+  backgroundImg: null | File;
+  source: string;
+}
 
 export const AddArticle = () => {
   const [addModalVisible, setAddModalVisible] = useState(false);
@@ -20,16 +35,57 @@ export const AddArticle = () => {
     setAddModalVisible(false);
   };
 
-  const addArticle = () => {};
+  const initialFormState = useMemo<FormState>(
+    () => ({
+      date: dayjs().format('YYYY-MM-DD'),
+      title: '文章标题',
+      subTitle: '文章副标题',
+      link: '文章链接',
+      backgroundImg: null,
+      source: '文章来源',
+    }),
+    [],
+  );
 
-  const [formState, setFormState] = useState({
-    date: dayjs().format('YYYY-MM-DD'),
-    title: '文章标题',
-    subTitle: '文章副标题',
-    link: '文章链接',
-    backgroundImgURL: '文章背景图链接',
-    source: '文章来源',
-  });
+  const [formState, setFormState] = useState(initialFormState);
+
+  const dispatch = useAppDispatch();
+
+  const { articleCurPage, pageSize } = useAppSelector(
+    (state) => state.adminPage.bodies.articleBody,
+  );
+
+  const { mutate: addArticle } = useMutation(
+    async () => {
+      const formData: FormData = Object.entries(formState).reduce((result, [key, value]) => {
+        if (key === 'backgroundImg') result.append('file', value!);
+        else result.append(key, value!);
+        return result;
+      }, new FormData());
+
+      const res = await axios.post<{ newArticle: Article }>('/api/articles', formData);
+      return res.data;
+    },
+    {
+      onMutate(variables) {
+        dispatch(setMessageState({ text: '正在上传', state: 'info', visible: true }));
+      },
+      onError(error, variables, context) {
+        dispatch(setMessageState({ text: '上传失败!', state: 'error', visible: true }));
+      },
+      onSuccess(data, variables, context) {
+        dispatch(setMessageState({ text: '上传成功!', state: 'success', visible: true }));
+        setFormState(initialFormState);
+        client.setQueryData<{
+          articles: Article[];
+          totalPageCount: number;
+        }>(['articles', articleCurPage, pageSize], (pre) => ({
+          ...pre!,
+          articles: [data.newArticle, ...(pre?.articles ?? [])],
+        }));
+      },
+    },
+  );
 
   const onDateChange = (value: { $d: string }) => {
     setFormState((preForm) => ({
@@ -71,10 +127,11 @@ export const AddArticle = () => {
   };
 
   const onBackgroundImgChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const img = event.target.files?.[0];
+    const backgroundImg = event.target.files?.[0];
+    if (!backgroundImg) return;
     setFormState((preForm) => ({
       ...preForm,
-      img,
+      backgroundImg,
     }));
   };
 
@@ -157,14 +214,10 @@ export const AddArticle = () => {
             ></TextField>
 
             <Button variant="contained" component="label" fullWidth>
-              文章背景图上传
-              <input
-                hidden
-                accept="image/*"
-                multiple
-                type="file"
-                onChange={onBackgroundImgChange}
-              />
+              {formState.backgroundImg instanceof File
+                ? `${formState.backgroundImg.name}`
+                : '文章背景图上传'}
+              <input hidden accept="image/*" type="file" onChange={onBackgroundImgChange} />
             </Button>
           </Box>
         </DialogContent>
@@ -172,10 +225,14 @@ export const AddArticle = () => {
         <DialogActions>
           <Button onClick={closeModal}>取消</Button>
           <Button
-            onClick={() => {
-              addArticle();
-            }}
-            variant='contained'
+            onClick={() => addArticle()}
+            variant="contained"
+            disabled={
+              Object.entries(formState)
+                .filter(([key]) => key !== 'backgroundImg')
+                .every(([key, value]) => initialFormState[key as keyof FormState] === value) ||
+              formState.backgroundImg === null
+            }
           >
             添加
           </Button>

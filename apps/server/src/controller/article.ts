@@ -1,6 +1,18 @@
 import { Article } from 'database';
 import { Request, Response } from 'express';
 
+export const addArticle = async (req: Request, res: Response) => {
+  const fileURL = `http://${req.hostname}/${req.file?.filename}`;
+
+  try {
+    const newArticle = new Article({ ...req.body, backgroundImgURL: fileURL });
+    await newArticle.save();
+    res.status(200).json({ message: '上传成功', newArticle });
+  } catch (error) {
+    res.status(502).json(error);
+  }
+};
+
 export const getArticles = async (req: Request, res: Response) => {
   const { query } = req;
   const sample = Number.parseInt((query.sample as string) ?? '0', 10);
@@ -10,7 +22,21 @@ export const getArticles = async (req: Request, res: Response) => {
 
   try {
     if (sample) {
-      const articles = await Article.aggregate([{ $sample: { size: sample } }]);
+      const articles = await Article.aggregate([
+        { $sample: { size: sample } },
+        {
+          $project: {
+            _id: false,
+            id: '$_id',
+            date: '$date',
+            title: '$title',
+            subtitle: '$subtitle',
+            link: '$link',
+            source: '$source',
+            backgroundImgURL: '$backgroundImgURL',
+          },
+        },
+      ]);
       res.status(200).json(articles);
     } else {
       const [[{ total }], articles] = await Promise.all([
@@ -19,6 +45,18 @@ export const getArticles = async (req: Request, res: Response) => {
           { $sort: { date: -1 } },
           { $skip: curPage * pageSize },
           { $limit: pageSize },
+          {
+            $project: {
+              _id: false,
+              id: '$_id',
+              date: '$date',
+              title: '$title',
+              subtitle: '$subtitle',
+              link: '$link',
+              source: '$source',
+              backgroundImgURL: '$backgroundImgURL',
+            },
+          },
         ]),
       ]);
       res.status(200).json({ totalPageCount: Math.ceil(total / pageSize), articles });

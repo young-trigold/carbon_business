@@ -3,13 +3,14 @@ import axios from 'axios';
 import { Article } from 'lib';
 import { useQuery } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
+import { setMessageState } from '../../../../app/store/message';
 import { setTotalPageCount } from '../../../../app/store/pages/home';
 import { ArticleCard } from './ArticleCard';
 import { PageController } from './PageController';
-import { useEffect } from 'react';
 
 export const ArticleGrid = () => {
   const { articleCurPage, pageSize } = useAppSelector((state) => state.homePage);
+  const dispatch = useAppDispatch();
 
   const { data, isLoading } = useQuery({
     queryKey: ['articles', articleCurPage, pageSize],
@@ -26,14 +27,13 @@ export const ArticleGrid = () => {
       }>(`/api/articles?${searchParamsAsStr}`);
       return res.data;
     },
+    onError(err) {
+      dispatch(setMessageState({ visible: true, text: '请求失败，刷新重试!', state: 'error' }));
+    },
+    onSuccess(data) {
+      dispatch(setTotalPageCount(data?.totalPageCount ?? 0));
+    },
   });
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isLoading) return;
-    dispatch(setTotalPageCount(data?.totalPageCount ?? 0));
-  }, [isLoading]);
 
   if (isLoading)
     return <Skeleton variant="rounded" animation="wave" width="100%" height="1000px" />;
@@ -50,7 +50,7 @@ export const ArticleGrid = () => {
         }}
       >
         {data?.articles?.map((article) => (
-          <ArticleCard key={article._id} {...article}></ArticleCard>
+          <ArticleCard key={article.id} {...article}></ArticleCard>
         ))}
       </Box>
       <PageController />

@@ -10,24 +10,10 @@ export const getUserInfo = async (token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     store.dispatch(setIsLogin(true));
     store.dispatch(setUserInfo(res.data));
-    store.dispatch(
-      setMessageState({
-        visible: true,
-        text: '登录成功',
-        state: 'success',
-      }),
-    );
   } catch (error) {
-    store.dispatch(
-      setMessageState({
-        visible: true,
-        text: '尝试登录失败，请刷新重试',
-        state: 'warning',
-      }),
-    );
+    console.warn('尝试登录失败');
   }
 };
 

@@ -22,7 +22,7 @@ export const getRecords = async (req: Request, res: Response) => {
       {
         $project: {
           date: '$_id',
-          _id: 0,
+          _id: false,
           records: '$records',
         },
       },
