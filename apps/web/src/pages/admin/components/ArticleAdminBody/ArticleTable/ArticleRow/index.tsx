@@ -15,9 +15,9 @@ import dayjs from 'dayjs';
 import { Article } from 'lib';
 import { useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
-import { client } from '../../../../../App';
-import { useAppDispatch, useAppSelector } from '../../../../../app/store';
-import { setMessageState } from '../../../../../app/store/message';
+import { client } from '../../../../../../App';
+import { useAppDispatch, useAppSelector } from '../../../../../../app/store';
+import { setMessageState } from '../../../../../../app/store/message';
 
 interface ArticleRowProps {
   article: Article;
@@ -135,18 +135,16 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
           articles: Article[];
           totalPageCount: number;
         }>(['articles', articleCurPage, pageSize], (pre) => {
-          return ({
+          return {
             ...pre!,
             articles: pre!.articles.filter((preArticle) => preArticle.id !== article.id),
-          });
-        } );
+          };
+        });
         dispatch(setMessageState({ state: 'success', visible: true, text: '删除成功!' }));
         closeModal();
       },
     },
   );
-
-  
 
   return (
     <TableRow key={article.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>

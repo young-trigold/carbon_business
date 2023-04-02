@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { AgenciesOfCarbonBusiness, QueryKeyOfCarbonBusiness, startDate } from 'lib';
 
 interface AdminPageState {
+  currentBodyIndex: number;
   bodies: {
     articleBody: {
       articleCurPage: number;
@@ -21,6 +22,7 @@ interface AdminPageState {
 }
 
 const initialState: AdminPageState = {
+  currentBodyIndex: 0,
   bodies: {
     articleBody: {
       articleCurPage: 0,
@@ -42,6 +44,9 @@ const adminPageSlice = createSlice({
   name: 'adminPage',
   initialState,
   reducers: {
+    setCurrentBodyIndex(state, action: PayloadAction<number>) {
+      state.currentBodyIndex = action.payload;
+    },
     setArticleCurPage(state, action: PayloadAction<number>) {
       state.bodies.articleBody.articleCurPage = action.payload;
     },
@@ -64,6 +69,7 @@ const adminPageSlice = createSlice({
 });
 
 export const {
+  setCurrentBodyIndex,
   setArticleCurPage,
   setTotalPageCount,
   setStartDate,

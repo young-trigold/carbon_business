@@ -4,10 +4,10 @@ import { Article } from 'lib';
 import { useQuery } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { setMessageState } from '../../../../app/store/message';
-import { setTotalPageCount as setTotalPageCountForHome} from '../../../../app/store/pages/home';
+import { setTotalPageCount as setTotalPageCountForAdmin } from '../../../../app/store/pages/admin';
+import { setTotalPageCount as setTotalPageCountForHome } from '../../../../app/store/pages/home';
 import { ArticleCard } from './ArticleCard';
 import { PageController } from './PageController';
-import { setTotalPageCount as setTotalPageCountForAdmin} from '../../../../app/store/pages/admin';
 
 export const ArticleGrid = () => {
   const { articleCurPage, pageSize } = useAppSelector((state) => state.homePage);
