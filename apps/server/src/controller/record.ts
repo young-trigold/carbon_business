@@ -78,3 +78,35 @@ export const getRecords = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const deleteRecord = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const record = await Record.findByIdAndRemove(id);
+    if (!record) res.status(404).json({ message: '找不到该数据!' });
+    else res.status(200).json({ message: '删除成功!' });
+  } catch (error) {
+    res.status(502).json(error);
+  }
+};
+
+export const updateRecord = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = req.body;
+  try {
+    const record = await Record.findByIdAndUpdate(id, data);
+    res.status(200).json({ message: '删除成功', record });
+  } catch (error) {
+    res.status(502).json(error);
+  }
+};
+
+export const addRecord = async (req: Request, res: Response) => {
+  try {
+    const newRecord = new Record({ ...req.body });
+    await newRecord.save();
+    res.status(200).json({ message: '上传成功', newRecord });
+  } catch (error) {
+    res.status(502).json(error);
+  }
+};

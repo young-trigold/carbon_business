@@ -27,13 +27,17 @@ export const RecordRow: React.FC<RecordRowProps> = (props) => {
   const { record } = props;
 
   const initialFormState = useMemo(
-    () => ({
-      ...record,
-    }),
+    () =>
+      Object.entries(record)
+        .filter(([key]) => key !== 'id')
+        .reduce((result, [key, value]) => {
+          result[key] = value;
+          return result;
+        }, {} as any),
     [],
   );
 
-  const [formState, setFormState] = useState(initialFormState);
+  const [formState, setFormState] = useState<Omit<CarbonBusiness, 'id'>>(initialFormState as any);
 
   const onAgencyChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const agency = event.target.value;
@@ -140,16 +144,16 @@ export const RecordRow: React.FC<RecordRowProps> = (props) => {
         dispatch(setMessageState({ visible: true, text: '更新失败!', state: 'error' }));
       },
       onSuccess(data, variables, context) {
-        client.setQueryData<{
-          records: CarbonBusiness[];
-          totalPageCount: number;
-        }>(['records', curPage, pageSize], (pre) => ({
-          ...pre!,
-          records: pre!.records.map((prerecord) => {
-            if (prerecord.id === record.id) return { ...prerecord, ...formState };
-            return prerecord;
-          }),
-        }));
+        // client.setQueryData<{
+        //   records: CarbonBusiness[];
+        //   totalPageCount: number;
+        // }>(['records', curPage, pageSize], (pre) => ({
+        //   ...pre!,
+        //   records: pre!.records.map((prerecord) => {
+        //     if (prerecord.id === record.id) return { ...prerecord, ...formState };
+        //     return prerecord;
+        //   }),
+        // }));
         dispatch(setMessageState({ visible: true, text: '更新成功!', state: 'success' }));
       },
     },
@@ -171,15 +175,15 @@ export const RecordRow: React.FC<RecordRowProps> = (props) => {
         dispatch(setMessageState({ state: 'error', visible: true, text: '删除失败!' }));
       },
       onSuccess(data, variables, context) {
-        client.setQueryData<{
-          records: CarbonBusiness[];
-          totalPageCount: number;
-        }>(['records', curPage, pageSize], (pre) => {
-          return {
-            ...pre!,
-            records: pre!.records.filter((prerecord) => prerecord.id !== record.id),
-          };
-        });
+        // client.setQueryData<{
+        //   records: CarbonBusiness[];
+        //   totalPageCount: number;
+        // }>(['records', curPage, pageSize], (pre) => {
+        //   return {
+        //     ...pre!,
+        //     records: pre!.records.filter((prerecord) => prerecord.id !== record.id),
+        //   };
+        // });
         dispatch(setMessageState({ state: 'success', visible: true, text: '删除成功!' }));
         closeModal();
       },

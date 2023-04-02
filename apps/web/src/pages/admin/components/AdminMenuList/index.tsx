@@ -5,7 +5,7 @@ import { setCurrentBodyIndex } from '../../../../app/store/pages/admin';
 const options = [
   { text: '文章管理', bodyIndex: 0 },
   { text: '数据管理', bodyIndex: 1 },
-  { text: '用户管理', bodyIndex: 2 },
+  // { text: '用户管理', bodyIndex: 2 },
 ];
 
 export const AdminMenuList = () => {
