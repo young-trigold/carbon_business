@@ -17,7 +17,7 @@ export const getArticles = async (req: Request, res: Response) => {
   const { query } = req;
   const sample = Number.parseInt((query.sample as string) ?? '0', 10);
 
-  const curPage = Number.parseInt((query.curPage as string) ?? '10', 10);
+  const curPage = Number.parseInt((query.curPage as string) ?? '1', 10);
   const pageSize = Number.parseInt((query.pageSize as string) ?? '10', 10);
 
   try {
@@ -39,27 +39,15 @@ export const getArticles = async (req: Request, res: Response) => {
       ]);
       res.status(200).json(articles);
     } else {
-      const [[{ total }], articles] = await Promise.all([
-        Article.aggregate([{ $sort: { date: -1 } }, { $count: 'total' }]),
-        Article.aggregate([
-          { $sort: { date: -1 } },
-          { $skip: curPage * pageSize },
-          { $limit: pageSize },
-          {
-            $project: {
-              _id: false,
-              id: '$_id',
-              date: '$date',
-              title: '$title',
-              subtitle: '$subtitle',
-              link: '$link',
-              source: '$source',
-              backgroundImgURL: '$backgroundImgURL',
-            },
-          },
-        ]),
+      const [articleCount, articles] = await Promise.all([
+        Article.count(),
+        Article.find({})
+          .sort({ date: -1 })
+          .skip(curPage * pageSize)
+          .limit(pageSize),
       ]);
-      res.status(200).json({ totalPageCount: Math.ceil(total / pageSize), articles });
+
+      res.status(200).json({ totalPageCount: Math.ceil(articleCount / pageSize), articles });
     }
   } catch (error) {
     res.status(502).json(error);

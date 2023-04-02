@@ -1,52 +1,80 @@
 import { Record } from 'database';
-import { Request, Response } from 'express';
 import dayjs from 'dayjs';
+import { Request, Response } from 'express';
 import { CarbonBusiness, QueryKeyOfCarbonBusiness } from 'lib';
 
 export const getRecords = async (req: Request, res: Response) => {
   const { query } = req;
-  const agencies = (query?.checkedAgencies as string)?.split(',') ?? ['上海', '湖北', '深圳', '广州'];
+  const agencies = (query?.checkedAgencies as string)?.split(',') ?? [
+    '上海',
+    '湖北',
+    '深圳',
+    '广州',
+  ];
   const key = (query?.key as QueryKeyOfCarbonBusiness) ?? 'averagePrice';
-  try {
-    const recordsByDate = await Record.aggregate([
-      {
-        $match: {
-          date: {
-            $gte: query.startDate ?? "2016-11-04", 
-            $lte: query.endDate ?? dayjs().format('YYYY-MM-DD'), 
+  const paged = Boolean(Number.parseInt(query.paged as string, 10));
+  const curPage = Number.parseInt((query.curPage as string) ?? '1', 10);
+  const pageSize = Number.parseInt((query.pageSize as string) ?? '10', 10);
+
+  if (paged) {
+    try {
+      const [recordCount, records] = await Promise.all([
+        Record.count(),
+        Record.find({})
+          .sort({ date: -1 })
+          .skip(curPage * pageSize)
+          .limit(pageSize),
+      ]);
+
+      res.json({
+        totalPageCount: Math.ceil(recordCount / pageSize),
+        records,
+      });
+    } catch (error) {
+      res.status(502).json(error);
+    }
+  } else {
+    try {
+      const recordsByDate = await Record.aggregate([
+        {
+          $match: {
+            date: {
+              $gte: query.startDate ?? '2016-11-04',
+              $lte: query.endDate ?? dayjs().format('YYYY-MM-DD'),
+            },
           },
         },
-      },
-      { $group: { _id: '$date', records: { $push: '$$ROOT' }, count: { $sum: 1 } } },
-      { $sort: { _id: -1 } },
-      {
-        $project: {
-          date: '$_id',
-          _id: false,
-          records: '$records',
+        { $group: { _id: '$date', records: { $push: '$$ROOT' }, count: { $sum: 1 } } },
+        { $sort: { _id: -1 } },
+        {
+          $project: {
+            date: '$_id',
+            _id: false,
+            records: '$records',
+          },
         },
-      },
-    ]);
-    let results = recordsByDate.map((recordByDate) => {
-      const result: any = { date: recordByDate.date };
-      (recordByDate.records as CarbonBusiness[]).forEach((record) => {
-        const rawAgencyOfRecord = record.agency.slice(0, 2);
-        const agencyOfRecord = rawAgencyOfRecord === '福建' ? '海峡' : rawAgencyOfRecord;
-        if (agencies && agencies.length && agencies.includes(agencyOfRecord)) {
-          result[agencyOfRecord] = record[key];
-        }
+      ]);
+      let results = recordsByDate.map((recordByDate) => {
+        const result: any = { date: recordByDate.date };
+        (recordByDate.records as CarbonBusiness[]).forEach((record) => {
+          const rawAgencyOfRecord = record.agency.slice(0, 2);
+          const agencyOfRecord = rawAgencyOfRecord === '福建' ? '海峡' : rawAgencyOfRecord;
+          if (agencies && agencies.length && agencies.includes(agencyOfRecord)) {
+            result[agencyOfRecord] = record[key];
+          }
+        });
+        return result;
       });
-      return result;
-    });
 
-    results = results.filter((result) =>
-      Object.values(result)
-        .slice(1)
-        .some((value) => Boolean(value)),
-    );
+      results = results.filter((result) =>
+        Object.values(result)
+          .slice(1)
+          .some((value) => Boolean(value)),
+      );
 
-    res.status(200).json(results);
-  } catch (error) {
-    res.status(502).json(error);
+      res.status(200).json(results);
+    } catch (error) {
+      res.status(502).json(error);
+    }
   }
 };

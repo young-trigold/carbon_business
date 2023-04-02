@@ -1,22 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
-import { AgenciesOfCarbonBusiness, QueryKeyOfCarbonBusiness, startDate } from 'lib';
 
 interface AdminPageState {
   currentBodyIndex: number;
   bodies: {
     articleBody: {
-      articleCurPage: number;
+      curPage: number;
       pageSize: number;
       totalPageCount: number;
     };
     recordBody: {
-      form: {
-        startDate: string;
-        endDate: string;
-        checkedAgencies: AgenciesOfCarbonBusiness[];
-        queryKey: QueryKeyOfCarbonBusiness;
-      };
+      curPage: number;
+      pageSize: number;
+      totalPageCount: number;
     };
   };
 }
@@ -25,17 +20,14 @@ const initialState: AdminPageState = {
   currentBodyIndex: 0,
   bodies: {
     articleBody: {
-      articleCurPage: 0,
+      curPage: 0,
       pageSize: 10,
       totalPageCount: 0,
     },
     recordBody: {
-      form: {
-        startDate: startDate,
-        endDate: dayjs().format('YYYY-MM-DD'),
-        checkedAgencies: ['上海', '湖北', '深圳', '广州'],
-        queryKey: 'averagePrice',
-      },
+      curPage: 0,
+      pageSize: 10,
+      totalPageCount: 0,
     },
   },
 };
@@ -48,22 +40,16 @@ const adminPageSlice = createSlice({
       state.currentBodyIndex = action.payload;
     },
     setArticleCurPage(state, action: PayloadAction<number>) {
-      state.bodies.articleBody.articleCurPage = action.payload;
+      state.bodies.articleBody.curPage = action.payload;
     },
-    setTotalPageCount(state, action: PayloadAction<number>) {
+    setArticleTotalPageCount(state, action: PayloadAction<number>) {
       state.bodies.articleBody.totalPageCount = action.payload;
     },
-    setStartDate(state, action: PayloadAction<string>) {
-      state.bodies.recordBody.form.startDate = action.payload;
+    setRecordCurPage(state, action: PayloadAction<number>) {
+      state.bodies.recordBody.curPage = action.payload;
     },
-    setEndDate(state, action: PayloadAction<string>) {
-      state.bodies.recordBody.form.endDate = action.payload;
-    },
-    setAgencies(state, action: PayloadAction<AgenciesOfCarbonBusiness[]>) {
-      state.bodies.recordBody.form.checkedAgencies = action.payload;
-    },
-    setQueryKey(state, action: PayloadAction<QueryKeyOfCarbonBusiness>) {
-      state.bodies.recordBody.form.queryKey = action.payload;
+    setRecordTotalPageCount(state, action: PayloadAction<number>) {
+      state.bodies.recordBody.totalPageCount = action.payload;
     },
   },
 });
@@ -71,11 +57,9 @@ const adminPageSlice = createSlice({
 export const {
   setCurrentBodyIndex,
   setArticleCurPage,
-  setTotalPageCount,
-  setStartDate,
-  setEndDate,
-  setAgencies,
-  setQueryKey,
+  setArticleTotalPageCount,
+  setRecordCurPage,
+  setRecordTotalPageCount,
 } = adminPageSlice.actions;
 
 export default adminPageSlice.reducer;

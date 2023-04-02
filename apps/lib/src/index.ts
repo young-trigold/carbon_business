@@ -9,6 +9,7 @@ export type CarbonBusiness = {
   averagePrice?: number;
   volume?: number;
   amount?: number;
+  id: string;
 };
 
 export type Article = {

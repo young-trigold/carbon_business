@@ -9,37 +9,34 @@ import {
   TableRow,
 } from '@mui/material';
 import axios from 'axios';
-import { Article } from 'lib';
+import { CarbonBusiness } from 'lib';
 import { useQuery } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../../../app/store';
-import { setArticleTotalPageCount as setArticleTotalPageCountForAdmin } from '../../../../../app/store/pages/admin';
-import { setTotalPageCount as setArticleTotalPageCountForHome } from '../../../../../app/store/pages/home';
-import { ArticleRow } from '../ArticleTable/ArticleRow';
+import { setRecordTotalPageCount } from '../../../../../app/store/pages/admin';
+import { RecordRow } from './RecordRow';
 
-export const ArticleTable = () => {
+export const RecordTable = () => {
   const dispatch = useAppDispatch();
-  const { articleCurPage, pageSize } = useAppSelector(
-    (state) => state.adminPage.bodies.articleBody,
-  );
+  const { curPage, pageSize } = useAppSelector((state) => state.adminPage.bodies.recordBody);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['articles', articleCurPage, pageSize],
+    queryKey: ['records', curPage, pageSize],
     queryFn: async () => {
       const searchParamsAsStr = Object.entries({
-        curPage: articleCurPage,
-        pageSize: pageSize,
+        curPage,
+        pageSize,
+        paged: 1,
       })
         .map(([key, value]) => `${key}=${value}`)
         .join('&');
       const res = await axios.get<{
-        articles: Article[];
+        records: CarbonBusiness[];
         totalPageCount: number;
-      }>(`/api/articles?${searchParamsAsStr}`);
+      }>(`/api/records?${searchParamsAsStr}`);
       return res.data;
     },
     onSuccess(data) {
-      dispatch(setArticleTotalPageCountForHome(data?.totalPageCount ?? 0));
-      dispatch(setArticleTotalPageCountForAdmin(data?.totalPageCount ?? 0));
+      dispatch(setRecordTotalPageCount(data?.totalPageCount ?? 0));
     },
   });
 
@@ -63,17 +60,22 @@ export const ArticleTable = () => {
           }}
         >
           <TableRow>
-            <TableCell>标题</TableCell>
-            <TableCell>来源</TableCell>
-            <TableCell>链接</TableCell>
-            <TableCell>背景图</TableCell>
             <TableCell>日期</TableCell>
+            <TableCell>交易机构</TableCell>
+            <TableCell>类型</TableCell>
+            <TableCell>开盘价</TableCell>
+            <TableCell>终盘价</TableCell>
+            <TableCell>最低价</TableCell>
+            <TableCell>最高价</TableCell>
+            <TableCell>平均价</TableCell>
+            <TableCell>交易量</TableCell>
+            <TableCell>交易额</TableCell>
             <TableCell align="center">操作</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.articles?.map((article) => (
-            <ArticleRow key={article.id} article={article}></ArticleRow>
+          {data?.records?.map((record) => (
+            <RecordRow key={record.id} record={record}></RecordRow>
           ))}
         </TableBody>
       </Table>
