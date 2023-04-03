@@ -94,10 +94,10 @@ class Crawler {
           const trElementsWithoutThead = trElements.slice(1);
           const result = trElementsWithoutThead.map((trElement) => {
             const tdElements = [...trElement.children];
-            const eachData: CarbonBusiness = {
-              date: tdElements[0].textContent ?? '',
-              agency: tdElements[1].textContent ?? '',
-              type: tdElements[2].textContent ?? '',
+            const eachData: Omit<CarbonBusiness, 'id'> = {
+              date: (tdElements[0].textContent ?? '').trim(),
+              agency: (tdElements[1].textContent ?? '').trim(),
+              type: (tdElements[2].textContent ?? '').trim(),
               startPrice: Number.parseFloat(tdElements[3].textContent ?? '0'),
               maxPrice: Number.parseFloat(tdElements[4].textContent ?? '0'),
               minPrice: Number.parseFloat(tdElements[5].textContent ?? '0'),

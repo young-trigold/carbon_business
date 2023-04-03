@@ -18,15 +18,15 @@ import { ArticleRow } from '../ArticleTable/ArticleRow';
 
 export const ArticleTable = () => {
   const dispatch = useAppDispatch();
-  const { articleCurPage, pageSize } = useAppSelector(
+  const { curPage, pageSize } = useAppSelector(
     (state) => state.adminPage.bodies.articleBody,
   );
 
   const { data, isLoading } = useQuery({
-    queryKey: ['articles', articleCurPage, pageSize],
+    queryKey: ['articles', curPage, pageSize],
     queryFn: async () => {
       const searchParamsAsStr = Object.entries({
-        curPage: articleCurPage,
+        curPage: curPage,
         pageSize: pageSize,
       })
         .map(([key, value]) => `${key}=${value}`)

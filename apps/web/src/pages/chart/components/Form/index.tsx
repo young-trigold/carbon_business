@@ -99,7 +99,7 @@ export const Form = () => {
           <DatePicker
             label="交易结束日期"
             minDate={form.startDate}
-            maxDate={dayjs().format('YYYY-DD-MM')}
+            maxDate={dayjs().format('YYYY-MM-DD')}
             value={form.endDate}
             onChange={onEndDateChange as any}
             renderInput={(params) => <TextField {...params} />}

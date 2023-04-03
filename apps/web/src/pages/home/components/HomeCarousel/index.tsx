@@ -78,6 +78,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
           <Card
             sx={{
               position: 'relative',
+              cursor: 'pointer',
             }}
             onClick={() => window.open(link)}
           >

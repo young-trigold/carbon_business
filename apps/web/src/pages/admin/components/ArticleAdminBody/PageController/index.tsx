@@ -1,7 +1,7 @@
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Button, IconButton, Stack, styled } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../../app/store';
-import { setArticleCurPage } from '../../../../../app/store/pages/admin';
+import { setArticleCurPage as setCurPage } from '../../../../../app/store/pages/admin';
 
 const StyledPageUnit = styled(Button)(({ theme }) => ({
   display: 'flex',
@@ -16,33 +16,33 @@ const StyledPageUnit = styled(Button)(({ theme }) => ({
 }));
 
 const StyledFunctionalPageUnit = styled(StyledPageUnit)<{
-  articleCurPage: number;
+  curPage: number;
   pageIndex: number;
-}>(({ theme, articleCurPage, pageIndex }) => ({
-  backgroundColor: articleCurPage === pageIndex ? theme.palette.primary.main : 'unset',
+}>(({ theme, curPage, pageIndex }) => ({
+  backgroundColor: curPage === pageIndex ? theme.palette.primary.main : 'unset',
   color: 'inherit',
 }));
 
-const getPageUnitFlags = (articleCurPage: number, totalPageCount: number) => {
+const getPageUnitFlags = (curPage: number, totalPageCount: number) => {
   if (
-    [0, 1, 2, totalPageCount - 1, totalPageCount - 2, totalPageCount - 3].includes(articleCurPage)
+    [0, 1, 2, totalPageCount - 1, totalPageCount - 2, totalPageCount - 3].includes(curPage)
   ) {
     return [1, 2, 3, NaN, totalPageCount - 2, totalPageCount - 1, totalPageCount];
   }
 
-  return [1, NaN, articleCurPage, articleCurPage + 1, articleCurPage + 2, NaN, totalPageCount];
+  return [1, NaN, curPage, curPage + 1, curPage + 2, NaN, totalPageCount];
 };
 
 export const PageController = () => {
-  const { articleCurPage, totalPageCount } = useAppSelector((state) => state.adminPage.bodies.articleBody);
+  const { curPage, totalPageCount } = useAppSelector((state) => state.adminPage.bodies.articleBody);
   const dispatch = useAppDispatch();
 
   const back = () => {
-    if (articleCurPage > 0) dispatch(setArticleCurPage(articleCurPage - 1));
+    if (curPage > 0) dispatch(setCurPage(curPage - 1));
   };
 
   const forward = () => {
-    if (articleCurPage < totalPageCount) dispatch(setArticleCurPage(articleCurPage + 1));
+    if (curPage < totalPageCount) dispatch(setCurPage(curPage + 1));
   };
 
   return (
@@ -54,18 +54,18 @@ export const PageController = () => {
         margin: '1em 0',
       }}
     >
-      <IconButton aria-label="back" onClick={back} disabled={!(articleCurPage > 0)}>
+      <IconButton aria-label="back" onClick={back} disabled={!(curPage > 0)}>
         <ArrowBack></ArrowBack>
       </IconButton>
-      {getPageUnitFlags(articleCurPage, totalPageCount).map((pageFlag) => {
+      {getPageUnitFlags(curPage, totalPageCount).map((pageFlag) => {
         if (Object.is(pageFlag, NaN)) return <StyledPageUnit disabled>...</StyledPageUnit>;
         return (
           <StyledFunctionalPageUnit
             key={String(pageFlag)}
-            articleCurPage={articleCurPage}
+            curPage={curPage}
             pageIndex={pageFlag - 1}
             onClick={() => {
-              dispatch(setArticleCurPage(pageFlag - 1));
+              dispatch(setCurPage(pageFlag - 1));
             }}
           >
             {pageFlag}
@@ -75,7 +75,7 @@ export const PageController = () => {
       <IconButton
         aria-label="forward"
         onClick={forward}
-        disabled={!(articleCurPage < totalPageCount - 1)}
+        disabled={!(curPage < totalPageCount - 1)}
       >
         <ArrowForward></ArrowForward>
       </IconButton>

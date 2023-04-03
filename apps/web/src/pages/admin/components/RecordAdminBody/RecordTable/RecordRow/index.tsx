@@ -294,7 +294,7 @@ export const RecordRow: React.FC<RecordRowProps> = (props) => {
       <Dialog maxWidth={false} open={deleteModalVisible} onClose={closeModal}>
         <DialogTitle>确认删除</DialogTitle>
         <Box width={500}>
-          <DialogContent>您确定要删除该文章吗？</DialogContent>
+          <DialogContent>您确定要删除该数据吗？</DialogContent>
         </Box>
         <DialogActions>
           <Button onClick={closeModal}>取消</Button>
