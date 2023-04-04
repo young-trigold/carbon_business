@@ -2,10 +2,12 @@ import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   TextField,
 } from '@mui/material';
 import Fab from '@mui/material/Fab';
@@ -15,6 +17,7 @@ import dayjs from 'dayjs';
 import { Article } from 'lib';
 import { useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { client } from '../../../../../App';
 import { useAppDispatch, useAppSelector } from '../../../../../app/store';
 import { setMessageState } from '../../../../../app/store/message';
@@ -23,9 +26,10 @@ interface FormState {
   date: string;
   title: string;
   subTitle: string;
-  link: string;
+  link?: string;
   backgroundImg: null | File;
   source: string;
+  ownBySelf: boolean;
 }
 
 export const AddArticle = () => {
@@ -40,9 +44,9 @@ export const AddArticle = () => {
       date: dayjs().format('YYYY-MM-DD'),
       title: '文章标题',
       subTitle: '文章副标题',
-      link: '文章链接',
       backgroundImg: null,
       source: '文章来源',
+      ownBySelf: true,
     }),
     [],
   );
@@ -51,9 +55,9 @@ export const AddArticle = () => {
 
   const dispatch = useAppDispatch();
 
-  const { articleCurPage, pageSize } = useAppSelector(
-    (state) => state.adminPage.bodies.articleBody,
-  );
+  const { curPage, pageSize } = useAppSelector((state) => state.adminPage.bodies.articleBody);
+
+  const navigate = useNavigate();
 
   const { mutate: addArticle } = useMutation(
     async () => {
@@ -79,13 +83,14 @@ export const AddArticle = () => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', articleCurPage, pageSize], (pre) => {
-          
-          return ({
+        }>(['articles', curPage, pageSize], (pre) => {
+          return {
             ...pre!,
             articles: [data.newArticle, ...(pre?.articles ?? [])],
-          });
-        } );
+          };
+        });
+        console.debug(data.newArticle);
+        navigate(`/articles/${data.newArticle.id}`);
       },
     },
   );
@@ -138,6 +143,11 @@ export const AddArticle = () => {
     }));
   };
 
+  const onOwnBySelfCheckBoxChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const ownBySelf = event.target.checked;
+    setFormState((preForm) => ({ ...preForm, ownBySelf }));
+  };
+
   return (
     <>
       <Fab
@@ -154,7 +164,6 @@ export const AddArticle = () => {
       </Fab>
       <Dialog maxWidth={false} open={addModalVisible} onClose={closeModal}>
         <DialogTitle>添加文章</DialogTitle>
-
         <DialogContent>
           <Box width={500} component="form">
             <Box
@@ -204,18 +213,30 @@ export const AddArticle = () => {
               }}
               onChange={onSourceChange}
             ></TextField>
-            <TextField
-              fullWidth
-              value={formState.link}
-              label="文章链接"
-              multiline
-              maxRows={4}
-              sx={{
-                margin: '0.5em 0',
-              }}
-              onChange={onLinkChange}
-            ></TextField>
+            {!formState.ownBySelf && (
+              <TextField
+                fullWidth
+                value={formState.link}
+                label="文章链接"
+                multiline
+                maxRows={4}
+                sx={{
+                  margin: '0.5em 0',
+                }}
+                onChange={onLinkChange}
+              />
+            )}
 
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={formState.ownBySelf}
+                  onChange={onOwnBySelfCheckBoxChange}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+              }
+              label="自有文章"
+            />
             <Button variant="contained" component="label" fullWidth>
               {formState.backgroundImg instanceof File
                 ? `${formState.backgroundImg.name}`

@@ -16,9 +16,11 @@ const articleScheme = new Schema(
       type: String,
       required: true,
     },
-    link: {
-      type: String,
-      required: true,
+    link: String,
+    content: String,
+    ownBySelf: {
+      type: Boolean,
+      required: true, 
     },
     subtitle: String,
     backgroundImgURL: String,

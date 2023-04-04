@@ -4,8 +4,8 @@ import { Header } from '../../components/Header';
 import { useQuery } from 'react-query';
 
 export const ArticlePage: React.FC = () => {
-  const { articleID } = useParams();
-
+  const { articleId } = useParams();
+  console.debug(articleId);
   // const {} = useQuery({
     
   // });
@@ -13,7 +13,9 @@ export const ArticlePage: React.FC = () => {
   return (
     <Box>
       <Header />
-      <main></main>
+      <main>
+        
+      </main>
     </Box>
   );
 };

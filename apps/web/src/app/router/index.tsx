@@ -13,7 +13,7 @@ export const RouterPart = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/chart" element={<ChartPage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/article/:articleID" element={<ArticlePage />} />
+        <Route path="/articles/:articleId" element={<ArticlePage />} />
       </Routes>
     </Router>
   );

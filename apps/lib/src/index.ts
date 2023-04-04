@@ -13,12 +13,14 @@ export type CarbonBusiness = {
 };
 
 export type Article = {
+  ownBySelf: boolean;
+  content?: string;
   title: string;
   subtitle: string;
   source: string;
   date: string;
   backgroundImgURL: string;
-  link: string;
+  link?: string;
   id: string;
 };
 

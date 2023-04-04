@@ -74,7 +74,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
 
   const dispatch = useAppDispatch();
 
-  const { articleCurPage, pageSize } = useAppSelector(
+  const { curPage, pageSize } = useAppSelector(
     (state) => state.adminPage.bodies.articleBody,
   );
 
@@ -103,7 +103,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', articleCurPage, pageSize], (pre) => ({
+        }>(['articles', curPage, pageSize], (pre) => ({
           ...pre!,
           articles: pre!.articles.map((preArticle) => {
             if (preArticle.id === article.id) return { ...preArticle, ...formState };
@@ -134,7 +134,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', articleCurPage, pageSize], (pre) => {
+        }>(['articles', curPage, pageSize], (pre) => {
           return {
             ...pre!,
             articles: pre!.articles.filter((preArticle) => preArticle.id !== article.id),

@@ -52,7 +52,10 @@ await connectDataBase('爬虫');
 // console.log(countByYear);
 // const countLowBy2017 = [...countByYear].reduce((result, [year, count]) => Number.parseInt(year) <= 2017 ? result + count : result, 0)
 // console.log(countLowBy2017, [...countByYear.values()].reduce((a, b) => a+b, 0));
-const articles = await Article.deleteMany({date: { $lte: '2018-01-01'}});
-// console.log(articles.length);
+// const articles = await Article.deleteMany({date: { $lte: '2018-01-01'}});
+// // console.log(articles.length);
 
-console.log('完成!');
+// console.log('完成!');
+
+// const articles = await Article.updateMany({ $set: { ownBySelf: false } });
+// console.log('完成');
