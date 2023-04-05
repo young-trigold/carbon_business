@@ -36,7 +36,7 @@ export class UnorderedListExtension extends NodeExtension {
 }
 
 declare global {
-  namespace EditorStore {
+  namespace Editor {
     interface Commands {
       unordered_list: CommandType<UnorderedListExtension>;
     }

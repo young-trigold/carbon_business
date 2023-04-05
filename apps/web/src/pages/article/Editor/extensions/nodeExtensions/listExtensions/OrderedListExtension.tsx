@@ -87,7 +87,7 @@ export class OrderedListExtension extends NodeExtension {
 }
 
 declare global {
-  namespace EditorStore {
+  namespace Editor {
     interface Commands {
       ordered_list: CommandType<OrderedListExtension>;
     }

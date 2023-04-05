@@ -1,4 +1,4 @@
-import getUniqueId from '@/utils/getUniqueId';
+import getUniqueId from '../../../../../utils/getUniqueId';
 import { InputRule, textblockTypeInputRule } from 'prosemirror-inputrules';
 import { NodeSpec, ParseRule } from 'prosemirror-model';
 import { PasteRule } from 'prosemirror-paste-rules';
@@ -131,7 +131,7 @@ export class HeadingExtension extends NodeExtension {
 }
 
 declare global {
-	namespace EditorStore {
+	namespace Editor {
 		interface Commands {
 			heading: CommandType<HeadingExtension>;
 		}

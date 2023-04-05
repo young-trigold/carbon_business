@@ -63,7 +63,7 @@ export class CodeExtension extends MarkExtension {
 }
 
 declare global {
-	namespace EditorStore {
+	namespace Editor {
 		interface Commands {
 			code: CommandType<CodeExtension>;
 		}

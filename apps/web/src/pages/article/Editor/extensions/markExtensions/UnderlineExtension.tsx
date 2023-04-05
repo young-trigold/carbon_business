@@ -50,8 +50,9 @@ export class UnderlineExtension extends MarkExtension {
 		return environment.isMac ? keyMapForMac : keyMapForWin;
 	}
 }
+
 declare global {
-	namespace EditorStore {
+	namespace Editor {
 		interface Commands {
 			underline: CommandType<UnderlineExtension>;
 		}

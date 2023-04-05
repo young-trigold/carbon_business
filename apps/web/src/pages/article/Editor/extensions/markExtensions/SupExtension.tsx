@@ -33,7 +33,7 @@ export class SupExtension extends MarkExtension {
 }
 
 declare global {
-	namespace EditorStore {
+	namespace Editor {
 		interface Commands {
 			sup: CommandType<SupExtension>;
 		}

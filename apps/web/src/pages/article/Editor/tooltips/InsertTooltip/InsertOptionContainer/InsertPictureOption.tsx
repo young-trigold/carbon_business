@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { memo, useRef } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import { message } from '@/components/Message';
 import PictureIconSrc from '@/static/icon/picture.png';
 import { StyledOption } from '.';
+import { useAppDispatch, useAppSelector } from '../../../../../../app/store';
 
 const InsertPictureOption = () => {
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -14,7 +13,7 @@ const InsertPictureOption = () => {
 		inputFileRef.current.click();
 	};
 
-	const { editorStore } = useAppSelector((state) => state.contentPage.editor);
+	const { editorStore } = useAppSelector((state) => state.articlePage.editor);
 	const dispatch = useAppDispatch();
 	const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
 		const { files } = event.target;
@@ -33,12 +32,9 @@ const InsertPictureOption = () => {
 				const node = editorState.schema.nodes.image.create(attrs);
 				const transaction = editorState.tr.replaceSelectionWith(node, false);
 				editorView.dispatch(transaction);
-				message.success('图片插入成功!');
+				
 			} catch (error) {
-				if (axios.isAxiosError(error))
-					return message.error((error.response?.data as { message: string })?.message);
-				if (error instanceof Error) return message.error(error.message);
-				return message.error(JSON.stringify(error));
+				
 			}
 		};
 

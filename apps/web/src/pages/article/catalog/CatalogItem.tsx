@@ -1,49 +1,47 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-
-import { AppState } from '@/app/store';
 import findHeadingElementById from '../editor/utils/findHeadingElementById';
 import { HeadingInfo } from './Catalog';
+import { styled } from '@mui/material';
+import { useAppSelector } from '../../../app/store';
 
 interface StyledCatalogItemProps {
 	level: number;
 	isCurrent: boolean;
 }
 
-const StyledCatalogItem = styled.div<StyledCatalogItemProps>`
-	position: relative;
-	margin: 3px ${(props) => `${(props.level - 1) * 1.5}em`};
-	padding-left: 1em;
-	margin-right: 0;
-	color: ${(props) => (props.isCurrent ? props.theme.primaryColor : 'inherit')};
-	transition: ${(props) => props.theme.transition};
-	cursor: pointer;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+const StyledCatalogItem = styled("div")<StyledCatalogItemProps>((props) => ({
+	position: "relative",
+	margin: `3px ${(props.level - 1) * 1.5}em`,
+	paddingLeft: `1em`,
+	marginRight: 0,
+	color: (props.isCurrent ? props.theme.palette.primary.main : 'inherit'),
+	cursor: "pointer",
+	overflow: "hidden",
+	textOverflow: "ellipsis",
+	whiteSpace: "nowrap",
 
-	&::before {
-		display: block;
-		position: absolute;
-		transform-origin: 0 0;
-		transform: translateX(-1em) ${(props) => (props.isCurrent ? '' : 'scaleY(0)')};
-		content: '';
-		width: 5px;
-		height: 1.2em;
-		border-radius: 4px;
-		background-color: ${(props) => props.theme.primaryColor};
-		transition: ${(props) => props.theme.transition};
-	}
+	"&::before": {
+		display: "block",
+		position: "absolute",
+		transformOrigin: `0 0`,
+		transform: `translateX(-1em) ${(props.isCurrent ? '' : 'scaleY(0)')}`,
+		content: '',
+		width: '5px',
+		height: '1.2em',
+		borderRadius: '4px',
+		backgroundColor: props.theme.palette.primary.main,
+	
+	},
 
-	&:active {
-		color: ${(props) => props.theme.activeColor};
-	}
+	"&:active": {
+		color: props.theme.palette.warning.main,
+	},
 
-	&:hover {
-		color: ${(props) => props.theme.hoverColor};
-	}
-`;
+	"&:hover": {
+		color: props.theme.palette.warning.main,
+	},
+}));
 
 export interface CatalogItemProps {
 	heading: HeadingInfo;
@@ -57,8 +55,8 @@ const CatalogItem: React.FC<CatalogItemProps> = (props) => {
 		currentHeadingElement?.scrollIntoView();
 	}, [heading.headingId]);
 
-	const currentHeadingId = useSelector(
-		(state: AppState) => state.contentPage.catalog.currentHeadingId,
+	const currentHeadingId = useAppSelector(
+		(state) => state.articlePage.catalog.currentHeadingId,
 	);
 
 	const [isCurrent, setIsCurrent] = useState(false);

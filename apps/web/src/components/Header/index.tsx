@@ -12,6 +12,9 @@ import { LoginButton } from './components/LoginButton';
 import { ToggleThemeButton } from './components/ToggleThemeButton';
 import { UserAvatar } from './components/UserAvatar';
 
+
+export const HeaderHeight = 60;
+
 const pages = [
   { title: '碳交易面板', link: '/chart' },
   { title: '碳导航', link: 'https://navi.co2.press/' },
@@ -29,6 +32,7 @@ export const Header = () => {
     <AppBar position="sticky" sx={{
       filter: 'opacity(0.7)',
       backdropFilter: 'blur(10px)',
+      height: `${HeaderHeight}px`, 
     }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>

@@ -4,6 +4,7 @@ import messageReducer from './message';
 import chartPageReducer from './pages/chart';
 import homePageReducer from './pages/home';
 import adminPageReducer from './pages/admin';
+import articlePageReducer from './pages/article';
 import themeModeReducer from './themeMode';
 import userReducer from './user';
 
@@ -13,6 +14,7 @@ export const store = configureStore({
     chartPage: chartPageReducer,
     homePage: homePageReducer,
     adminPage: adminPageReducer,
+    articlePage: articlePageReducer,
     user: userReducer,
     message: messageReducer,
   },

@@ -1,10 +1,7 @@
-import styled from 'styled-components';
-
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import { setHeadings } from '@/app/store/pages/contentPage';
 import { memo, useEffect } from 'react';
 import { HeadingExtension } from '../editor/extensions';
 import CatalogItem from './CatalogItem';
+import { Paper, styled } from '@mui/material';
 
 export interface HeadingInfo {
 	level: number;
@@ -16,35 +13,34 @@ interface StyledCatalogProps {
 	catalogVisible: boolean;
 }
 
-const StyledCatalog = styled.div<StyledCatalogProps>`
-	flex: 0 0 300px;
-	max-height: 550px;
-	background-color: ${(props) => props.theme.foregroundColor};
-	border-radius: 6.4px;
-	padding: 1em;
-	user-select: none;
-	position: sticky;
-	transition: ${(props) => props.theme.transition};
-	overflow-y: auto;
-	margin: 0 1em;
-	top: 2em;
-	overscroll-behavior: contain;
+const StyledCatalog = styled(Paper)<StyledCatalogProps>((props) => ({
+  flex: '0 0 300px',
+	maxHeight: '550px',
+	// backgroundColor: ${(props) => props.theme.foregroundColor};
+	borderRadius: '6.4px',
+	padding: '1em',
+	userSelect: 'none',
+	position: 'sticky',
+	overflowY: 'auto',
+	margin: '0 1em',
+	top: '2em',
+	overscrollBehavior: "contain",
 
-	@media (max-width: 1014px) {
-		z-index: 4;
-		position: fixed;
-		width: 300px;
-		margin: unset;
-		top: unset;
-		bottom: 160px;
-		right: 50%;
-		max-height: 450px;
-		transform: translate(50%, 0) ${(props) => (props.catalogVisible ? '' : 'scaleY(0)')};
-		opacity: ${(props) => (props.catalogVisible ? 1 : 0)};
-		background-color: ${(props) => props.theme.foregroundColor};
-		box-shadow: ${(props) => `0 0 6px ${props.theme.shadowColor}`};
-	}
-`;
+	// @media (max-width: 1014px) {
+	// 	z-index: 4;
+	// 	position: fixed;
+	// 	width: 300px;
+	// 	margin: unset;
+	// 	top: unset;
+	// 	bottom: 160px;
+	// 	right: 50%;
+	// 	max-height: 450px;
+	// 	transform: translate(50%, 0) ${(props) => (props.catalogVisible ? '' : 'scaleY(0)')};
+	// 	opacity: ${(props) => (props.catalogVisible ? 1 : 0)};
+	// 	background-color: ${(props) => props.theme.foregroundColor};
+	// 	box-shadow: ${(props) => `0 0 6px ${props.theme.shadowColor}`};
+	// }
+}));
 
 interface CatalogProps {}
 

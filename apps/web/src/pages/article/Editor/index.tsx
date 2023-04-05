@@ -1,13 +1,14 @@
 import { memo, useEffect, useRef } from 'react';
 
 import InsertTooltip from './tooltips/InsertTooltip';
-import SelectionCommentTooltip from './tooltips/selectionCommentTooltip';
 import { Paper , styled } from '@mui/material';
 import { Extension } from './extensions/type';
 import { Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { HandleDOMEvents } from './store';
+import { EditorStore, HandleDOMEvents } from './store';
 import { useAppDispatch } from '../../../app/store';
+import { presetNodeExtensions, presetPlainExtensions } from './extensions';
+import { setEditorStore } from '../../../app/store/pages/article';
 
 const EditorContainer = styled(Paper)((props) => ({
   flex: '1 1 760px',
@@ -160,7 +161,7 @@ export const Editor: React.FC<EditorProps> = (props) => {
           <InsertTooltip />
         </>
       )}
-      {!editable && <SelectionCommentTooltip />}
+      {/* {!editable && <SelectionCommentTooltip />} */}
     </EditorContainer>
   );
 };

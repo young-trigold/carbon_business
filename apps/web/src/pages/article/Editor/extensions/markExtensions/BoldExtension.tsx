@@ -68,7 +68,7 @@ export class BoldExtension extends MarkExtension {
 }
 
 declare global {
-	namespace EditorStore {
+	namespace Editor {
 		interface Commands {
 			bold: CommandType<BoldExtension>;
 		}

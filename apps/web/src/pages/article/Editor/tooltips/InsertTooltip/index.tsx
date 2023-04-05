@@ -1,68 +1,67 @@
-import { useAppSelector } from '@/app/store';
-import { ContentPageContext } from '@/app/store/pages/contentPage';
-import { memo, useCallback, useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { memo, useCallback, useEffect, useState } from 'react'
 
-import InsertOptionContainer from './InsertOptionContainer';
+import { styled } from '@mui/material'
+import { useAppSelector } from '../../../../../app/store'
+import InsertOptionContainer from './InsertOptionContainer'
 
 interface StyledInsertTooltipProps {
-	visible: boolean;
-	position: Pick<DOMRect, 'left' | 'top'>;
+	visible: boolean
+	position: Pick<DOMRect, 'left' | 'top'>
 }
 
-export const InsertTooltipWidth = 14;
-export const InsertTooltipHeight = 14;
+export const InsertTooltipWidth = 14
+export const InsertTooltipHeight = 14
 
-const StyledInsertTooltip = styled.div<StyledInsertTooltipProps>`
-	position: absolute;
-	width: ${() => `${InsertTooltipWidth}px`};
-	height: ${() => `${InsertTooltipHeight}px`};
-	left: 0;
-	top: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-	opacity: ${(props) => (props.visible ? 1 : 0)};
-	visibility: ${(props) => (props.visible ? 'unset' : 'hidden')};
-	transform: ${(props) =>
-		`translate(${props.position.left - InsertTooltipWidth / 2}px, ${props.position.top + 2}px)`};
-	border-radius: 50%;
-	border: 1px solid ${(props) => props.theme.borderColor};
-	box-shadow: 0 0 2px ${(props) => props.theme.shadowColor};
-	color: ${(props) => props.theme.warnColor};
-	background-color: ${(props) => props.theme.surfaceColor};
-	transition: ${(props) => props.theme.transition};
-	user-select: none;
-	z-index: 1;
-`;
+const StyledInsertTooltip = styled("div")<StyledInsertTooltipProps>((props) => ({
+  position: "absolute",
+	width: `${InsertTooltipWidth}px`,
+	height: `${InsertTooltipHeight}px`,
+	left: 0,
+	top: 0,
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+	cursor: "pointer",
+	opacity: (props.visible ? 1 : 0),
+	visibility:(props.visible ? 'unset' : 'hidden'),
+	transform:
+		`translate(${props.position.left - InsertTooltipWidth / 2}px, ${props.position.top + 2}px)`,
+	borderRadius: "50%",
+	// border: `1px solidprops.theme.borderColor`,
+	// boxShadow: `0 0 2px ${props.theme.shadowColor}`,
+	color: props.theme.palette.warning.main,
+	// backgroundColor: props.theme.surfaceColor,
+	// transition: props.theme.transition,
+	userSelect: "none",
+	zIndex: 1,
+}))
 
 interface InsertTooltipProps {}
 
 const InsertTooltip = (props: InsertTooltipProps) => {
-	const { insertTooltip } = useAppSelector((state) => state.contentPage.editor.plugin);
-	const { visible, position } = insertTooltip;
-	const [insertOptionContainerVisible, setInsertOptionContainerVisible] = useState(false);
+	const { insertTooltip } = useAppSelector((state) => state.articlePage.editor.plugin)
+	const { visible, position } = insertTooltip
+	const [insertOptionContainerVisible, setInsertOptionContainerVisible] = useState(false)
 
 	useEffect(() => {
-		setInsertOptionContainerVisible(false);
-	}, [position]);
+		setInsertOptionContainerVisible(false)
+	}, [position])
 
 	const handleInsertTooltipClicked: React.MouseEventHandler = useCallback((event) => {
-		event.stopPropagation();
-		setInsertOptionContainerVisible(true);
-	}, []);
+		event.stopPropagation()
+		setInsertOptionContainerVisible(true)
+	}, [])
 
 	useEffect(() => {
 		const handleClick = () => {
-			setInsertOptionContainerVisible(false);
-		};
-		window.addEventListener('click', handleClick);
+			setInsertOptionContainerVisible(false)
+		}
+		window.addEventListener('click', handleClick)
 
 		return () => {
-			window.removeEventListener('click', handleClick);
-		};
-	}, []);
+			window.removeEventListener('click', handleClick)
+		}
+	}, [])
 
 	return (
 		<>
@@ -75,7 +74,7 @@ const InsertTooltip = (props: InsertTooltipProps) => {
 			</StyledInsertTooltip>
 			{insertOptionContainerVisible && <InsertOptionContainer />}
 		</>
-	);
-};
+	)
+}
 
-export default memo(InsertTooltip);
+export default memo(InsertTooltip)

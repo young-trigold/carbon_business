@@ -1,16 +1,14 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import { useAppDispatch, useAppSelector } from '@/app/store';
-import { setCurrentHeadingId } from '@/app/store/pages/contentPage';
-import { HeaderHeight } from '@/components/Header';
 import getCurrentHeadingId from '../editor/utils/getCurrentHeadingId';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { styled } from '@mui/material';
+import { setCurrentHeadingId } from '../../../app/store/pages/article';
 
-const StyledContentContainer = styled.div`
-	max-height: ${() => `calc(100vh - ${HeaderHeight}px)`};
-	overflow: overlay;
-	scroll-padding-top: 2em;
-`;
+const StyledContentContainer = styled("div")(() => ({
+	maxHeight: `calc(100vh - ${36}px)`,
+	overflow: "overlay",
+	scrollPaddingTop: "2em",
+}));
 
 const ContentContainer: React.FC<PropsWithChildren> = (props) => {
 	const { children } = props;
@@ -23,7 +21,7 @@ const ContentContainer: React.FC<PropsWithChildren> = (props) => {
 		if (currentHeadingId) dispatch(setCurrentHeadingId(currentHeadingId));
 	};
 
-	const { catalog, editor } = useAppSelector((state) => state.contentPage);
+	const { catalog, editor } = useAppSelector((state) => state.articlePage);
 	const { headings } = catalog;
 	const { editorStore } = editor;
 	useEffect(() => {

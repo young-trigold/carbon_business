@@ -3,7 +3,7 @@ import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { PasteRule } from 'prosemirror-paste-rules';
 import { Command, PluginKey, Plugin as ProseMirrorPlugin } from 'prosemirror-state';
 import { NodeView, NodeViewConstructor } from 'prosemirror-view';
-import EditorStore from '../store';
+import {EditorStore} from '../store';
 
 export abstract class Extension {
 	editorStore: EditorStore | null = null;

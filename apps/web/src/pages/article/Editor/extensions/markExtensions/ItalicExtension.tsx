@@ -69,7 +69,7 @@ export class ItalicExtension extends MarkExtension {
 }
 
 declare global {
-	namespace EditorStore {
+	namespace Editor {
 		interface Commands {
 			italic: CommandType<ItalicExtension>;
 		}

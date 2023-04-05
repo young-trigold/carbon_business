@@ -17,11 +17,11 @@ export type HandleDOMEvents = {
 	) => void | boolean;
 };
 
-class EditorStore {
+export class EditorStore {
 	status: EditorStoreStatus = EditorStoreStatus.Init;
 	view: EditorView | null = null;
 	schema: Schema | null = null;
-	commands: EditorStore.Commands = {} as any;
+	commands: Editor.Commands = {} as any;
 	plugins: ProseMirrorPlugin[] = [];
 	markExtensions: MarkExtension[] = [];
 	nodeExtensions: NodeExtension[] = [];
@@ -86,14 +86,10 @@ class EditorStore {
 	}
 }
 
-export default EditorStore;
-
-declare global {
-	namespace EditorStore {
-		interface Commands {
-			[extensionName: string]: {
-				[commandName: string]: (...args: any[]) => void;
-			};
-		}
-	}
-}
+// declare class EditorStore {
+//   interface Commands {
+//     [extensionName: string]: {
+//       [commandName: string]: (...args: any[]) => void;
+//     };
+//   }
+// }

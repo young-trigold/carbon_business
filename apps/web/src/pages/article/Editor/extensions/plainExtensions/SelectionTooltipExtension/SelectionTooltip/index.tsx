@@ -1,7 +1,7 @@
-import store from '@/app/store';
 import { useCallback } from 'react';
-import styled from 'styled-components';
 import { HeadingDecoration } from './components/HeadingDecoration';
+import { styled } from '@mui/material';
+import { store } from '../../../../../../../app/store';
 
 interface StyledSelectionTooltipProps {
   visible: boolean;
@@ -11,54 +11,54 @@ interface StyledSelectionTooltipProps {
 export const SelectionTooltipWidth = 300;
 export const SelectionTooltipHeight = 34;
 
-const StyledSelectionTooltip = styled.div<StyledSelectionTooltipProps>`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: ${() => `${SelectionTooltipWidth}px`};
-  height: ${() => `${SelectionTooltipHeight}px`};
-  top: 0;
-  left: 0;
-  transform: ${(props) =>
+const StyledSelectionTooltip = styled('div')<StyledSelectionTooltipProps>((props) => ({
+  position: "absolute",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: `${SelectionTooltipWidth}px`,
+  height: `${SelectionTooltipHeight}px`,
+  top: 0,
+  left: 0,
+  transform:
     `translate(${props.position.left - SelectionTooltipWidth / 2}px, ${
       props.position.top - SelectionTooltipHeight - 4
-    }px)`};
-  visibility: ${(props) => (props.visible ? 'unset' : 'hidden')};
-  opacity: ${(props) => (props.visible ? 1 : 0)};
-  border-radius: 6.4px;
-  border: 1px solid ${(props) => props.theme.borderColor};
-  box-shadow: 0 0 6px ${(props) => props.theme.shadowColor};
-  background-color: ${(props) => props.theme.foregroundColor};
-  transition: ${(props) => props.theme.transition};
-  user-select: none;
-  padding: 1px;
-  z-index: 1;
-`;
+    }px)`,
+  visibility:(props.visible ? 'unset' : 'hidden'),
+  opacity: (props.visible ? 1 : 0),
+  borderRadius: '6.4px',
+  // border: `1px solid ${props.theme.borderColor}`,
+  // boxShadow: `0 0 6px ${props.theme.palette.}`,
+  // backgroundColor: 
+  // transition: ${(props) => props.theme.transition};
+  userSelect: 'none',
+  padding: '1px',
+  zIndex: 1,
+}));
 
-const StyledOption = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  font-size: 20px;
-  border-radius: 6.4px;
-  transition: ${(props) => props.theme.transition};
-  font-family: 'Times New Roman';
-  cursor: pointer;
+const StyledOption = styled('div')((props) => ({
+  display: "flex",
+  position: "relative",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "30px",
+  height: "30px",
+  fontSize: "20px",
+  borderRadius: "6.4px",
+  // transition: ${(props) => props.theme.transition};
+  fontFamily: 'Times New Roman',
+  cursor: "pointer",
 
-  :hover {
-    color: ${(props) => props.theme.foregroundColor};
-    background-color: ${(props) => props.theme.hoverColor};
-  }
+  // :hover {
+  //   /* color: ${(props) => props.theme.foregroundColor}; */
+  //   background-color: ${(props) => props.theme.hoverColor};
+  // }
 
-  :active {
-    color: ${(props) => props.theme.foregroundColor};
-    background-color: ${(props) => props.theme.activeColor};
-  }
-`;
+  // :active {
+  //   /* color: ${(props) => props.theme.foregroundColor}; */
+  //   backgroundColor: ${(props) => props.theme.activeColor};
+  // }
+}));
 
 interface SelectionTooltipProps {
   position: Pick<DOMRect, 'left' | 'top'>;
@@ -68,7 +68,7 @@ interface SelectionTooltipProps {
 export const SelectionTooltip = (props: SelectionTooltipProps) => {
   const { position, visible } = props;
   // console.debug(props);
-  const { editorStore } = store.getState().contentPage.editor;
+  const { editorStore } = store.getState().articlePage.editor;
 
   const handleToggleBold: React.MouseEventHandler<HTMLDivElement> = useCallback(() => {
     if (!editorStore) return;

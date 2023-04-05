@@ -1,11 +1,11 @@
-import store from '@/app/store';
-import themes from '@/app/theme/themes';
 import { PluginKey, PluginView } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { Root, createRoot } from 'react-dom/client';
-import { ThemeProvider } from 'styled-components';
 import { SelectionTooltipPluginState } from '.';
 import { SelectionTooltip } from './SelectionTooltip';
+import { ThemeProvider } from '@mui/material';
+import { store } from '../../../../../../app/store';
+import { themes } from '../../../../../../app/theme/themes';
 
 export class SelectionTooltipView implements PluginView {
   root: null | Root = null;
@@ -21,7 +21,7 @@ export class SelectionTooltipView implements PluginView {
   update(view: EditorView) {
     const { state } = view;
     const { selection } = state;
-    const { $head } = selection;
+    const { $head } = selection; 
     const cursorPositionToViewPort = view.coordsAtPos($head.pos);
     const editorContainerPositionToViewPort = view.dom.parentElement!.getBoundingClientRect();
     const { themeMode } = store.getState().themeMode;

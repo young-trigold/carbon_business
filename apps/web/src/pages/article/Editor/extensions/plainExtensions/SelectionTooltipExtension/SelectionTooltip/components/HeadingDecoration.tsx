@@ -1,72 +1,70 @@
-import store from '@/app/store';
+import { styled } from '@mui/material';
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import { store } from '../../../../../../../../app/store';
 
-const StyledHeadingOptionContainer = styled.div`
-  position: absolute;
-  top: 100%;
-  left: -50%;
-  white-space: nowrap;
-  background-color: ${(props) => props.theme.foregroundColor};
-  border-radius: 6.4px;
-  transition: ${(props) => props.theme.transition};
-  user-select: none;
-  font-size: 16px;
-  border: 1px solid ${(props) => props.theme.borderColor};
-  padding: 1px;
-  transform-origin: 0 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(1, 0);
-`;
+const StyledHeadingOptionContainer = styled('div')(() => ({
+  position: 'absolute',
+  top: '100%',
+  left: '-50%',
+  whiteSpace: 'nowrap',
+  // backgroundColor: ${(props) => props.theme.foregroundColor};
+  borderRadius: '6.4px',
+  // transition: ${(props) => props.theme.transition};
+  userSelect: 'none',
+  fontSize: '16px',
+  // border: 1px solid ${(props) => props.theme.borderColor};
+  padding: '1px',
+  transformOrigin: '0 0',
+  opacity: 0,
+  pointerEvents: 'none',
+  transform: 'scale(1, 0)',
+}));
 
-const StyledHeadingOption = styled.div`
-  padding: 2px 4px;
-  transition: ${(props) => props.theme.transition};
-  border-radius: 6.4px;
-  cursor: pointer;
+const StyledHeadingOption = styled('div')(() => ({
+  padding: ' 2px 4px',
+  // transition: ${(props) => props.theme.transition};
+  borderRadius: '6.4px',
+  cursor: 'pointer',
 
-  :hover {
-    color: ${(props) => props.theme.foregroundColor};
-    background-color: ${(props) => props.theme.hoverColor};
-  }
+  // :hover {
+  //   color: ${(props) => props.theme.foregroundColor};
+  //   background-color: ${(props) => props.theme.hoverColor};
+  // }
 
-  :active {
-    color: ${(props) => props.theme.foregroundColor};
-    background-color: ${(props) => props.theme.activeColor};
-  }
-`;
+  // :active {
+  //   color: ${(props) => props.theme.foregroundColor};
+  //   background-color: ${(props) => props.theme.activeColor};
+  // }
+}));
 
-const StyledHeadingDecoration = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 30px;
-  font-size: 20px;
-  border-radius: 6.4px;
-  transition: ${(props) => props.theme.transition};
-  
-  font-family: 'Times New Roman';
+const StyledHeadingDecoration = styled('div')(() => ({
+  display: 'flex',
+  position: 'relative',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '40px',
+  height: '30px',
+  fontSize: '20px',
+  borderRadius: '6.4px',
+  fontFamily: 'Times New Roman',
 
-  &:hover {
-    & ${StyledHeadingOptionContainer} {
-      opacity: unset;
-      pointer-events: unset;
-      transform: unset;
-    }
-  }
-`;
+  // &:hover {
+  //   & ${StyledHeadingOptionContainer} {
+  //     opacity: unset;
+  //     pointer-events: unset;
+  //     transform: unset;
+  //   }
+  // }
+}));
 
-const StyledSpan = styled.span`
-  :hover {
-    background-color: ${(props) => props.theme.surfaceColor};
-  }
-`;
+const StyledSpan = styled('span')((props) => ({
+  ':hover': {
+    backgroundColor: props.theme.palette.secondary.main,
+  },
+}));
 
 export const HeadingDecoration = () => {
-  const { editorStore } = store.getState().contentPage.editor;
+  const { editorStore } = store.getState().articlePage.editor;
 
   const toggleHeadingLevel1 = useCallback(() => {
     if (!editorStore?.view) return;

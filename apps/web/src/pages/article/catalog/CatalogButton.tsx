@@ -1,33 +1,27 @@
-import { memo, useCallback } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Fab } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { toggleCatalogVisible } from '../../../app/store/pages/article';
 
-import { toggleCatalogVisible } from '@/app/store/pages/contentPage';
-import { StyledFloatingActionButton } from '@/components/Button/FloatingActionButton';
-import ListIcon from '@/static/icon/list.png';
-import styled from 'styled-components';
+export const CatalogButton: React.FC = () => {
+  const dispatch = useDispatch();
 
-const StyledCatalogButton = styled(StyledFloatingActionButton)`
-	opacity: 0;
-	transform: scaleY(0);
+  const onClick = () => {
+    dispatch(toggleCatalogVisible());
+  };
 
-	@media (max-width: 1013.9px) {
-		opacity: 1;
-		transform: unset;
-	}
-`;
-
-const CatalogButton: React.FC = () => {
-	const dispatch = useDispatch();
-
-	const handleClick = useCallback(() => {
-		dispatch(toggleCatalogVisible());
-	}, [toggleCatalogVisible]);
-
-	return (
-		<StyledCatalogButton rect={{ right: 32, bottom: 110 }} onClick={handleClick}>
-			<img alt="目录" src={ListIcon} draggable={false} style={{ width: '100%' }} />
-		</StyledCatalogButton>
-	);
+  return (
+    <Fab
+      color="primary"
+      aria-label="menu"
+      sx={{
+        position: 'absolute',
+        right: '48px',
+        bottom: '48px',
+      }}
+      onClick={onClick}
+    >
+      <MenuIcon></MenuIcon>
+    </Fab>
+  );
 };
-
-export default memo(CatalogButton);
