@@ -2,6 +2,8 @@ import { memo, useEffect } from 'react';
 import { HeadingExtension } from '../editor/extensions';
 import CatalogItem from './CatalogItem';
 import { Paper, styled } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
+import { setHeadings } from '../../../app/store/pages/article';
 
 export interface HeadingInfo {
 	level: number;
@@ -45,10 +47,10 @@ const StyledCatalog = styled(Paper)<StyledCatalogProps>((props) => ({
 interface CatalogProps {}
 
 const Catalog: React.FC<CatalogProps> = (props) => {
-	const { visible: catalogVisible } = useAppSelector((state) => state.contentPage.catalog);
+	const { visible: catalogVisible } = useAppSelector((state) => state.articlePage.catalog);
 
 	// =============================== heading ===============================
-	const { catalog, editor } = useAppSelector((state) => state.contentPage);
+	const { catalog, editor } = useAppSelector((state) => state.articlePage);
 	const { headings } = catalog;
 	const { editorStore } = editor;
 

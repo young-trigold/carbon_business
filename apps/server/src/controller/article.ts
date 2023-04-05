@@ -13,6 +13,21 @@ export const addArticle = async (req: Request, res: Response) => {
   }
 };
 
+export const getArticleById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const article = await Article.findById(id);
+    if (!id) {
+      res.status(404).json({ message: '未找到该文章!' });
+    } else {
+      res.status(200).json({ article });
+    }
+  } catch (error) {
+    res.status(502).json(error);
+  }
+};
+
 export const getArticles = async (req: Request, res: Response) => {
   const { query } = req;
   const sample = Number.parseInt((query.sample as string) ?? '0', 10);

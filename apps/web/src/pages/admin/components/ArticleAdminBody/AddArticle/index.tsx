@@ -90,7 +90,7 @@ export const AddArticle = () => {
           };
         });
         console.debug(data.newArticle);
-        navigate(`/articles/${data.newArticle.id}`);
+        navigate(`/articles/edit/${data.newArticle.id}`);
       },
     },
   );

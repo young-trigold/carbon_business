@@ -14,6 +14,7 @@ export const RouterPart = () => {
         <Route path="/chart" element={<ChartPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/articles/:articleId" element={<ArticlePage editable={false} />} />
+        <Route path="/articles/edit/:articleId" element={<ArticlePage editable={true} />} />
       </Routes>
     </Router>
   );
