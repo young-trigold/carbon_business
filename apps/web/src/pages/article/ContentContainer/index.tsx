@@ -5,7 +5,7 @@ import { styled } from '@mui/material';
 import { setCurrentHeadingId } from '../../../app/store/pages/article';
 
 const StyledContentContainer = styled("div")(() => ({
-	maxHeight: `calc(100vh - ${36}px)`,
+	maxHeight: `calc(100vh - 60px)`,
 	overflow: "overlay",
 	scrollPaddingTop: "2em",
 }));

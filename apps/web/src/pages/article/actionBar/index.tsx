@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { memo, useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import PublishIcon from '@mui/icons-material/Publish';
+import { Fab } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 
 const ActionBar: React.FC = () => {
@@ -10,7 +11,7 @@ const ActionBar: React.FC = () => {
   const { hasLogin, userInfo } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  const handlePublish = useCallback(async () => {
+  const publish = useCallback(async () => {
     if (!hasLogin) {
       // dispatch(openModal(CurrentModal.Login));
       // message.warn('请先登录!');
@@ -50,15 +51,34 @@ const ActionBar: React.FC = () => {
   }, [editorStore, hasLogin, userInfo, articleId]);
 
   const navigate = useNavigate();
+
   // const handleCancel = useCallback(() => {
   //   navigate(`/${isChapter ? 'chapters' : 'articles'}/${articleId}`);
   // }, [isChapter, articleId]);
 
   return (
     <aside>
-     
+      <Fab
+        color="primary"
+        aria-label="publish"
+        // sx={{
+        //   position: 'absolute',
+        //   right: '48px',
+        //   bottom: '48px',
+        //   opacity: 0,
+        //   transform: 'scaleY(0)',
+
+        //   '@media (max-width: 1013.9px)': {
+        //     opacity: 1,
+        //     transform: 'unset',
+        //   },
+        // }}
+        onClick={publish}
+      >
+        <PublishIcon></PublishIcon>
+      </Fab>
     </aside>
   );
 };
 
-export default (ActionBar);
+export default ActionBar;

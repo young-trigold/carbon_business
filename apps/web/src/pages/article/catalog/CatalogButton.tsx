@@ -18,6 +18,13 @@ export const CatalogButton: React.FC = () => {
         position: 'absolute',
         right: '48px',
         bottom: '48px',
+        opacity: 0,
+        transform: "scaleY(0)",
+      
+       "@media (max-width: 1013.9px)": {
+          opacity: 1,
+          transform: "unset",
+        },
       }}
       onClick={onClick}
     >
