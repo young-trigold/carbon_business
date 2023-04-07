@@ -9,9 +9,45 @@ const lightTheme = createTheme(
       contrastThreshold: 4.5,
       background: {
         default: '#f4f5f5',
+        paper: '#ffffff',
       },
       primary: {
-        main: '#66bb6a',
+        main: '#81c784',
+      },
+      secondary: {
+        main: '#ffa733',
+      },
+      action: {
+        hover: '#66bb6a',
+        focus: '#4caf50',
+        active: '#43a047',
+      },
+
+    },
+    transitions: {
+      duration: {
+        shortest: 150,
+        shorter: 200,
+        short: 250,
+        // most basic recommended timing
+        standard: 300,
+        // this is to be used in complex animations
+        complex: 375,
+        // recommended when something is entering screen
+        enteringScreen: 225,
+        // recommended when something is leaving screen
+        leavingScreen: 195,
+      },
+      easing: {
+        // This is the most common easing curve.
+        easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        // Objects enter the screen at full velocity from off-screen and
+        // slowly decelerate to a resting point.
+        easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
+        // Objects leave the screen at full velocity. They do not decelerate when off-screen.
+        easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+        // The sharp curve is used by objects that may return to the screen at any time.
+        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
       },
     },
   },
@@ -25,47 +61,49 @@ const darkTheme = createTheme(
       contrastThreshold: 4.5,
       background: {
         default: '#1b1b1d',
+        paper: '#242526',
       },
       primary: {
-        main: '#388e3c',
+        main: '#43a047',
+      },
+      secondary: {
+        main: '#ff9100',
+      },
+      action: {
+        hover: '#388e3c',
+        focus: '#2e7d32',
+        active: '#1b5e20',
+      },
+    },
+    transitions: {
+      duration: {
+        shortest: 150,
+        shorter: 200,
+        short: 250,
+        // most basic recommended timing
+        standard: 300,
+        // this is to be used in complex animations
+        complex: 375,
+        // recommended when something is entering screen
+        enteringScreen: 225,
+        // recommended when something is leaving screen
+        leavingScreen: 195,
+      },
+      easing: {
+        // This is the most common easing curve.
+        easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        // Objects enter the screen at full velocity from off-screen and
+        // slowly decelerate to a resting point.
+        easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
+        // Objects leave the screen at full velocity. They do not decelerate when off-screen.
+        easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+        // The sharp curve is used by objects that may return to the screen at any time.
+        sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
       },
     },
   },
   zhCN,
 );
-
-// const themes: Themes = {
-//   light: {
-//     primaryColor: '#1890ff',
-//     hoverColor: '#40a9ff',
-//     activeColor: '#096dd9',
-//     backgroundColor: '#f4f5f5',
-//     foregroundColor: '#ffffff',
-//     surfaceColor: '#f2f2f2',
-//     textColor: '#1c1e21',
-//     successColor: '#52c41a',
-//     warnColor: '#faad14',
-//     dangeColor: '#ff4d4f',
-//     shadowColor: 'rgb(0 0 0 / 0.1)',
-//     borderColor: '#dadde1',
-//     transition: 'all 0.3s cubic-bezier(0.34, 0.69, 0.1, 1)',
-//   },
-//   dark: {
-//     primaryColor: '#67d6ed',
-//     hoverColor: '#95e2f2',
-//     activeColor: '#19b5d5',
-//     backgroundColor: '#1b1b1d',
-//     foregroundColor: '#242526',
-//     surfaceColor: '#2f3031',
-//     textColor: '#e3e3e3',
-//     successColor: '#73d13d',
-//     warnColor: '#ffec3d',
-//     dangeColor: '#fa541c',
-//     shadowColor: 'rgb(0 0 0/0.4)',
-//     borderColor: '#606770',
-//     transition: 'all 0.3s cubic-bezier(0.34, 0.69, 0.1, 1)',
-//   },
-// };
 
 export const themes: Record<ThemeMode, Theme> = {
   light: lightTheme,

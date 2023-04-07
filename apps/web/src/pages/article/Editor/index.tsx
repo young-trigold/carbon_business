@@ -149,8 +149,8 @@ export const Editor: React.FC<EditorProps> = (props) => {
     dispatch(setEditorStore(editorStore));
 
     return () => {
-      editorView.destroy();
       dispatch(setEditorStore(null));
+      editorView.destroy();
     };
   }, []);
 

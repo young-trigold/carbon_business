@@ -3,6 +3,9 @@ import { GlobalStyles, Theme } from '@mui/material';
 export const Styles = () => {
   const styles = (theme: Theme) => {
     return {
+      "*": {
+        outline: 'none !important',
+      },
       a: {
         textDecoration: `none`,
         color: "inherit",

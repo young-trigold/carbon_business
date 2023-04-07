@@ -1,8 +1,7 @@
 import { styled } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../../../../app/store';
 import InsertLinkOption from './InsertLinkOption';
 import InsertPictureOption from './InsertPictureOption';
-import { useAppSelector } from '../../../../../../app/store';
 
 interface StyledInsertOptionContainerProps {
   position: Partial<DOMRect>;
@@ -10,37 +9,29 @@ interface StyledInsertOptionContainerProps {
 
 const StyledInsertOptionContainer = styled('div')<StyledInsertOptionContainerProps>((props) => ({
   position: 'absolute',
-  // border: 1px solid ${(props) => props.theme.borderColor};
   borderRadius: '6.4px',
-  // box-shadow: 0 0 6px ${(props) => props.theme.shadowColor};
-  // background-color: ${(props) => props.theme.foregroundColor};
+  boxShadow: props.theme.shadows[2],
+  backgroundColor: props.theme.palette.background.paper,
   top: 0,
   left: 0,
-  width: '150px',
   transform: `translate(${props.position.left}px, ${props.position.top}px)`,
-  // transition: ${(props) => props.theme.transition};
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
   userSelect: 'none',
   zIndex: 9,
 }));
 
 export const StyledOption = styled('div')((props) => ({
-  display: 'flex',
-  padding: '0.5em',
-  borderRadius: ' 6.4px',
+  borderRadius: '6.4px',
   cursor: 'pointer',
-
-  '& > *': {
-    marginRight: '1em',
-  },
+  margin: '4px',
+  padding: '4px 0.5em',
 
   '&:hover': {
-    // color: ${(props) => props.theme.hoverColor};
-    // background-color: ${(props) => props.theme.surfaceColor};
+    backgroundColor: props.theme.palette.action.hover,
   },
 
   '&:active': {
-    // color: ${(props) => props.theme.activeColor};
-    // background-color: ${(props) => props.theme.surfaceColor};
+    backgroundColor: props.theme.palette.action.active,
   },
 }));
 

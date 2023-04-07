@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { Article } from 'lib';
 import { useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { client } from '../../../../../../App';
 import { useAppDispatch, useAppSelector } from '../../../../../../app/store';
 import { setMessageState } from '../../../../../../app/store/message';
@@ -74,9 +75,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
 
   const dispatch = useAppDispatch();
 
-  const { curPage, pageSize } = useAppSelector(
-    (state) => state.adminPage.bodies.articleBody,
-  );
+  const { curPage, pageSize } = useAppSelector((state) => state.adminPage.bodies.articleBody);
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
@@ -146,6 +145,12 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
     },
   );
 
+  const navigate = useNavigate();
+
+  const goEditArticlePage = () => {
+    navigate(`/articles/edit/${article.id}`);
+  };
+
   return (
     <TableRow key={article.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
       <TableCell component="th" scope="row">
@@ -165,13 +170,19 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         ></TextField>
       </TableCell>
       <TableCell>
-        <TextField
-          onChange={onLinkChange}
-          multiline
-          maxRows={4}
-          variant="standard"
-          value={formState.link}
-        ></TextField>
+        {formState.link ? (
+          <TextField
+            onChange={onLinkChange}
+            multiline
+            maxRows={4}
+            variant="standard"
+            value={formState.link}
+          ></TextField>
+        ) : (
+          <Button variant="outlined" onClick={goEditArticlePage}>
+            修改内容
+          </Button>
+        )}
       </TableCell>
       <TableCell>
         <Box

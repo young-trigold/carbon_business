@@ -1,63 +1,53 @@
-import { useCallback } from 'react';
-import { HeadingDecoration } from './components/HeadingDecoration';
 import { styled } from '@mui/material';
+import { useCallback } from 'react';
 import { store } from '../../../../../../../app/store';
+import { HeadingDecoration } from './components/HeadingDecoration';
 
 interface StyledSelectionTooltipProps {
   visible: boolean;
   position: Pick<DOMRect, 'left' | 'top'>;
 }
 
-export const SelectionTooltipWidth = 300;
-export const SelectionTooltipHeight = 34;
-
 const StyledSelectionTooltip = styled('div')<StyledSelectionTooltipProps>((props) => ({
-  position: "absolute",
+  position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  width: `${SelectionTooltipWidth}px`,
-  height: `${SelectionTooltipHeight}px`,
+  width: 'fit-content',
   top: 0,
   left: 0,
-  transform:
-    `translate(${props.position.left - SelectionTooltipWidth / 2}px, ${
-      props.position.top - SelectionTooltipHeight - 4
-    }px)`,
-  visibility:(props.visible ? 'unset' : 'hidden'),
-  opacity: (props.visible ? 1 : 0),
+  transform: `translate(calc(${props.position.left}px - 50%), calc(${props.position.top}px - 100% - 10px))`,
+  visibility: props.visible ? 'unset' : 'hidden',
+  opacity: props.visible ? 1 : 0,
   borderRadius: '6.4px',
-  // border: `1px solid ${props.theme.borderColor}`,
-  // boxShadow: `0 0 6px ${props.theme.palette.}`,
-  // backgroundColor: 
-  // transition: ${(props) => props.theme.transition};
+  boxShadow: props.theme.shadows[2],
+  backgroundColor: props.theme.palette.background.paper,
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
   userSelect: 'none',
-  padding: '1px',
   zIndex: 1,
 }));
 
 const StyledOption = styled('div')((props) => ({
-  display: "flex",
-  position: "relative",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "30px",
-  height: "30px",
-  fontSize: "20px",
-  borderRadius: "6.4px",
-  // transition: ${(props) => props.theme.transition};
+  display: 'flex',
+  position: 'relative',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '30px',
+  height: '30px',
+  margin: '4px',
+  fontSize: '20px',
+  borderRadius: '6.4px',
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
   fontFamily: 'Times New Roman',
-  cursor: "pointer",
+  cursor: 'pointer',
 
-  // :hover {
-  //   /* color: ${(props) => props.theme.foregroundColor}; */
-  //   background-color: ${(props) => props.theme.hoverColor};
-  // }
+  ':hover': {
+    backgroundColor: props.theme.palette.action.hover,
+  },
 
-  // :active {
-  //   /* color: ${(props) => props.theme.foregroundColor}; */
-  //   backgroundColor: ${(props) => props.theme.activeColor};
-  // }
+  ':active': {
+    backgroundColor: props.theme.palette.action.active,
+  },
 }));
 
 interface SelectionTooltipProps {

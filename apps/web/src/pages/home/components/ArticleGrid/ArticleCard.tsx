@@ -1,11 +1,15 @@
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
 import { Article } from 'lib';
+import { useNavigate } from 'react-router-dom';
 
 export const ArticleCard: React.FC<Article> = (props) => {
-  const { title, subtitle, source, date, backgroundImgURL, link } = props;
+  const { title, subtitle, source, date, backgroundImgURL, link , id } = props;
+
+  const navigate = useNavigate();
 
   const onClick = () => {
-    window.open(link);
+    if(link) window.open(link);
+    else navigate(`articles/${id}`);
   };
 
   return (
@@ -23,10 +27,12 @@ export const ArticleCard: React.FC<Article> = (props) => {
           sx={{
             padding: '0.5em',
             backgroundImage: `url(${backgroundImgURL})`,
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPositionY: 'center'
           }}
         />
-        <CardContent sx={{ padding: '0.5em' }}>
+        <CardContent sx={{ padding: '0.5em', flexGrow: 1}}>
           <Stack>
             <Typography variant="h6">
               {title.length > 30 ? title.slice(0, 30) + '...' : title}

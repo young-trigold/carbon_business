@@ -2,39 +2,37 @@ import { styled } from '@mui/material';
 import { useCallback } from 'react';
 import { store } from '../../../../../../../../app/store';
 
-const StyledHeadingOptionContainer = styled('div')(() => ({
+const StyledHeadingOptionContainer = styled('div')((props) => ({
   position: 'absolute',
   top: '100%',
   left: '-50%',
   whiteSpace: 'nowrap',
-  // backgroundColor: ${(props) => props.theme.foregroundColor};
+  backgroundColor: props.theme.palette.background.paper,
   borderRadius: '6.4px',
-  // transition: ${(props) => props.theme.transition};
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
   userSelect: 'none',
   fontSize: '16px',
-  // border: 1px solid ${(props) => props.theme.borderColor};
   padding: '1px',
   transformOrigin: '0 0',
   opacity: 0,
   pointerEvents: 'none',
   transform: 'scale(1, 0)',
+  boxShadow: props.theme.shadows[2],
 }));
 
-const StyledHeadingOption = styled('div')(() => ({
+const StyledHeadingOption = styled('div')((props) => ({
   padding: ' 2px 4px',
-  // transition: ${(props) => props.theme.transition};
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
   borderRadius: '6.4px',
   cursor: 'pointer',
 
-  // :hover {
-  //   color: ${(props) => props.theme.foregroundColor};
-  //   background-color: ${(props) => props.theme.hoverColor};
-  // }
+  ':hover': {
+    backgroundColor: props.theme.palette.action.hover,
+  },
 
-  // :active {
-  //   color: ${(props) => props.theme.foregroundColor};
-  //   background-color: ${(props) => props.theme.activeColor};
-  // }
+  ':active': {
+    backgroundColor: props.theme.palette.action.active,
+  },
 }));
 
 const StyledHeadingDecoration = styled('div')(() => ({
@@ -48,18 +46,12 @@ const StyledHeadingDecoration = styled('div')(() => ({
   borderRadius: '6.4px',
   fontFamily: 'Times New Roman',
 
-  // &:hover {
-  //   & ${StyledHeadingOptionContainer} {
-  //     opacity: unset;
-  //     pointer-events: unset;
-  //     transform: unset;
-  //   }
-  // }
-}));
-
-const StyledSpan = styled('span')((props) => ({
-  ':hover': {
-    backgroundColor: props.theme.palette.secondary.main,
+  '&:hover': {
+    '&>div': {
+      opacity: 'unset',
+      pointerEvents: 'unset',
+      transform: 'unset',
+    },
   },
 }));
 
@@ -86,7 +78,7 @@ export const HeadingDecoration = () => {
 
   return (
     <StyledHeadingDecoration>
-      <StyledSpan>H</StyledSpan>
+      <span>H</span>
       <StyledHeadingOptionContainer>
         <StyledHeadingOption onClick={toggleHeadingLevel1}>
           <span>1 级标题</span>

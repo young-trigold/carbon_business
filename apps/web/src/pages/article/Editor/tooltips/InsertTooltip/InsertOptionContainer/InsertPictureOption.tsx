@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { memo, useRef } from 'react';
 
-import PictureIconSrc from '@/static/icon/picture.png';
 import { StyledOption } from '.';
 import { useAppDispatch, useAppSelector } from '../../../../../../app/store';
 
@@ -43,7 +42,6 @@ const InsertPictureOption = () => {
 
 	return (
 		<StyledOption onClick={handleOptionClick}>
-			<img src={PictureIconSrc} alt="图片" width={24} />
 			<span>插入图片</span>
 			<input
 				ref={inputFileRef}

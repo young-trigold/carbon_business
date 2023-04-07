@@ -16,7 +16,8 @@ import {
 } from '../../app/store/pages/article';
 import { Header } from '../../components/Header';
 import ContentContainer from './ContentContainer';
-import { Catalog } from './catalog';
+import ActionBar from './actionBar';
+import { Catalog, CatalogButton } from './catalog';
 import { Editor } from './editor';
 import {
   BoldExtension,
@@ -183,8 +184,8 @@ export const ArticlePage: React.FC<ContentPageProps> = (props) => {
             handleDOMEvents={handleDOMEvents}
           />
           {/* <CommentList /> */}
-          {/* {editable && <ActionBar />}
-            <CatalogButton /> */}
+          {editable && <ActionBar />}
+          <CatalogButton />
         </MainContainer>
         {/* <Footer /> */}
       </ContentContainer>

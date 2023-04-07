@@ -32,13 +32,14 @@ const StyledCatalogItem = styled('div')<StyledCatalogItemProps>((props) => ({
     backgroundColor: props.theme.palette.primary.main,
   },
 
-  '&:active': {
-    color: props.theme.palette.warning.main,
+  '&:hover': {
+    color: props.theme.palette.action.hover,
   },
 
-  '&:hover': {
-    color: props.theme.palette.warning.main,
+  '&:active': {
+    color: props.theme.palette.action.active,
   },
+
 }));
 
 export interface CatalogItemProps {
