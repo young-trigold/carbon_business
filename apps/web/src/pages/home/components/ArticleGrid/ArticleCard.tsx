@@ -3,36 +3,30 @@ import { Article } from 'lib';
 import { useNavigate } from 'react-router-dom';
 
 export const ArticleCard: React.FC<Article> = (props) => {
-  const { title, subtitle, source, date, backgroundImgURL, link , id } = props;
+  const { title, subtitle, source, date, backgroundImgURL, link, id } = props;
 
   const navigate = useNavigate();
 
   const onClick = () => {
-    if(link) window.open(link);
+    if (link) window.open(link);
     else navigate(`articles/${id}`);
   };
 
   return (
     <Card
       sx={{
-        height: '160px',
         cursor: 'pointer',
-        margin: '0.5em 0'
+        margin: '0.5em 0',
+        overflow: 'hidden',
       }}
       onClick={onClick}
     >
       <Stack direction="row">
-        <Box
-          width={350}
-          sx={{
-            padding: '0.5em',
-            backgroundImage: `url(${backgroundImgURL})`,
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPositionY: 'center'
-          }}
-        />
-        <CardContent sx={{ padding: '0.5em', flexGrow: 1}}>
+        <Box sx={{ display: 'flex' }} margin="0.5em">
+          <img src={backgroundImgURL} width={200} />
+        </Box>
+
+        <CardContent sx={{ flexGrow: 1 }}>
           <Stack>
             <Typography variant="h6">
               {title.length > 30 ? title.slice(0, 30) + '...' : title}

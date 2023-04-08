@@ -18,7 +18,6 @@ interface StyledCatalogProps {
 const StyledCatalog = styled(Paper)<StyledCatalogProps>((props) => ({
   flex: '0 0 300px',
   maxHeight: '550px',
-  // backgroundColor: ${(props) => props.theme.foregroundColor};
   borderRadius: '6.4px',
   padding: '1em',
   userSelect: 'none',
@@ -27,6 +26,7 @@ const StyledCatalog = styled(Paper)<StyledCatalogProps>((props) => ({
   margin: '0 1em',
   top: '2em',
   overscrollBehavior: 'contain',
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
 
   '@media (max-width: 1014px)': {
     zIndex: 4,

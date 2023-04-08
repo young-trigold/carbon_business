@@ -85,7 +85,7 @@ export const updateArticle = async (req: Request, res: Response) => {
   const data = req.body;
   try {
     const article = await Article.findByIdAndUpdate(id, data);
-    res.status(200).json({ message: '删除成功', article });
+    res.status(200).json({ message: '更新成功!', article });
   } catch (error) {
     res.status(502).json(error);
   }

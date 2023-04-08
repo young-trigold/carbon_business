@@ -1,21 +1,22 @@
-import { memo, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-import InsertTooltip from './tooltips/InsertTooltip';
-import { Paper , styled } from '@mui/material';
-import { Extension } from './extensions/type';
+import { Paper, styled } from '@mui/material';
 import { Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { EditorStore, HandleDOMEvents } from './store';
 import { useAppDispatch } from '../../../app/store';
-import { presetNodeExtensions, presetPlainExtensions } from './extensions';
 import { setEditorStore } from '../../../app/store/pages/article';
+import { presetNodeExtensions, presetPlainExtensions } from './extensions';
+import { Extension } from './extensions/type';
+import { EditorStore, HandleDOMEvents } from './store';
+import InsertTooltip from './tooltips/InsertTooltip';
 
 const EditorContainer = styled(Paper)((props) => ({
   flex: '1 1 760px',
   minWidth: '350px',
   minHeight: 'calc(100vh - 300px)',
   zIndex: 2,
-  position: "relative",
+  position: 'relative',
+  margin: '1em',
   // backgroundColor: props.theme.foregroundColor,
   // background-image: linear-gradient(
   //     to right,
@@ -28,58 +29,55 @@ const EditorContainer = styled(Paper)((props) => ({
   borderRadius: '6.4px',
   padding: '1.5em 2em 0.5em 2em',
   overflowWrap: 'break-word',
-  // caret-color: ${(props) => props.theme.warnColor};
+  caretColor: props.theme.palette.warning.main,
 
-  // @media (max-width: 530px) {
-  //   border-radius: 0;
-  //   padding: 1.5em 1em 0.5em 1em;
-  // }
+  '@media (max-width: 530px)': {
+    borderRadius: 0,
+    padding: '1.5em 1em 0.5em 1em',
+  },
 
   // 上下标
   'sub, sup': {
     fontSize: '8px',
-    position: "relative",
-    verticalAlign: "unset",
+    position: 'relative',
+    verticalAlign: 'unset',
   },
 
-  "sup": {
+  sup: {
     bottom: '0.6em',
   },
 
   // 下划线
-  'u': {
+  u: {
     textDecorationColor: props.theme.palette.primary.main,
   },
 
   // 段落
-  // p {
-  //   text-indent: 2em;
+  p: {
+    textIndent: '2em',
 
-  //   & img {
-  //     display: block;
-  //     margin: 0 auto;
-  //     max-width: 100%;
-  //   }
+    '& img': {
+      display: 'block',
+      margin: '0 auto',
+      maxWidth: '100%',
+    },
 
-  //   & code {
-  //     font-size: 14px;
-  //     font-style: italic;
-  //     font-weight: bold;
-  //     color: ${(props) => props.theme.activeColor};
-  //     background-color: ${(props) => props.theme.foregroundColor};
-  //     font-family: 'source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace';
-  //     border-radius: 4px;
-  //     transition: ${(props) => props.theme.transition};
-  //   }
-  // }
+    '& code': {
+      fontSize: '14px',
+      fontStyle: 'italic',
+      fontWeight: 'bold',
+      color: props.theme.palette.primary.main,
+      fontFamily: 'source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace',
+      borderRadius: '4px',
+    },
+  },
 
-  // // 列表
-  // ol,
-  // ul {
-  //   & p {
-  //     text-indent: unset;
-  //   }
-  // }
+  // 列表
+  'ol,ul': {
+    '& p': {
+      textIndent: 'unset',
+    },
+  },
 
   // // 代码块
   // .cm-editor {
@@ -149,8 +147,8 @@ export const Editor: React.FC<EditorProps> = (props) => {
     dispatch(setEditorStore(editorStore));
 
     return () => {
-      dispatch(setEditorStore(null));
       editorView.destroy();
+      dispatch(setEditorStore(null));
     };
   }, []);
 
@@ -165,4 +163,3 @@ export const Editor: React.FC<EditorProps> = (props) => {
     </EditorContainer>
   );
 };
-

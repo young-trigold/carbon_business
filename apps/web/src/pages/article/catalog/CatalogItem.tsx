@@ -19,6 +19,7 @@ const StyledCatalogItem = styled('div')<StyledCatalogItemProps>((props) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+  transition: `${props.theme.transitions.duration.standard}ms ${props.theme.transitions.easing.easeOut}`,
 
   '&::before': {
     display: 'block',

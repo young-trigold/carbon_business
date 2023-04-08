@@ -41,8 +41,7 @@ const StyledContentPage = styled('div')(() => ({
   maxHeight: '100%',
   position: 'relative',
   whiteSpace: 'pre-wrap',
-  // backgroundColor: ${(props) => props.theme.backgroundColor};
-  // transition: ${(props) => props.theme.transition};
+  height: '100vh',
 }));
 
 const MainContainer = styled('main')(() => ({
@@ -90,21 +89,23 @@ export const ArticlePage: React.FC<ContentPageProps> = (props) => {
   const selectionTooltipExtension = useMemo(() => new SelectionTooltipExtension(), []);
 
   const extensions = useMemo(
-    () => [
-      new BoldExtension(),
-      new ItalicExtension(),
-      new UnderlineExtension(),
-      new LinkExtension(),
-      new SubExtension(),
-      new SupExtension(),
-      new CodeExtension(),
-      new HeadingExtension(),
-      new CodeBlockExtension(),
-      new ImageExtension(),
-      ...ListExtensions.map((Extension) => new Extension()),
-      ...TableExtensions.map((Extension) => new Extension()),
-      selectionTooltipExtension,
-    ],
+    () => {
+      const base = [
+        new BoldExtension(),
+        new ItalicExtension(),
+        new UnderlineExtension(),
+        new LinkExtension(),
+        new SubExtension(),
+        new SupExtension(),
+        new CodeExtension(),
+        new HeadingExtension(),
+        new CodeBlockExtension(),
+        new ImageExtension(),
+        ...ListExtensions.map((Extension) => new Extension()),
+        ...TableExtensions.map((Extension) => new Extension()),
+      ];
+      return editable ? [...base, selectionTooltipExtension] : base;
+    }, 
     [],
   );
 
@@ -157,14 +158,13 @@ export const ArticlePage: React.FC<ContentPageProps> = (props) => {
     error,
     data: item,
   } = useQuery({
-    queryKey: [articleId],
+    queryKey: ['articles', articleId],
     queryFn: async () => {
       const url = `/api/articles/${articleId}`;
-      const res = await axios.get<Article>(url);
-      return res.data;
+      const res = await axios.get<{ article: Article }>(url);
+      return res.data.article;
     },
   });
-  // useDocumentTitle(`${isChapter ? '章节' : '文章'} - ${item?.title}`, [item?.title]);
 
   if (isLoading) return <Skeleton />;
   if (isError) return <span>{(error as Error).message}</span>;
@@ -184,11 +184,12 @@ export const ArticlePage: React.FC<ContentPageProps> = (props) => {
             handleDOMEvents={handleDOMEvents}
           />
           {/* <CommentList /> */}
-          {editable && <ActionBar />}
+
           <CatalogButton />
         </MainContainer>
         {/* <Footer /> */}
       </ContentContainer>
+      {editable && <ActionBar />}
     </StyledContentPage>
   );
 };
