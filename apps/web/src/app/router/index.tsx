@@ -1,9 +1,12 @@
+import { Skeleton } from '@mui/material';
+import { Suspense, lazy } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import NotFoundPage from '../../pages/404';
-import { ChartPage } from '../../pages/chart';
 import { HomePage } from '../../pages/home';
-import { ArticlePage } from '../../pages/article';
-import { AdminPage } from '../../pages/admin';
+
+const ChartPage = lazy(() => import('../../pages/chart'));
+const AdminPage = lazy(() => import('../../pages/admin'));
+const ArticlePage = lazy(() => import('../../pages/article'));
 
 export const RouterPart = () => {
   return (
@@ -11,10 +14,38 @@ export const RouterPart = () => {
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/chart" element={<ChartPage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/articles/:articleId" element={<ArticlePage editable={false} />} />
-        <Route path="/articles/edit/:articleId" element={<ArticlePage editable={true} />} />
+        <Route
+          path="/chart"
+          element={
+            <Suspense fallback={<Skeleton />}>
+              <ChartPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={<Skeleton />}>
+              <AdminPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/:articleId"
+          element={
+            <Suspense fallback={<Skeleton />}>
+              <ArticlePage editable={false} />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/edit/:articleId"
+          element={
+            <Suspense fallback={<Skeleton />}>
+              <ArticlePage editable={true} />
+            </Suspense>
+          }
+        />
       </Routes>
     </Router>
   );

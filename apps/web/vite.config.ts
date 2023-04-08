@@ -36,9 +36,18 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:80',
+        changeOrigin: true,
+      },
+    },
+  },
   build: {
     outDir: '../server/build/public',
     emptyOutDir: true,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',

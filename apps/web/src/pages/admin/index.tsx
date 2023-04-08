@@ -8,7 +8,7 @@ import { RecordAdminBody } from './components/RecordAdminBody';
 
 const bodies = [<ArticleAdminBody />, <RecordAdminBody />];
 
-export const AdminPage: React.FC = () => {
+const AdminPage: React.FC = () => {
   const { currentBodyIndex } = useAppSelector((state) => state.adminPage);
 
   const currentBody = useMemo(() => bodies[currentBodyIndex], [currentBodyIndex]);
@@ -31,3 +31,5 @@ export const AdminPage: React.FC = () => {
     </Stack>
   );
 };
+
+export default AdminPage;

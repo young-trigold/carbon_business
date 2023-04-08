@@ -54,7 +54,7 @@ interface ContentPageProps {
   editable: boolean;
 }
 
-export const ArticlePage: React.FC<ContentPageProps> = (props) => {
+const ArticlePage: React.FC<ContentPageProps> = (props) => {
   const { editable } = props;
   const { articleId } = useParams();
   const dispatch = useAppDispatch();
@@ -193,3 +193,5 @@ export const ArticlePage: React.FC<ContentPageProps> = (props) => {
     </StyledContentPage>
   );
 };
+
+export default ArticlePage;

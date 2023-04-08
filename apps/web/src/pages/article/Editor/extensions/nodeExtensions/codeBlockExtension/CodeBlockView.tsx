@@ -50,11 +50,11 @@ export class CodeBlockView implements NodeView {
 
   codeMirrorView: CodeMirrorView;
 
-  getPos: () => number;
+  getPos: () => number | undefined;
 
   updating = false;
 
-  constructor(node: ProseMirrorNode, view: ProseMirrorView, getPos: () => number) {
+  constructor(node: ProseMirrorNode, view: ProseMirrorView, getPos: () => number | undefined) {
     this.node = node;
     this.view = view;
     this.getPos = getPos;
@@ -123,7 +123,7 @@ export class CodeBlockView implements NodeView {
   }
 
   asProseMirrorSelection(doc: ProseMirrorNode) {
-    const offset = this.getPos() + 1;
+    const offset = this.getPos() ?? 0 + 1;
     const { anchor, head } = this.codeMirrorView.state.selection.main;
     return TextSelection.create(doc, anchor + offset, head + offset);
   }
@@ -132,7 +132,7 @@ export class CodeBlockView implements NodeView {
     this.codeMirrorView.setState(cmTr.state);
 
     if (cmTr.docChanged && !this.updating) {
-      const start = this.getPos() + 1;
+      const start = this.getPos() ?? 0 + 1;
 
       const cmValue = cmTr.state.doc.toString();
       const change = computeChange(this.node.textContent, cmValue);
@@ -178,7 +178,7 @@ export class CodeBlockView implements NodeView {
         return false;
       }
 
-      const targetPos = this.getPos() + (dir < 0 ? 0 : this.node.nodeSize);
+      const targetPos = this.getPos() ?? 0 + (dir < 0 ? 0 : this.node.nodeSize);
       const pmSelection = Selection.near(this.view.state.doc.resolve(targetPos), dir);
       this.view.dispatch(this.view.state.tr.setSelection(pmSelection).scrollIntoView());
       this.view.focus();

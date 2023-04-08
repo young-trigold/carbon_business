@@ -3,7 +3,7 @@ import { Header } from '../../components/Header';
 import { Chart } from './components/Chart';
 import { Form } from './components/Form';
 
-export const ChartPage = () => {
+const ChartPage = () => {
   return (
     <Box>
       <Header />
@@ -22,3 +22,5 @@ export const ChartPage = () => {
     </Box>
   );
 };
+
+export default ChartPage;
