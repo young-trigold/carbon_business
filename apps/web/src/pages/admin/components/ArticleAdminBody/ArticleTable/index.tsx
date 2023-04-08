@@ -23,7 +23,7 @@ export const ArticleTable = () => {
   );
 
   const { data, isLoading } = useQuery({
-    queryKey: ['articles', curPage, pageSize],
+    queryKey: ['articles', curPage, pageSize, 'default'],
     queryFn: async () => {
       const searchParamsAsStr = Object.entries({
         curPage: curPage,
