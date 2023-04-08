@@ -18,9 +18,9 @@ export const HeaderHeight = 60;
 const pages = [
   { title: '碳交易面板', link: '/chart' },
   { title: '碳导航', link: 'https://navi.co2.press/' },
-  { title: '碳市场', link: ' ' },
-  { title: '碳足迹', link: '' },
-  { title: '政策法规', link: '' },
+  { title: '碳市场', link: '/market' },
+  { title: '碳足迹', link: '/footage' },
+  { title: '碳金融', link: '/finance' },
 ];
 
 export const Header = () => {

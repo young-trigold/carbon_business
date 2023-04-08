@@ -8,15 +8,19 @@ import { setArticleTotalPageCount as setTotalPageCountForAdmin } from '../../../
 import { setTotalPageCount as setTotalPageCountForHome } from '../../../../app/store/pages/home';
 import { ArticleCard } from './ArticleCard';
 import { PageController } from './PageController';
+import { useParams } from 'react-router-dom';
 
 export const ArticleGrid = () => {
+  const { articleTag = 'default' } = useParams();
+
   const { articleCurPage, pageSize } = useAppSelector((state) => state.homePage);
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['articles', articleCurPage, pageSize],
+    queryKey: ['articles', articleCurPage, pageSize, articleTag],
     queryFn: async () => {
       const searchParamsAsStr = Object.entries({
+        articleTag,
         curPage: articleCurPage,
         pageSize: pageSize,
       })

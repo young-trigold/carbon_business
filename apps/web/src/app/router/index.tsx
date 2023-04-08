@@ -14,6 +14,7 @@ export const RouterPart = () => {
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/:articleTag" element={<HomePage />} /> 
         <Route
           path="/chart"
           element={

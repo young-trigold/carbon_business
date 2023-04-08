@@ -59,3 +59,9 @@ await connectDataBase('爬虫');
 
 // const articles = await Article.updateMany({ $set: { ownBySelf: false } });
 // console.log('完成');
+// const tags = ['market', 'finance', 'footage'];
+// const getRandomTag= () => tags[~~(Math.random() * (2 - 0 + 1) + 0)];
+// console.log(Array.from({length: 10}, getRandomTag));
+// const articles = await Article.find({});
+// await Promise.all(articles.map((article) => Article.findByIdAndUpdate(article.id, { $set: { tag: getRandomTag() } })));
+// console.log('完成');

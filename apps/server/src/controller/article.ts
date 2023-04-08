@@ -34,6 +34,7 @@ export const getArticles = async (req: Request, res: Response) => {
 
   const curPage = Number.parseInt((query.curPage as string) ?? '1', 10);
   const pageSize = Number.parseInt((query.pageSize as string) ?? '10', 10);
+  const articleTag = query.articleTag;
 
   try {
     if (sample) {
@@ -55,8 +56,8 @@ export const getArticles = async (req: Request, res: Response) => {
       res.status(200).json(articles);
     } else {
       const [articleCount, articles] = await Promise.all([
-        Article.count(),
-        Article.find({})
+        Article.find(articleTag !== 'default'  ? { tag: articleTag } : {}).count(),
+        Article.find(articleTag !== 'default' ? { tag: articleTag } : {})
           .sort({ date: -1 })
           .skip(curPage * pageSize)
           .limit(pageSize),

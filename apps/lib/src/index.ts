@@ -12,6 +12,8 @@ export type CarbonBusiness = {
   id: string;
 };
 
+export type ArticleTag = 'market' | 'finance' | 'footage';
+
 export type Article = {
   ownBySelf: boolean;
   content?: string;
@@ -19,6 +21,7 @@ export type Article = {
   subtitle: string;
   source: string;
   date: string;
+  tag?: ArticleTag;
   backgroundImgURL: string;
   link?: string;
   id: string;
