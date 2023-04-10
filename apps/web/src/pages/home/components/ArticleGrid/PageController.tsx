@@ -1,5 +1,7 @@
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { Button, IconButton, Stack, styled } from '@mui/material';
+import { ArticleTag } from 'lib';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { setArticleCurPage } from '../../../../app/store/pages/home';
 
@@ -34,15 +36,18 @@ const getPageUnitFlags = (articleCurPage: number, totalPageCount: number) => {
 };
 
 export const PageController = () => {
+  const { articleTag = 'default' } = useParams();
   const { articleCurPage, totalPageCount } = useAppSelector((state) => state.homePage);
   const dispatch = useAppDispatch();
+
+  const totalCount = totalPageCount[articleTag as ArticleTag & 'default'] as number;
 
   const back = () => {
     if (articleCurPage > 0) dispatch(setArticleCurPage(articleCurPage - 1));
   };
 
   const forward = () => {
-    if (articleCurPage < totalPageCount) dispatch(setArticleCurPage(articleCurPage + 1));
+    if (articleCurPage < totalCount) dispatch(setArticleCurPage(articleCurPage + 1));
   };
 
   return (
@@ -57,7 +62,7 @@ export const PageController = () => {
       <IconButton aria-label="back" onClick={back} disabled={!(articleCurPage > 0)}>
         <ArrowBack></ArrowBack>
       </IconButton>
-      {getPageUnitFlags(articleCurPage, totalPageCount).map((pageFlag) => {
+      {getPageUnitFlags(articleCurPage, totalCount).map((pageFlag) => {
         if (Object.is(pageFlag, NaN)) return <StyledPageUnit disabled>...</StyledPageUnit>;
         return (
           <StyledFunctionalPageUnit
@@ -75,7 +80,7 @@ export const PageController = () => {
       <IconButton
         aria-label="forward"
         onClick={forward}
-        disabled={!(articleCurPage < totalPageCount - 1)}
+        disabled={!(articleCurPage < totalCount - 1)}
       >
         <ArrowForward></ArrowForward>
       </IconButton>

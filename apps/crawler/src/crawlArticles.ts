@@ -26,6 +26,7 @@ const getArticlesByPageIndex = async (pageIndex: number) => {
       const result: Omit<ArticleType, 'id'>[] = linkElements.map((linkElement) => {
         console.debug(linkElement.querySelector('p.wz_desc')?.textContent);
         return {
+          ownBySelf: false,
           title: linkElement.title.trim(),
           subtitle: linkElement.querySelector('p.wz_desc')?.textContent?.trim() ?? '',
           link: linkElement.href,

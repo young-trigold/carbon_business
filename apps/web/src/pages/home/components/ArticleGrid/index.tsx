@@ -2,13 +2,18 @@ import { Box, Skeleton } from '@mui/material';
 import axios from 'axios';
 import { Article } from 'lib';
 import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { setMessageState } from '../../../../app/store/message';
 import { setArticleTotalPageCount as setTotalPageCountForAdmin } from '../../../../app/store/pages/admin';
-import { setTotalPageCount as setTotalPageCountForHome } from '../../../../app/store/pages/home';
+import {
+  setFinanceTotalPageCount,
+  setFootageTotalPageCount,
+  setMarketTotalPageCount,
+  setDefaultTotalPageCount as setTotalPageCountForHome,
+} from '../../../../app/store/pages/home';
 import { ArticleCard } from './ArticleCard';
 import { PageController } from './PageController';
-import { useParams } from 'react-router-dom';
 
 export const ArticleGrid = () => {
   const { articleTag = 'default' } = useParams();
@@ -17,7 +22,7 @@ export const ArticleGrid = () => {
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['articles', articleCurPage, pageSize, articleTag],
+    queryKey: ['articles', articleTag, articleCurPage, pageSize],
     queryFn: async () => {
       const searchParamsAsStr = Object.entries({
         articleTag,
@@ -35,9 +40,23 @@ export const ArticleGrid = () => {
     onError(err) {
       dispatch(setMessageState({ visible: true, text: '请求失败，刷新重试!', state: 'error' }));
     },
-    onSuccess(data) {
-      dispatch(setTotalPageCountForHome(data?.totalPageCount ?? 0));
-      dispatch(setTotalPageCountForAdmin(data?.totalPageCount ?? 0));
+    onSuccess(data) {;
+      switch (articleTag) {
+        case 'default':
+          dispatch(setTotalPageCountForHome(data?.totalPageCount ?? 0));
+          dispatch(setTotalPageCountForAdmin(data?.totalPageCount ?? 0));
+          break;
+        case 'market':
+          dispatch(setMarketTotalPageCount(data?.totalPageCount ?? 0));
+          break;
+        case 'finance':
+          dispatch(setFinanceTotalPageCount(data?.totalPageCount ?? 0));
+          break;
+        case 'footage':
+          dispatch(setFootageTotalPageCount(data?.totalPageCount ?? 0));
+        default:
+          break;
+      }
     },
   });
 

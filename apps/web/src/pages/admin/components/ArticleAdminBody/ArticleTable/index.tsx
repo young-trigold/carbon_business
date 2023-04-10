@@ -12,8 +12,6 @@ import axios from 'axios';
 import { Article } from 'lib';
 import { useQuery } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../../../app/store';
-import { setArticleTotalPageCount as setArticleTotalPageCountForAdmin } from '../../../../../app/store/pages/admin';
-import { setTotalPageCount as setArticleTotalPageCountForHome } from '../../../../../app/store/pages/home';
 import { ArticleRow } from '../ArticleTable/ArticleRow';
 
 export const ArticleTable = () => {
@@ -23,7 +21,7 @@ export const ArticleTable = () => {
   );
 
   const { data, isLoading } = useQuery({
-    queryKey: ['articles', curPage, pageSize, 'default'],
+    queryKey: ['articles','default', curPage, pageSize],
     queryFn: async () => {
       const searchParamsAsStr = Object.entries({
         curPage: curPage,
@@ -36,10 +34,6 @@ export const ArticleTable = () => {
         totalPageCount: number;
       }>(`/api/articles?${searchParamsAsStr}`);
       return res.data;
-    },
-    onSuccess(data) {
-      dispatch(setArticleTotalPageCountForHome(data?.totalPageCount ?? 0));
-      dispatch(setArticleTotalPageCountForAdmin(data?.totalPageCount ?? 0));
     },
   });
 
