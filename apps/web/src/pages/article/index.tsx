@@ -105,6 +105,7 @@ const ArticlePage: React.FC<ContentPageProps> = (props) => {
   }, []);
 
   const onChange = useCallback((view: EditorView, tr: Transaction) => {
+    view.updateState(view.state.apply(tr));
     const { state } = view;
     // 更新 insert tooltip
     const { selection } = state;
@@ -134,7 +135,7 @@ const ArticlePage: React.FC<ContentPageProps> = (props) => {
       }),
     );
 
-    view.updateState(view.state.apply(tr));
+    
   }, []);
 
   const handleDOMEvents: HandleDOMEvents = useMemo(
