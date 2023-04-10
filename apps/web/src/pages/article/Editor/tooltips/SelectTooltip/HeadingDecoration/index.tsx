@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import { useCallback } from 'react';
-import { store } from '../../../../../../../../app/store';
+import { useAppSelector } from '../../../../../../app/store';
 
 const StyledHeadingOptionContainer = styled('div')((props) => ({
   position: 'absolute',
@@ -56,7 +56,7 @@ const StyledHeadingDecoration = styled('div')(() => ({
 }));
 
 export const HeadingDecoration = () => {
-  const { editorStore } = store.getState().articlePage.editor;
+  const { editorStore } = useAppSelector((state) => state.articlePage.editor);
 
   const toggleHeadingLevel1 = useCallback(() => {
     if (!editorStore?.view) return;

@@ -9,6 +9,7 @@ import { presetNodeExtensions, presetPlainExtensions } from './extensions';
 import { Extension } from './extensions/type';
 import { EditorStore, HandleDOMEvents } from './store';
 import InsertTooltip from './tooltips/InsertTooltip';
+import { SelectTooltip } from './tooltips/SelectTooltip';
 
 const EditorContainer = styled(Paper)((props) => ({
   flex: '1 1 760px',
@@ -157,6 +158,7 @@ export const Editor: React.FC<EditorProps> = (props) => {
       {editable && (
         <>
           <InsertTooltip />
+          <SelectTooltip />
         </>
       )}
       {/* {!editable && <SelectionCommentTooltip />} */}

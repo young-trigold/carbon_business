@@ -77,4 +77,4 @@ const InsertTooltip = (props: InsertTooltipProps) => {
   );
 };
 
-export default memo(InsertTooltip);
+export default InsertTooltip;

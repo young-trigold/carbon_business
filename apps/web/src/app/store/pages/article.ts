@@ -17,7 +17,7 @@ export type InsertTooltipState = {
   position: Pick<DOMRect, 'left' | 'top'>;
 };
 
-export type SelectionTooltipState = {
+export type SelectTooltipState = {
   visible: boolean;
   position: Pick<DOMRect, 'left' | 'top'>;
 };
@@ -36,7 +36,7 @@ interface ArticlePageState {
     editorStore: EditorStore | null;
     plugin: {
       insertTooltip: InsertTooltipState;
-      selectionTooltip: SelectionTooltipState;
+      selectTooltip: SelectTooltipState;
     };
   };
 }
@@ -62,7 +62,7 @@ export const initialState: ArticlePageState = {
           top: 0,
         },
       },
-      selectionTooltip: {
+      selectTooltip: {
         visible: false,
         position: {
           left: 0,
@@ -98,17 +98,17 @@ const ArticlePageSlice = createSlice({
     setInsertTooltip: (state, action: PayloadAction<InsertTooltipState>) => {
       state.editor.plugin.insertTooltip = action.payload;
     },
-    setSelectionTooltip: (state, action: PayloadAction<SelectionTooltipState>) => {
-      state.editor.plugin.selectionTooltip = action.payload;
+    setSelectTooltip: (state, action: PayloadAction<SelectTooltipState>) => {
+      state.editor.plugin.selectTooltip = action.payload;
     },
-    setSelectionTooltipVisible: (
+    setSelectTooltipVisible: (
       state,
-      action: PayloadAction<SelectionTooltipState['visible']>,
+      action: PayloadAction<SelectTooltipState['visible']>,
     ) => {
-      state.editor.plugin.selectionTooltip.visible = action.payload;
+      state.editor.plugin.selectTooltip.visible = action.payload;
     },
-    setSelectionTooltipPosition: (state, action: PayloadAction<Pick<DOMRect, 'left' | 'top'>>) => {
-      state.editor.plugin.selectionTooltip.position = action.payload;
+    setSelectTooltipPosition: (state, action: PayloadAction<Pick<DOMRect, 'left' | 'top'>>) => {
+      state.editor.plugin.selectTooltip.position = action.payload;
     },
     setEditorStore: (state, action: PayloadAction<EditorStore | null>) => {
       state.editor.editorStore = action.payload as any;
@@ -130,9 +130,9 @@ export const {
   setCurrentHeadingId,
   setInsertTooltipVisible,
   setInsertTooltip,
-  setSelectionTooltip,
-  setSelectionTooltipPosition,
-  setSelectionTooltipVisible,
+  setSelectTooltip,
+  setSelectTooltipPosition,
+  setSelectTooltipVisible,
   setEditorStore,
   resetArticlePage,
 } = ArticlePageSlice.actions;

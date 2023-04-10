@@ -1,14 +1,14 @@
 import { styled } from '@mui/material';
-import { useCallback } from 'react';
-import { store } from '../../../../../../../app/store';
-import { HeadingDecoration } from './components/HeadingDecoration';
+import React, { useCallback } from 'react';
+import { useAppSelector } from '../../../../../app/store';
+import { HeadingDecoration } from './HeadingDecoration';
 
-interface StyledSelectionTooltipProps {
+interface StyledSelectTooltipProps {
   visible: boolean;
   position: Pick<DOMRect, 'left' | 'top'>;
 }
 
-const StyledSelectionTooltip = styled('div')<StyledSelectionTooltipProps>((props) => ({
+const StyledSelectTooltip = styled('div')<StyledSelectTooltipProps>((props) => ({
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
@@ -50,15 +50,11 @@ const StyledOption = styled('div')((props) => ({
   },
 }));
 
-interface SelectionTooltipProps {
-  position: Pick<DOMRect, 'left' | 'top'>;
-  visible: boolean;
-}
+interface SelectTooltipProps {}
 
-export const SelectionTooltip = (props: SelectionTooltipProps) => {
-  const { position, visible } = props;
-  // console.debug(props);
-  const { editorStore } = store.getState().articlePage.editor;
+export const SelectTooltip: React.FC<SelectTooltipProps> = (props) => {
+  const { editorStore, plugin } = useAppSelector((state) => state.articlePage.editor);
+  const { visible, position } = plugin.selectTooltip;
 
   const handleToggleBold: React.MouseEventHandler<HTMLDivElement> = useCallback(() => {
     if (!editorStore) return;
@@ -113,7 +109,7 @@ export const SelectionTooltip = (props: SelectionTooltipProps) => {
   const preventDefault: React.MouseEventHandler<HTMLElement> = (event) => event.preventDefault();
 
   return (
-    <StyledSelectionTooltip
+    <StyledSelectTooltip
       onMouseDown={(event) => event.stopPropagation()}
       onMouseUp={preventDefault}
       visible={visible}
@@ -161,6 +157,6 @@ export const SelectionTooltip = (props: SelectionTooltipProps) => {
           </svg>
         </span>
       </StyledOption>
-    </StyledSelectionTooltip>
+    </StyledSelectTooltip>
   );
 };

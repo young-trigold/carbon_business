@@ -8,11 +8,12 @@ import { useQuery } from 'react-query';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import {
+  resetArticlePage,
   setCurrentHeadingId,
   setInsertTooltip,
   setInsertTooltipVisible,
-  setSelectionTooltip,
-  setSelectionTooltipVisible,
+  setSelectTooltip,
+  setSelectTooltipVisible,
 } from '../../app/store/pages/article';
 import { Header } from '../../components/Header';
 import ContentContainer from './ContentContainer';
@@ -33,7 +34,6 @@ import {
 import { ImageExtension } from './editor/extensions/nodeExtensions/ImageExtension';
 import { ListExtensions } from './editor/extensions/nodeExtensions/listExtensions';
 import { TableExtensions } from './editor/extensions/nodeExtensions/tableExtensions';
-import { SelectionTooltipExtension } from './editor/extensions/plainExtensions/SelectionTooltipExtension';
 import { HandleDOMEvents } from './editor/store';
 import findHeadingElementById from './editor/utils/findHeadingElementById';
 
@@ -80,34 +80,29 @@ const ArticlePage: React.FC<ContentPageProps> = (props) => {
   }, [catalog.currentHeadingId]);
 
   // // unmount
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(resetContentPage());
-  //   };
-  // }, []);
+  useEffect(() => {
+    return () => {
+      dispatch(resetArticlePage());
+    };
+  }, []);
 
-  const selectionTooltipExtension = useMemo(() => new SelectionTooltipExtension(), []);
-
-  const extensions = useMemo(
-    () => {
-      const base = [
-        new BoldExtension(),
-        new ItalicExtension(),
-        new UnderlineExtension(),
-        new LinkExtension(),
-        new SubExtension(),
-        new SupExtension(),
-        new CodeExtension(),
-        new HeadingExtension(),
-        new CodeBlockExtension(),
-        new ImageExtension(),
-        ...ListExtensions.map((Extension) => new Extension()),
-        ...TableExtensions.map((Extension) => new Extension()),
-      ];
-      return editable ? [...base, selectionTooltipExtension] : base;
-    }, 
-    [],
-  );
+  const extensions = useMemo(() => {
+    const base = [
+      new BoldExtension(),
+      new ItalicExtension(),
+      new UnderlineExtension(),
+      new LinkExtension(),
+      new SubExtension(),
+      new SupExtension(),
+      new CodeExtension(),
+      new HeadingExtension(),
+      new CodeBlockExtension(),
+      new ImageExtension(),
+      ...ListExtensions.map((Extension) => new Extension()),
+      ...TableExtensions.map((Extension) => new Extension()),
+    ];
+    return base;
+  }, []);
 
   const onChange = useCallback((view: EditorView, tr: Transaction) => {
     const { state } = view;
@@ -130,12 +125,12 @@ const ArticlePage: React.FC<ContentPageProps> = (props) => {
     );
 
     dispatch(
-      setSelectionTooltip({
+      setSelectTooltip({
         position: {
           left: cursorPositionToViewPort.left - editorContainerPositionToViewPort.left,
           top: cursorPositionToViewPort.top - editorContainerPositionToViewPort.top,
         },
-        visible: !empty && tr.getMeta(selectionTooltipExtension.pluginKey)?.selectionTooltipVisible,
+        visible: !empty,
       }),
     );
 
@@ -146,7 +141,7 @@ const ArticlePage: React.FC<ContentPageProps> = (props) => {
     () => ({
       blur: () => {
         dispatch(setInsertTooltipVisible(false));
-        dispatch(setSelectionTooltipVisible(false));
+        dispatch(setSelectTooltipVisible(false));
       },
     }),
     [],

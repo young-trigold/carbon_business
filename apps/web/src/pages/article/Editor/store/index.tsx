@@ -86,10 +86,14 @@ export class EditorStore {
 	}
 }
 
-// declare class EditorStore {
-//   interface Commands {
-//     [extensionName: string]: {
-//       [commandName: string]: (...args: any[]) => void;
-//     };
-//   }
-// }
+
+declare global {
+  namespace Editor {
+    interface Commands {
+      [extensionName: string]: {
+        [commandName: string]: (...args: any[]) => void;
+      };
+    }
+  }
+}
+
