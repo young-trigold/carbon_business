@@ -65,7 +65,7 @@ export const ArticleTable = () => {
           <TableRow>
             <TableCell>标题</TableCell>
             <TableCell>来源</TableCell>
-            <TableCell>链接</TableCell>
+            <TableCell>链接/内容</TableCell>
             <TableCell>背景图</TableCell>
             <TableCell>日期</TableCell>
             <TableCell align="center">操作</TableCell>
