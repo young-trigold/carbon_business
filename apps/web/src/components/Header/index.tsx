@@ -27,12 +27,14 @@ export const Header = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state);
   const { hasLogin, userInfo } = user;
+  const theme = useTheme();
 
   return (
     <AppBar position="sticky" sx={{
       filter: 'opacity(0.7)',
       backdropFilter: 'blur(10px)',
-      height: `${HeaderHeight}px`, 
+      height: `${HeaderHeight}px`,
+      boxShadow: theme.shadows[1],
     }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>

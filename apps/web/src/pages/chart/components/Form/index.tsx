@@ -84,7 +84,7 @@ export const Form = () => {
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3}>
       <FormGroup>
         <Stack spacing={2}>
           <DatePicker

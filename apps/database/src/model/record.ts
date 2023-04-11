@@ -16,6 +16,7 @@ const recordScheme = new Schema(
       type: String,
       required: true,
     },
+    predicted: Boolean,
     startPrice: Number,
     endPrice: Number,
     minPrice: Number,

@@ -11,12 +11,11 @@ const ChartPage = () => {
         direction="row"
         spacing={2}
         sx={{
-          height: 'calc(100vh - 69px)',
           padding: '1em',
-          alignItems: 'center',
         }}
+        alignItems="center"
       >
-        <Chart width={1100} height={700} />
+        <Chart width={1100} height={750} />
         <Form />
       </Stack>
     </Box>

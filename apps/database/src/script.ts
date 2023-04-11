@@ -1,5 +1,6 @@
 import { connectDataBase } from './connect.js';
-import { Article } from './index.js';
+import { Article, Record } from './index.js';
+import {CarbonBusiness} from 'lib';
 
 await connectDataBase('爬虫');
 // - 海峡 /福建海峡 update 海峡
@@ -64,4 +65,8 @@ await connectDataBase('爬虫');
 // console.log(Array.from({length: 10}, getRandomTag));
 // const articles = await Article.find({});
 // await Promise.all(articles.map((article) => Article.findByIdAndUpdate(article.id, { $set: { tag: getRandomTag() } })));
+// console.log('完成');
+
+// const predictedRecords: Omit<CarbonBusiness, 'id'> = [].filter(() => {});
+// await Record.insertMany([]);
 // console.log('完成');

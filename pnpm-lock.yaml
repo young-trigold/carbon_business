@@ -65,6 +65,9 @@ importers:
 
   apps/database:
     dependencies:
+      lib:
+        specifier: workspace:^
+        version: link:../lib
       mongoose:
         specifier: ^7.0.3
         version: registry.npmmirror.com/mongoose@7.0.3
