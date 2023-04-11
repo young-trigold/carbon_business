@@ -5,14 +5,16 @@ import { useAppSelector } from '../../app/store';
 import { AdminMenuList } from './components/AdminMenuList';
 import { ArticleAdminBody } from './components/ArticleAdminBody';
 import { RecordAdminBody } from './components/RecordAdminBody';
+import { SlideAdminBody } from './components/SlideAdminBody';
 
-const bodies = [<ArticleAdminBody />, <RecordAdminBody />];
+export const tabs = [
+  {text: '文章管理', body: <ArticleAdminBody />},
+  {text: '数据管理', body: <RecordAdminBody />},
+  {text: '轮播图管理', body: <SlideAdminBody />},
+];
 
 const AdminPage: React.FC = () => {
-  const { currentBodyIndex } = useAppSelector((state) => state.adminPage);
-
-  const currentBody = useMemo(() => bodies[currentBodyIndex], [currentBodyIndex]);
-
+  const currentBody = useAppSelector((state) => tabs[state.adminPage.currentBodyIndex].body);
   const { hasLogin, userInfo } = useAppSelector((state) => state.user);
 
   if (!hasLogin || userInfo?.permission !== 'admin') return <Navigate to="/" />;
@@ -27,7 +29,6 @@ const AdminPage: React.FC = () => {
     >
       <AdminMenuList />
       {currentBody}
-      
     </Stack>
   );
 };

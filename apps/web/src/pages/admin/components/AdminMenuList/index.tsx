@@ -1,12 +1,7 @@
 import { MenuItem, MenuList, useTheme } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { setCurrentBodyIndex } from '../../../../app/store/pages/admin';
-
-const options = [
-  { text: '文章管理', bodyIndex: 0 },
-  { text: '数据管理', bodyIndex: 1 },
-  // { text: '用户管理', bodyIndex: 2 },
-];
+import { tabs } from '../..';
 
 export const AdminMenuList = () => {
   const dispatch = useAppDispatch();
@@ -22,16 +17,16 @@ export const AdminMenuList = () => {
         height: 'fit-content',
       }}
     >
-      {options.map((option, index) => (
+      {tabs.map((tab, index) => (
         <MenuItem
-          onClick={() => dispatch(setCurrentBodyIndex(option.bodyIndex))}
-          key={option.text}
+          onClick={() => dispatch(setCurrentBodyIndex(index))}
+          key={tab.text}
           sx={{
             padding: '1em',
             backgroundColor: currentBodyIndex === index ? palette.primary.main : 'unset',
           }}
         >
-          {option.text}
+          {tab.text}
         </MenuItem>
       ))}
     </MenuList>

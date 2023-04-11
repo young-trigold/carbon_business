@@ -1,3 +1,11 @@
+export type Slide = {
+  backgroundImgURL: string,
+  description: string,
+  title: string,
+  link: string,
+  id: string,
+}
+
 export type CarbonBusiness = {
   date: string;
   agency: string;
