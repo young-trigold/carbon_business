@@ -73,8 +73,6 @@ const Catalog: React.FC<CatalogProps> = (props) => {
     dispatch(setHeadings(currentHeadings));
   }, [editorStore?.view?.state.doc.content]);
 
-  if (!headings.length) return null;
-
   return (
     <StyledCatalog catalogVisible={catalogVisible}>
       {headings
