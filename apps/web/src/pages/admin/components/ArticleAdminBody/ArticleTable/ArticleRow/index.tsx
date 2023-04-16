@@ -102,7 +102,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', curPage, pageSize], (pre) => ({
+        }>(['articles', 'default', curPage, pageSize], (pre) => ({
           ...pre!,
           articles: pre!.articles.map((preArticle) => {
             if (preArticle.id === article.id) return { ...preArticle, ...formState };
@@ -133,7 +133,7 @@ export const ArticleRow: React.FC<ArticleRowProps> = (props) => {
         client.setQueryData<{
           articles: Article[];
           totalPageCount: number;
-        }>(['articles', curPage, pageSize], (pre) => {
+        }>(['articles', 'default', curPage, pageSize], (pre) => {
           return {
             ...pre!,
             articles: pre!.articles.filter((preArticle) => preArticle.id !== article.id),

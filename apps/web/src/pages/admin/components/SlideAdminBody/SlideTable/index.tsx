@@ -30,7 +30,7 @@ export const SlideTable = () => {
     <TableContainer
       component={Paper}
       sx={{
-        height: 'calc(100vh - 76px - 32px)',
+        height: '100vh',
       }}
     >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

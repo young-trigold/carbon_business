@@ -46,7 +46,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
   const { width = 900, height = 500 } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const getCarousel = async () => {
+  const getSlides = async () => {
     const res = await axios.get<
       {
         backgroundImgURL: string;
@@ -60,8 +60,8 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
   };
 
   const { data, isLoading } = useQuery({
-    queryKey: 'carousel',
-    queryFn: getCarousel,
+    queryKey: ['slides'],
+    queryFn: getSlides,
   });
 
   const slides =

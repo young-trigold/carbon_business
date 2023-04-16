@@ -13,7 +13,7 @@ import axios from 'axios';
 import { Slide } from 'lib';
 import { useMemo, useState } from 'react';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { client } from '../../../../../../App';
 import { useAppDispatch } from '../../../../../../app/store';
 import { setMessageState } from '../../../../../../app/store/message';
 
@@ -24,12 +24,19 @@ interface SlideRowProps {
 export const SlideRow: React.FC<SlideRowProps> = (props) => {
   const { slide } = props;
 
-  const initialFormState = useMemo(
+  const [backgroundImageURL, setBackgroundImageURL] = useState(slide.backgroundImgURL);
+
+  const initialFormState = useMemo<{
+    title: string;
+    description: string;
+    link: string;
+    backgroundImg: null | File;
+  }>(
     () => ({
       title: slide.title,
       description: slide.description,
       link: slide.link,
-      backgroundImgURL: slide.backgroundImgURL,
+      backgroundImg: null,
     }),
     [],
   );
@@ -60,7 +67,17 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
     }));
   };
 
-  const onBackgroundImgURLChange = () => {};
+  const onBackgroundImgChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const backgroundImg = event.target.files?.[0];
+    if (!backgroundImg) return;
+    setFormState((pre) => ({ ...pre, backgroundImg }));
+    const fileReader = new FileReader();
+    fileReader.addEventListener('load', (event) => {
+      console.debug(fileReader.result);
+      setBackgroundImageURL(fileReader.result as string);
+    });
+    fileReader.readAsDataURL(backgroundImg);
+  };
 
   const dispatch = useAppDispatch();
 
@@ -71,12 +88,18 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
   };
 
   const { mutate: updateSlide } = useMutation(
-    (slideId: string) => {
-      return axios.put(`/api/slides/${slideId}`, formState, {
+    async (slideId: string) => {
+      const formData: FormData = Object.entries(formState).reduce((result, [key, value]) => {
+        if (key === 'backgroundImg') result.append('file', value!);
+        else result.append(key, value!);
+        return result;
+      }, new FormData());
+      const res = await axios.put<{ fileURL: string }>(`/api/slides/${slideId}`, formData, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
         },
       });
+      return res.data;
     },
     {
       onMutate(variables) {
@@ -86,16 +109,12 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
         dispatch(setMessageState({ visible: true, text: '更新失败!', state: 'error' }));
       },
       onSuccess(data, variables, context) {
-        // client.setQueryData<{
-        //   slides: Slide[];
-        //   totalPageCount: number;
-        // }>(['slides', curPage, pageSize], (pre) => ({
-        //   ...pre!,
-        //   slides: pre!.slides.map((preSlide) => {
-        //     if (preSlide.id === slide.id) return { ...preSlide, ...formState };
-        //     return preSlide;
-        //   }),
-        // }));
+        client.setQueryData<Array<Slide>>('slides', (pre) => {
+          const updatedSlides = [...pre!];
+          const index = pre!.findIndex((slide) => slide.id === props.slide.id);
+          updatedSlides.splice(index, 1, {...pre![index], backgroundImgURL: data.fileURL});
+          return updatedSlides;
+        });
         dispatch(setMessageState({ visible: true, text: '更新成功!', state: 'success' }));
       },
     },
@@ -132,7 +151,7 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
     },
   );
 
-  const navigate = useNavigate();
+  const disabled = formState.backgroundImg === null;
 
   return (
     <TableRow key={slide.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -167,14 +186,23 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
       </TableCell>
       <TableCell>
         <Box
-          width={150}
-          height={100}
           sx={{
-            backgroundSize: 'cover',
-            backgroundImage: `url(${formState.backgroundImgURL})`,
+            position: 'relative',
           }}
         >
-          {/* <input accept="image/*" type="file" /> */}
+          <img src={backgroundImageURL} width={250} />
+          <label
+            style={{
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+            }}
+          >
+            <input hidden accept="image/*" type="file" onChange={onBackgroundImgChange} />
+          </label>
         </Box>
       </TableCell>
 
@@ -194,7 +222,7 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
           onClick={() => {
             updateSlide(slide.id);
           }}
-          disabled={JSON.stringify(initialFormState) === JSON.stringify(formState)}
+          disabled={disabled}
         >
           更新
         </Button>

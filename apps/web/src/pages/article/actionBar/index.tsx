@@ -1,8 +1,7 @@
-import axios from 'axios';
-import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import PublishIcon from '@mui/icons-material/Publish';
 import { Fab, styled } from '@mui/material';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { setMessageState } from '../../../app/store/message';
 
@@ -21,12 +20,11 @@ const ActionBar: React.FC = () => {
 
   const publish = async () => {
     if (!hasLogin) {
-     
-      dispatch(setMessageState({visible: true, text: '请先登录!', state: 'warning'}))
+      dispatch(setMessageState({ visible: true, text: '请先登录!', state: 'warning' }));
       return;
     }
     if (userInfo?.permission !== 'admin') {
-      dispatch(setMessageState({visible: true, text: '权限不足!', state: 'warning'}))
+      dispatch(setMessageState({ visible: true, text: '权限不足!', state: 'warning' }));
       return;
     }
     if (!editorStore) return;
@@ -48,17 +46,16 @@ const ActionBar: React.FC = () => {
           },
         },
       );
-      dispatch(setMessageState({visible: true, text: '发布成功!', state: 'success'}))
+      dispatch(setMessageState({ visible: true, text: '发布成功!', state: 'success' }));
+      location.href = '/';
     } catch (error) {
       // if (axios.isAxiosError(error))
       //   return message.error((error.response?.data as { message: string })?.message);
       // if (error instanceof Error) return message.error(error.message);
       // return message.error(JSON.stringify(error));
-      dispatch(setMessageState({visible: true, text: '发布失败!', state: 'error'}))
+      dispatch(setMessageState({ visible: true, text: '发布失败!', state: 'error' }));
     }
   };
-
-  const navigate = useNavigate();
 
   // const handleCancel = useCallback(() => {
   //   navigate(`/${isChapter ? 'chapters' : 'articles'}/${articleId}`);
@@ -66,11 +63,7 @@ const ActionBar: React.FC = () => {
 
   return (
     <StyledActionBar>
-      <Fab
-        color="primary"
-        aria-label="publish"
-        onClick={publish}
-      >
+      <Fab color="primary" aria-label="publish" onClick={publish}>
         <PublishIcon></PublishIcon>
       </Fab>
     </StyledActionBar>

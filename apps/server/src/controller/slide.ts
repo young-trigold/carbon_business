@@ -25,13 +25,12 @@ export const addSlide = async (req: Request, res: Response) => {
 export const updateSlide = async (req: Request, res: Response) => {
   const { id } = req.params;
   const fileURL = `http://${req.hostname}/${req.file?.filename}`;
-
   try {
-    const updatedSlide = await Slide.findByIdAndUpdate(id, {
+   await Slide.findByIdAndUpdate(id, {
       ...req.body,
       backgroundImgURL: fileURL,
     });
-    res.status(200).json({ message: '上传成功', updatedSlide });
+    res.status(200).json({ message: '上传成功', fileURL });
   } catch (error) {
     res.status(502).json(error);
   }
