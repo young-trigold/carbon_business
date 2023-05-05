@@ -121,7 +121,7 @@ export const Chart: React.FC<ChartProps> = (props) => {
         },
         {
           source: data!.slice(0, 1558 / 2 + 1).map((record) => {
-            const obj = {};
+            const obj: Record<string, string> = {};
             Object.entries(record).forEach(([key, value]) => {
               if (key === 'date') obj.date = value;
               else obj[`${key}预测`] = value;
