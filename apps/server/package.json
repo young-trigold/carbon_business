@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/index.js\""
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/index.js\"",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
