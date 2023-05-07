@@ -18,15 +18,6 @@ const EditorContainer = styled(Paper)((props) => ({
   zIndex: 2,
   position: 'relative',
   margin: '1em',
-  // backgroundColor: props.theme.foregroundColor,
-  // background-image: linear-gradient(
-  //     to right,
-  //     ${(props) => props.theme.shadowColor} ${px()},
-  //     transparent 0
-  //   ),
-  //   linear-gradient(to bottom, ${(props) => props.theme.shadowColor} ${px()}, transparent 0);
-  // background-size: 1.2em 1.2em,
-  // background-position-x: 0.6em,
   borderRadius: '6.4px',
   padding: '1.5em 2em 0.5em 2em',
   overflowWrap: 'break-word',
@@ -79,34 +70,6 @@ const EditorContainer = styled(Paper)((props) => ({
       textIndent: 'unset',
     },
   },
-
-  // // 代码块
-  // .cm-editor {
-  //   font-size: 14px;
-  //   border-radius: 6.4px;
-  //   box-shadow: 0 0 4px ${(props) => props.theme.shadowColor};
-  //   background-color: ${(props) => props.theme.foregroundColor};
-  //   transition: ${(props) => props.theme.transition};
-
-  //   &.cm-focused {
-  //     outline: none;
-  //   }
-
-  //   // gutters
-  //   .cm-gutters {
-  //     color: ${(props) => props.theme.textColor};
-  //     background-color: ${(props) => props.theme.surfaceColor};
-  //     border-radius: 6.4px;
-  //     border-top-right-radius: 0;
-  //     border-bottom-right-radius: 0;
-  //     border-right-color: ${(props) => props.theme.borderColor};
-  //     user-select: none;
-
-  //     .cm-gutterElement.cm-activeLineGutter {
-  //       color: ${(props) => props.theme.primaryColor};
-  //     }
-  //   }
-  // }
 }));
 
 interface EditorProps {
