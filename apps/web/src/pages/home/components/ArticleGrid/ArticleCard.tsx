@@ -22,9 +22,11 @@ export const ArticleCard: React.FC<Article> = (props) => {
       onClick={onClick}
     >
       <Stack direction="row">
-        <Box sx={{ display: 'flex' }} margin="0.5em">
-          <img src={backgroundImgURL} width={200} />
-        </Box>
+        {backgroundImgURL && (
+          <Box sx={{ display: 'flex' }} margin="0.5em">
+            <img src={backgroundImgURL} width={200} />
+          </Box>
+        )}
 
         <CardContent sx={{ flexGrow: 1 }}>
           <Stack>

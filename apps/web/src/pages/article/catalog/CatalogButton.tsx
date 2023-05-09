@@ -17,7 +17,7 @@ export const CatalogButton: React.FC = () => {
       sx={{
         position: 'absolute',
         right: '48px',
-        bottom: '48px',
+        top: '60%',
         opacity: 0,
         transform: "scaleY(0)",
       

@@ -1,15 +1,20 @@
 import PublishIcon from '@mui/icons-material/Publish';
-import { Fab, styled } from '@mui/material';
+import { Fab, Tooltip, styled } from '@mui/material';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { setMessageState } from '../../../app/store/message';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 const StyledActionBar = styled('aside')((props) => ({
-  width: '100px',
+  display: 'flex',
+  flexDirection: 'column',
   position: 'absolute',
   right: '48px',
-  bottom: '148px',
+  top: '60%',
+  "&>button": {
+    marginBottom: '2em'
+  }
 }));
 
 const ActionBar: React.FC = () => {
@@ -49,23 +54,28 @@ const ActionBar: React.FC = () => {
       dispatch(setMessageState({ visible: true, text: '发布成功!', state: 'success' }));
       location.href = '/';
     } catch (error) {
-      // if (axios.isAxiosError(error))
-      //   return message.error((error.response?.data as { message: string })?.message);
-      // if (error instanceof Error) return message.error(error.message);
-      // return message.error(JSON.stringify(error));
       dispatch(setMessageState({ visible: true, text: '发布失败!', state: 'error' }));
     }
   };
 
-  // const handleCancel = useCallback(() => {
-  //   navigate(`/${isChapter ? 'chapters' : 'articles'}/${articleId}`);
-  // }, [isChapter, articleId]);
+  const navigate = useNavigate();
+
+  const navigateToQAPage = () => {
+    navigate(`/articles/645a30c5ac8134096f9b7c52`);
+  };
 
   return (
     <StyledActionBar>
-      <Fab color="primary" aria-label="publish" onClick={publish}>
-        <PublishIcon></PublishIcon>
-      </Fab>
+      <Tooltip title="帮助">
+        <Fab color="primary" aria-label="question" onClick={navigateToQAPage}>
+          <QuestionMarkIcon></QuestionMarkIcon>
+        </Fab>
+      </Tooltip>
+      <Tooltip title="发布">
+        <Fab color="primary" aria-label="publish" onClick={publish}>
+          <PublishIcon></PublishIcon>
+        </Fab>
+      </Tooltip>
     </StyledActionBar>
   );
 };

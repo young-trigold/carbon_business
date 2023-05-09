@@ -18,13 +18,10 @@ export const getArticleById = async (req: Request, res: Response) => {
 
   try {
     const article = await Article.findById(id);
-    if (!id) {
-      res.status(404).json({ message: '未找到该文章!' });
-    } else {
-      res.status(200).json({ article });
-    }
+    console.debug(article);
+    res.status(200).json({ article });
   } catch (error) {
-    res.status(502).json(error);
+    res.status(404).json(error);
   }
 };
 
@@ -56,8 +53,8 @@ export const getArticles = async (req: Request, res: Response) => {
       res.status(200).json(articles);
     } else {
       const [articleCount, articles] = await Promise.all([
-        Article.find(articleTag !== 'default'  ? { tag: articleTag } : {}).count(),
-        Article.find(articleTag !== 'default' ? { tag: articleTag } : {})
+        Article.find(articleTag !== 'default' ? { tag: articleTag } : {}).count(),
+        Article.find(articleTag && articleTag !== 'default' ? { tag: articleTag } : {})
           .sort({ date: -1 })
           .skip(curPage * pageSize)
           .limit(pageSize),
