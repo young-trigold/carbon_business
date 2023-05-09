@@ -1,4 +1,3 @@
-import { Forest } from '@mui/icons-material';
 import { Stack, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,7 +10,6 @@ import { useAppSelector } from '../../app/store';
 import { LoginButton } from './components/LoginButton';
 import { ToggleThemeButton } from './components/ToggleThemeButton';
 import { UserAvatar } from './components/UserAvatar';
-
 
 export const HeaderHeight = 60;
 
@@ -30,12 +28,15 @@ export const Header = () => {
   const theme = useTheme();
 
   return (
-    <AppBar position="sticky" sx={{
-      filter: 'opacity(0.7)',
-      backdropFilter: 'blur(10px)',
-      height: `${HeaderHeight}px`,
-      boxShadow: theme.shadows[1],
-    }}>
+    <AppBar
+      position="sticky"
+      sx={{
+        filter: 'opacity(0.7)',
+        backdropFilter: 'blur(10px)',
+        height: `${HeaderHeight}px`,
+        boxShadow: theme.shadows[1],
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Stack
@@ -48,7 +49,18 @@ export const Header = () => {
               cursor: 'pointer',
             }}
           >
-            <Forest sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Box width={50} sx={{
+              borderRadius: '50%',
+              overflow: 'hidden',
+              marginRight: '0.5em',
+            }}>
+              <img
+                alt="西安邮电大学"
+                src="../../../src/static/icons/xupt_logo.png"
+                width={50}
+              />
+            </Box>
+
             <Typography
               variant="h6"
               noWrap
