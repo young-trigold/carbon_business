@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
-    "script": "node build/script.js"
+    "script": "node build/script.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

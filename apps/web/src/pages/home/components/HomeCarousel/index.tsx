@@ -35,6 +35,7 @@ const SlideContainer = styled(Card)<{
   transition: 'all 0.3s',
   color: 'white',
   transform: index === currentindex ? 'unset' : 'translateX(-50%)',
+  cursor: "pointer",
 }));
 
 interface HomeCarouselProps {
@@ -117,13 +118,13 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
     });
   };
 
-  // useEffect(() => {
-  //   const animation = window.setInterval(onForward, 3000);
+  useEffect(() => {
+    const animation = window.setInterval(onForward, 3000);
 
-  //   return () => {
-  //     return window.clearInterval(animation);
-  //   };
-  // }, [onForward]);
+    return () => {
+      return window.clearInterval(animation);
+    };
+  }, [onForward]);
 
   if (isLoading)
     return (
