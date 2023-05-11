@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm -r --stream --parallel run dev",
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "preview": "cd apps/server & node build/index.js"
   },
   "keywords": [],
   "author": "trigold",

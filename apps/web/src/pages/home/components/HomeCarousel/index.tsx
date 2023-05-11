@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
   styled,
+  useTheme,
 } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -126,6 +127,8 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
     };
   }, [onForward]);
 
+  const theme = useTheme();
+
   if (isLoading)
     return (
       <Skeleton
@@ -158,6 +161,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
           position: 'absolute',
           left: '0',
           transform: 'translate(100%)',
+          border: `1px solid ${theme.palette.primary.main}`,
         }}
         color="primary"
       >
@@ -169,6 +173,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
           position: 'absolute',
           right: '0',
           transform: 'translate(-100%)',
+          border: `1px solid ${theme.palette.primary.main}`,
         }}
         color="primary"
       >
