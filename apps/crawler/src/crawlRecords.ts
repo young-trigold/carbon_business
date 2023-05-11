@@ -34,7 +34,6 @@ class Crawler {
           },
         },
       ]);
-      console.debug(datesOfRecords[0]);
       const date = datesOfRecords[0].date as string;
       this.#latestDateForDatabase = date;
       return date;

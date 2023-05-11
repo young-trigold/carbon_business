@@ -16,6 +16,7 @@ const articleScheme = new Schema(
       type: String,
       required: true,
     },
+    readCount: Number,
     link: String,
     content: String,
     ownBySelf: {

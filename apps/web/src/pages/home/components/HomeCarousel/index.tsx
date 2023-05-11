@@ -64,8 +64,6 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
     queryFn: getSlides,
   });
 
-  console.debug(location);
-
   const slides =
     data?.map((slide, index) => {
       const { title, description, backgroundImgURL, link, id } = slide;

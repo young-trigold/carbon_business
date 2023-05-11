@@ -73,7 +73,6 @@ export const SlideRow: React.FC<SlideRowProps> = (props) => {
     setFormState((pre) => ({ ...pre, backgroundImg }));
     const fileReader = new FileReader();
     fileReader.addEventListener('load', (event) => {
-      console.debug(fileReader.result);
       setBackgroundImageURL(fileReader.result as string);
     });
     fileReader.readAsDataURL(backgroundImg);

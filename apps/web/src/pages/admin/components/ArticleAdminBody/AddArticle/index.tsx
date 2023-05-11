@@ -89,7 +89,6 @@ export const AddArticle = () => {
             articles: [data.newArticle, ...(pre?.articles ?? [])],
           };
         });
-        console.debug(data.newArticle);
         navigate(`/articles/edit/${data.newArticle.id}`);
       },
     },

@@ -5,7 +5,6 @@ const uploadAPI = Router();
 
 uploadAPI.post('/upload/single', singleUpload, (req, res) => {
 	const { file, hostname} = req;
-  console.debug(hostname);
 	const fileURL = `http://${hostname}/${file?.filename}`;
 	res.status(200).json({ message: '上传成功!', fileURL });
 });

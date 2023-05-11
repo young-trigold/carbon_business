@@ -18,7 +18,6 @@ export const getArticleById = async (req: Request, res: Response) => {
 
   try {
     const article = await Article.findById(id);
-    console.debug(article);
     res.status(200).json({ article });
   } catch (error) {
     res.status(404).json(error);
@@ -27,41 +26,21 @@ export const getArticleById = async (req: Request, res: Response) => {
 
 export const getArticles = async (req: Request, res: Response) => {
   const { query } = req;
-  const sample = Number.parseInt((query.sample as string) ?? '0', 10);
 
   const curPage = Number.parseInt((query.curPage as string) ?? '1', 10);
   const pageSize = Number.parseInt((query.pageSize as string) ?? '10', 10);
   const articleTag = query.articleTag;
 
   try {
-    if (sample) {
-      const articles = await Article.aggregate([
-        { $sample: { size: sample } },
-        {
-          $project: {
-            _id: false,
-            id: '$_id',
-            date: '$date',
-            title: '$title',
-            subtitle: '$subtitle',
-            link: '$link',
-            source: '$source',
-            backgroundImgURL: '$backgroundImgURL',
-          },
-        },
-      ]);
-      res.status(200).json(articles);
-    } else {
-      const [articleCount, articles] = await Promise.all([
-        Article.find(articleTag !== 'default' ? { tag: articleTag } : {}).count(),
-        Article.find(articleTag && articleTag !== 'default' ? { tag: articleTag } : {})
-          .sort({ date: -1 })
-          .skip(curPage * pageSize)
-          .limit(pageSize),
-      ]);
+    const [articleCount, articles] = await Promise.all([
+      Article.find(articleTag !== 'default' ? { tag: articleTag } : {}).count(),
+      Article.find(articleTag && articleTag !== 'default' ? { tag: articleTag } : {})
+        .sort({ date: -1 })
+        .skip(curPage * pageSize)
+        .limit(pageSize),
+    ]);
 
-      res.status(200).json({ totalPageCount: Math.ceil(articleCount / pageSize), articles });
-    }
+    res.status(200).json({ totalPageCount: Math.ceil(articleCount / pageSize), articles });
   } catch (error) {
     res.status(502).json(error);
   }
@@ -84,6 +63,17 @@ export const updateArticle = async (req: Request, res: Response) => {
   try {
     const article = await Article.findByIdAndUpdate(id, data);
     res.status(200).json({ message: '更新成功!', article });
+  } catch (error) {
+    res.status(502).json(error);
+  }
+};
+
+export const inc = async (req: Request, res: Response) => {
+  const { id, field } = req.query;
+  console.debug(id, field);
+  try {
+    await Article.findByIdAndUpdate(id, { $inc: { [`${field}`]: 1 } });
+    res.status(200).json({ message: '更新成功!' });
   } catch (error) {
     res.status(502).json(error);
   }

@@ -1,5 +1,5 @@
 import { connectDataBase } from './connect.js';
-import { Slide } from './index.js';
+import { Article, Slide } from './index.js';
 
 await connectDataBase('爬虫');
 // - 海峡 /福建海峡 update 海峡
@@ -107,4 +107,5 @@ await connectDataBase('爬虫');
 //     return Slide.findByIdAndUpdate(id, { $set: { backgroundImgURL: newBackgroundImgURL } });
 //   }),
 // );
+// await Article.updateMany({$set: {readCount: 1}})
 // console.debug('完成');

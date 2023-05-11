@@ -10,6 +10,7 @@ import { slideAPI } from './api/slides.js';
 import { articleAPI } from './api/article.js';
 import { userApi } from './api/user.js';
 import uploadAPI from './api/upload.js';
+import { infosAPI } from './api/infos.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ server.use('/api', slideAPI);
 server.use('/api', articleAPI);
 server.use('/api', userApi);
 server.use('/api', uploadAPI);
+server.use('/api', infosAPI);
 server.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

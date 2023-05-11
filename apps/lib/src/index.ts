@@ -34,6 +34,7 @@ export type Article = {
   backgroundImgURL: string;
   link?: string;
   id: string;
+  readCount?: number;
 };
 
 export const carbonBusinessKeys = new Map<keyof CarbonBusiness, string>([

@@ -1,4 +1,5 @@
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
+import axios from 'axios';
 import { Article } from 'lib';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,9 +8,10 @@ export const ArticleCard: React.FC<Article> = (props) => {
 
   const navigate = useNavigate();
 
-  const onClick = () => {
+  const onClick = async () => {
     if (link) window.open(link);
     else navigate(`articles/${id}`);
+    await axios.put(`/api/articles?id=${id}&field=readCount`);
   };
 
   return (

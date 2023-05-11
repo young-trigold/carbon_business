@@ -41,7 +41,6 @@ class Crawler {
         '.sx_content3_content_left > .sx_content3_content_left_ul1 > li > a',
         (linkElements) => {
           const result: Omit<ArticleType, 'id'>[] = linkElements.map((linkElement) => {
-            console.debug(linkElement.querySelector('p.wz_desc')?.textContent);
             return {
               ownBySelf: false,
               title: linkElement.title.trim(),
@@ -102,7 +101,6 @@ class Crawler {
         '.sx_content3_content_left > .sx_content3_content_left_ul1 > li > a',
         (linkElements) => {
           const result: Omit<ArticleType, 'id'>[] = linkElements?.map((linkElement) => {
-            console.debug(linkElement.querySelector('p.wz_desc')?.textContent);
             return {
               ownBySelf: false,
               title: linkElement.title.trim(),
@@ -115,6 +113,8 @@ class Crawler {
               source:
                 linkElement.querySelectorAll('p.wz_time > span')[0]?.textContent ??
                 '四川联合交易所',
+              readCount: 1,
+              tag: ['market', 'finance', 'footage'][Math.floor(Math.random() * (2 - 0 + 1) + 0)] as any,
             };
           });
           return result;
