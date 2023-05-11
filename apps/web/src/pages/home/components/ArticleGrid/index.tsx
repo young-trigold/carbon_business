@@ -1,4 +1,4 @@
-import { Box, Skeleton } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import axios from 'axios';
 import { Article } from 'lib';
 import { useQuery } from 'react-query';
@@ -40,7 +40,7 @@ export const ArticleGrid = () => {
     onError(err) {
       dispatch(setMessageState({ visible: true, text: '请求失败，刷新重试!', state: 'error' }));
     },
-    onSuccess(data) {;
+    onSuccess(data) {
       switch (articleTag) {
         case 'default':
           dispatch(setTotalPageCountForHome(data?.totalPageCount ?? 0));
@@ -65,13 +65,13 @@ export const ArticleGrid = () => {
 
   return (
     <Box>
+      <Typography variant="h5">实时文章</Typography>
       <Box
         sx={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, 600px)',
           gridGap: '1em',
-          justifyContent: 'space-around',
-          padding: '2em',
+          justifyContent: 'space-between',
         }}
       >
         {data?.articles?.map((article) => (

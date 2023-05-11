@@ -25,12 +25,12 @@ const Dot = styled('div')<{
   margin: '0 16px',
 }));
 
-const SlideContainer = styled(Box)<{
+const SlideContainer = styled(Card)<{
   index: number;
   currentindex: number;
 }>(({ index, currentindex }) => ({
   borderRadius: '4px',
-  position: index === currentindex ? 'unset' : 'absolute',
+  position: index === currentindex ? 'relative' : 'absolute',
   opacity: index === currentindex ? 1 : 0,
   transition: 'all 0.3s',
   color: 'white',
@@ -72,38 +72,29 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
           key={id}
           index={index}
           currentindex={currentIndex}
-          width={width - 100}
-          height={height - 100}
+          onClick={() => window.open(link)}
         >
-          <Card
+          <Box
+            width="800px"
+            height="400px"
             sx={{
-              position: 'relative',
-              cursor: 'pointer',
+              backgroundSize: 'cover',
+              backgroundImage: `url(${location.protocol}//${location.host}/${backgroundImgURL})`,
             }}
-            onClick={() => window.open(link)}
-          >
-            <Box
-              width="100%"
-              height="400px"
-              sx={{
-                backgroundSize: 'cover',
-                backgroundImage: `url(${location.protocol}//${location.host}/${backgroundImgURL})`,
-              }}
-            />
+          />
 
-            <CardContent
-              sx={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                backgroundColor: 'rgba(0,0,0, 0.3)',
-                color: 'white',
-              }}
-            >
-              <Typography variant="h5">{title}</Typography>
-              <Typography variant="body2">{description}</Typography>
-            </CardContent>
-          </Card>
+          <CardContent
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              backgroundColor: 'rgba(0,0,0, 0.3)',
+              color: 'white',
+            }}
+          >
+            <Typography variant="h5">{title}</Typography>
+            <Typography variant="body2">{description}</Typography>
+          </CardContent>
         </SlideContainer>
       );
     }) ?? [];
@@ -126,13 +117,13 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
     });
   };
 
-  useEffect(() => {
-    const animation = window.setInterval(onForward, 3000);
+  // useEffect(() => {
+  //   const animation = window.setInterval(onForward, 3000);
 
-    return () => {
-      return window.clearInterval(animation);
-    };
-  }, [onForward]);
+  //   return () => {
+  //     return window.clearInterval(animation);
+  //   };
+  // }, [onForward]);
 
   if (isLoading)
     return (
@@ -151,13 +142,11 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
     <Box
       sx={{
         position: 'relative',
-        width: `${width}px`,
         height: `${height}px`,
-        padding: '0 2em',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '0 1em',
+        flex: 0,
       }}
     >
       {...slides}
@@ -167,6 +156,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
         sx={{
           position: 'absolute',
           left: '0',
+          transform: 'translate(100%)',
         }}
         color="primary"
       >
@@ -177,6 +167,7 @@ export const HomeCarousel: React.FC<HomeCarouselProps> = (props) => {
         sx={{
           position: 'absolute',
           right: '0',
+          transform: 'translate(-100%)',
         }}
         color="primary"
       >

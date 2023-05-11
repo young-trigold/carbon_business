@@ -8,11 +8,13 @@ export const HomePage = () => {
   return (
     <Box>
       <Header />
-      <Stack flexDirection="row">
-        <HomeCarousel />
-        <InfoList />
-      </Stack>
-      <ArticleGrid />
+      <Box padding="0 2em">
+        <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
+          <HomeCarousel />
+          <InfoList />
+        </Stack>
+        <ArticleGrid />
+      </Box>
     </Box>
   );
 };
