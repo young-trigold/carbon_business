@@ -134,7 +134,6 @@ class Crawler {
       )}.json`;
       const start = performance.now();
       const carbonBusinessArticlesByPageIndex = await getDataByPageIndex(pageIndex);
-      console.debug(carbonBusinessArticlesByPageIndex);
       console.log(`第${pageIndex}页文章已爬取`);
       await writeFile(path, JSON.stringify(carbonBusinessArticlesByPageIndex));
       console.log(`第${pageIndex}页文章已存放到文件`);
