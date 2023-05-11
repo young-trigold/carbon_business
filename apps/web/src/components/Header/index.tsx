@@ -10,6 +10,7 @@ import { useAppSelector } from '../../app/store';
 import { LoginButton } from './components/LoginButton';
 import { ToggleThemeButton } from './components/ToggleThemeButton';
 import { UserAvatar } from './components/UserAvatar';
+import XUPTIcon from '../../../src/static/icons/xupt_logo.png';
 
 export const HeaderHeight = 60;
 
@@ -56,7 +57,7 @@ export const Header = () => {
             }}>
               <img
                 alt="西安邮电大学"
-                src="../../../src/static/icons/xupt_logo.png"
+                src={XUPTIcon}
                 width={50}
               />
             </Box>
