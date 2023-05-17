@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^7.0.3",
-    "lib": "workspace:^"
+    "lib": "workspace:^",
+    "mongoose": "^7.1.1"
   }
 }

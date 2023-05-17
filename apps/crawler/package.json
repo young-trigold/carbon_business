@@ -17,7 +17,7 @@
     "database": "workspace:^",
     "js-xlsx": "^0.8.22",
     "lib": "workspace:^",
-    "puppeteer-core": "^19.8.5",
+    "puppeteer-core": "^19.11.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.2/xlsx-0.19.2.tgz"
   }
 }
