@@ -9,7 +9,12 @@ export const HomePage = () => {
     <Box>
       <Header />
       <Box padding="0 2em">
-        <Stack flexDirection="row" justifyContent="space-between" alignItems="center">
+        <Stack
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
           <HomeCarousel />
           <InfoList />
         </Stack>
