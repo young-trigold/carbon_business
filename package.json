@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "pnpm -r --stream --parallel run dev",
     "build": "pnpm -r build",
-    "preview": "cd apps/server & node build/index.js"
+    "preview": "cd apps/server & node build/index.js",
+    "update": "pnpm -r update"
   },
   "keywords": [],
   "author": "trigold",
